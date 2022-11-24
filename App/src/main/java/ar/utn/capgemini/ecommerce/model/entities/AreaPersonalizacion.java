@@ -1,4 +1,4 @@
-package ar.utn.capgemini.ecommerce.model;
+package ar.utn.capgemini.ecommerce.model.entities;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -12,22 +12,22 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "tipoPersonalizacion")
-public class TipoPersonalizacion extends EntidadPersistente {
+@Table(name = "areaPersonalizacion")
+public class AreaPersonalizacion extends EntidadPersistente {
 
     @Column(name = "descripcion")
     private String descripcion;
 
-    @OneToMany(mappedBy = "tipoPersonalizacion")
+    @OneToMany(mappedBy = "areaPersonalizacion")
     @JsonBackReference
     private List<PosiblePersonalizacion> posiblesPersonalizaciones;
 
-    public TipoPersonalizacion() {
+    public AreaPersonalizacion() {
         this.posiblesPersonalizaciones = new ArrayList<>();
     }
 
     public void agregarPosiblePersonalizacion(PosiblePersonalizacion posiblePersonalizacion){
         this.posiblesPersonalizaciones.add(posiblePersonalizacion);
-        posiblePersonalizacion.setTipoPersonalizacion(this);
+        posiblePersonalizacion.setAreaPersonalizacion(this);
     }
 }

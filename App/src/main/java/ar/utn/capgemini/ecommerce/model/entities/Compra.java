@@ -1,4 +1,4 @@
-package ar.utn.capgemini.ecommerce.model;
+package ar.utn.capgemini.ecommerce.model.entities;
 
 import ar.utn.capgemini.ecommerce.model.enums.ESTADO;
 import ar.utn.capgemini.ecommerce.model.enums.PAGO;

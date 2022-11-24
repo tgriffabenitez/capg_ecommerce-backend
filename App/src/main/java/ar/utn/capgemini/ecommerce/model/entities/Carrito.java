@@ -1,9 +1,8 @@
-package ar.utn.capgemini.ecommerce.model;
+package ar.utn.capgemini.ecommerce.model.entities;
 
 import ar.utn.capgemini.ecommerce.model.enums.ESTADO;
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,34 +14,31 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "publicacion")
-public class Publicacion extends EntidadPersistente {
+@Table(name = "carrito")
+public class Carrito extends EntidadPersistente {
 
     @Enumerated(EnumType.STRING)
-    private ESTADO estadoPublicacion;
+    private ESTADO estadoCarrito;
 
     @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
     private LocalDate fechaCambioEstado;
 
-    @OneToMany(mappedBy = "publicacion")
+    @OneToMany(mappedBy = "carrito")
     @JsonBackReference
     private List<PublicacionCarrito> publicacionesPorCarrito;
 
-    @ManyToOne
-    @JsonManagedReference
-    @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
-    private Vendedor vendedor;
+    @OneToOne(mappedBy = "carrito")
+    private Compra compra;
 
-    @OneToOne
-    @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
-    private ProductoPersonalizado productoPersonalizado;
+    @OneToOne(mappedBy = "carrito")
+    private Cliente cliente;
 
-    public Publicacion() {
+    public Carrito() {
         this.publicacionesPorCarrito = new ArrayList<>();
     }
 
     public void agregarPublicacionCarrito(PublicacionCarrito publicacionCarrito){
         this.publicacionesPorCarrito.add(publicacionCarrito);
-        publicacionCarrito.setPublicacion(this);
+        publicacionCarrito.setCarrito(this);
     }
 }

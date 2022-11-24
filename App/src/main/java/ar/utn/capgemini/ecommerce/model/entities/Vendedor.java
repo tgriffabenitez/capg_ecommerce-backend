@@ -1,4 +1,4 @@
-package ar.utn.capgemini.ecommerce.model;
+package ar.utn.capgemini.ecommerce.model.entities;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
