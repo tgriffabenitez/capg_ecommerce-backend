@@ -34,7 +34,7 @@ public class ProductoBaseController {
     }
 
     @PostMapping(path = {"", "/"})
-    public ProductoBase agregarProductoBase(ProductoBase productoBase){
+    public ProductoBase agregarProductoBase(@RequestBody ProductoBase productoBase){
         return repo.save(productoBase);
     }
 
