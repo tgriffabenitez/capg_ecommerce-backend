@@ -36,7 +36,7 @@ public class ProductoBase extends EntidadPersistente {
     private List<ProductoPersonalizado> productosPersonalizados;
 
     @OneToMany(mappedBy = "productoBase")
-    @JsonBackReference
+    @JsonManagedReference
     private List<PosiblePersonalizacion> posiblesPersonalizaciones;
 
     public ProductoBase() {

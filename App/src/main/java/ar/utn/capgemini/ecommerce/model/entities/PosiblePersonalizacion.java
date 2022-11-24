@@ -17,7 +17,7 @@ import java.util.List;
 public class PosiblePersonalizacion extends EntidadPersistente {
 
     @ManyToOne
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
     private ProductoBase productoBase;
 
