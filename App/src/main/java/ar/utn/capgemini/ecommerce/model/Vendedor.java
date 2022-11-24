@@ -21,7 +21,8 @@ public class Vendedor extends EntidadPersistente {
 
     private String tienda;
 
-    private List<MetodoDePagoPorVendedor> metodosDePago;
+    //@ManyToMany
+    private List<MetodoDePago> metodosDePago;
 
     private List<PersonalizacionConcreta> personalizacionesConcretas;
 

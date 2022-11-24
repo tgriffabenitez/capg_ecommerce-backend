@@ -7,8 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,9 +16,7 @@ public class MetodoDePago extends EntidadPersistente {
 
     private PAGO formaDePago;
 
-    private List<MetodoDePagoPorVendedor> pagosVendedores;
-
     public MetodoDePago() {
-        this.pagosVendedores = new ArrayList<>();
+
     }
 }
