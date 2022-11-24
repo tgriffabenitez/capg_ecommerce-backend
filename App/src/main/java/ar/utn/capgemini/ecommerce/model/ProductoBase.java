@@ -1,6 +1,8 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,13 +27,16 @@ public class ProductoBase extends EntidadPersistente {
     private LocalTime tiempoDeFabricacion;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
 
-   @OneToMany(mappedBy = "productoBase")
+    @OneToMany(mappedBy = "productoBase")
+    @JsonBackReference
     private List<ProductoPersonalizado> productosPersonalizados;
 
     @OneToMany(mappedBy = "productoBase")
+    @JsonBackReference
     private List<PosiblePersonalizacion> posiblesPersonalizaciones;
 
     public ProductoBase() {

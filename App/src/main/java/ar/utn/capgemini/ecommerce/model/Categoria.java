@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class Categoria extends EntidadPersistente {
     private String descripcion;
 
     @OneToMany(mappedBy = "categoria")
+    @JsonBackReference
     private List<ProductoBase> productosBase;
 
     public Categoria() {

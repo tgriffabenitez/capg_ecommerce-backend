@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,7 @@ public class Cliente extends EntidadPersistente {
     private String contrasenia;
 
     @OneToMany(mappedBy = "cliente")
+    @JsonBackReference
     private List<Compra> compras;
 
     @OneToOne

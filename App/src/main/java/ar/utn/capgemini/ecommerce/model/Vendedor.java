@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,9 +29,11 @@ public class Vendedor extends EntidadPersistente {
     private List<MetodoDePago> metodosDePago;
 
     @OneToMany(mappedBy = "vendedor")
+    @JsonBackReference
     private List<PersonalizacionConcreta> personalizacionesConcretas;
 
     @OneToMany(mappedBy = "vendedor")
+    @JsonBackReference
     private List<Publicacion> publicaciones;
 
     public Vendedor() {

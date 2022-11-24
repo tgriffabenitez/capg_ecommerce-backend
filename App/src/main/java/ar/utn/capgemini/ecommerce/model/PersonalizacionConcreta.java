@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,14 +20,17 @@ public class PersonalizacionConcreta extends EntidadPersistente {
     private Integer precioPersonalizacionConcreta;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "posiblePersonalizacion_id", referencedColumnName = "id")
     private PosiblePersonalizacion posiblePersonalizacion;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
     private ProductoPersonalizado productoPersonalizado;
 

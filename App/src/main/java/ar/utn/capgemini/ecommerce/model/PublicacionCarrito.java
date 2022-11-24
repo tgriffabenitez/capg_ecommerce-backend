@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,10 +17,12 @@ public class PublicacionCarrito extends EntidadPersistente {
     private Integer cantidadPublicaciones;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "publicacion_id", referencedColumnName = "id")
     private Publicacion publicacion;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "carrito_id", referencedColumnName = "id")
     private Carrito carrito;
 

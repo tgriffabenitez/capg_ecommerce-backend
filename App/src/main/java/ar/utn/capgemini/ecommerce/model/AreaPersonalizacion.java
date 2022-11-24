@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,8 +18,8 @@ public class AreaPersonalizacion extends EntidadPersistente {
     @Column(name = "descripcion")
     private String descripcion;
 
-
     @OneToMany(mappedBy = "areaPersonalizacion")
+    @JsonBackReference
     private List<PosiblePersonalizacion> posiblesPersonalizaciones;
 
     public AreaPersonalizacion() {

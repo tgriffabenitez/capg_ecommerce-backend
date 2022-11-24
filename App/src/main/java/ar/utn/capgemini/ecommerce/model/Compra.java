@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.model;
 import ar.utn.capgemini.ecommerce.model.enums.ESTADO;
 import ar.utn.capgemini.ecommerce.model.enums.PAGO;
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,11 +32,12 @@ public class Compra extends EntidadPersistente {
     @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
     private LocalDate fechaCambioEstado;
 
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "carrito_id", referencedColumnName = "id")
     private Carrito carrito;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 

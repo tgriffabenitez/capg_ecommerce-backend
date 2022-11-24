@@ -2,6 +2,8 @@ package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.model.enums.ESTADO;
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +25,11 @@ public class Publicacion extends EntidadPersistente {
     private LocalDate fechaCambioEstado;
 
     @OneToMany(mappedBy = "publicacion")
+    @JsonBackReference
     private List<PublicacionCarrito> publicacionesPorCarrito;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
