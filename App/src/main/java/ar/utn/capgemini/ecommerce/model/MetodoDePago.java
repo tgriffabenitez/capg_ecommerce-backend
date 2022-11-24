@@ -1,5 +1,6 @@
 package ar.utn.capgemini.ecommerce.model;
 
+import ar.utn.capgemini.ecommerce.model.enums.PAGO;
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,14 +13,14 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "tipoPersonalizacion")
-public class TipoPersonalizacion extends EntidadPersistente {
+@Table(name = "metodoDePago")
+public class MetodoDePago extends EntidadPersistente {
 
-    private String descripcion;
+    private PAGO formaDePago;
 
-    private List<PosiblePersonalizacion> posiblesPersonalizaciones;
+    private List<MetodoDePagoPorVendedor> pagosVendedores;
 
-    public TipoPersonalizacion() {
-        this.posiblesPersonalizaciones = new ArrayList<>();
+    public MetodoDePago() {
+        this.pagosVendedores = new ArrayList<>();
     }
 }
