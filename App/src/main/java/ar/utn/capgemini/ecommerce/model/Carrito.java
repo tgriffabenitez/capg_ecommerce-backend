@@ -5,8 +5,7 @@ import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +16,27 @@ import java.util.List;
 @Table(name = "carrito")
 public class Carrito extends EntidadPersistente {
 
+    @Enumerated(EnumType.STRING)
     private ESTADO estadoCarrito;
 
+    @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
     private LocalDate fechaCambioEstado;
 
+    @OneToMany(mappedBy = "carrito")
     private List<PublicacionCarrito> publicacionesPorCarrito;
 
+    @OneToOne(mappedBy = "carrito")
     private Compra compra;
 
+    @OneToOne(mappedBy = "carrito")
     private Cliente cliente;
 
     public Carrito() {
         this.publicacionesPorCarrito = new ArrayList<>();
+    }
+
+    public void agregarPublicacionCarrito(PublicacionCarrito publicacionCarrito){
+        this.publicacionesPorCarrito.add(publicacionCarrito);
+        publicacionCarrito.setCarrito(this);
     }
 }

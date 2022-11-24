@@ -4,10 +4,7 @@ import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +17,15 @@ public class Categoria extends EntidadPersistente {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Transient
+    @OneToMany(mappedBy = "categoria")
     private List<ProductoBase> productosBase;
 
     public Categoria() {
-        this.descripcion = descripcion;
         productosBase = new ArrayList<>();
+    }
+
+    public void agregarProductoBase(ProductoBase productosBase){
+        this.productosBase.add(productosBase);
+        productosBase.setCategoria(this);
     }
 }
