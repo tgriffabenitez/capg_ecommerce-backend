@@ -23,7 +23,7 @@ public class Factura extends EntidadPersistente {
     @Column(name = "precioFinal")
     private Double precioFinal;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "compra_id", referencedColumnName = "id")
     private Compra compra;
 

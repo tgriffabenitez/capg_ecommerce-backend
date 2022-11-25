@@ -27,11 +27,11 @@ public class Cliente extends EntidadPersistente {
     @Column(name = "contrasenia")
     private String contrasenia;
 
-    @OneToMany(mappedBy = "cliente")
-    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private List<Compra> compras;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "carrito_id", referencedColumnName = "id")
     private Carrito carrito;
 
@@ -39,8 +39,4 @@ public class Cliente extends EntidadPersistente {
         this.compras = new ArrayList<>();
     }
 
-    public void agregarCompra(Compra compra){
-        this.compras.add(compra);
-        compra.setCliente(this);
-    }
 }

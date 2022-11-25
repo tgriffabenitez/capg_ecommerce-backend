@@ -16,24 +16,19 @@ import java.util.List;
 @Table(name = "productoPersonalizado")
 public class ProductoPersonalizado extends EntidadPersistente {
 
-    @ManyToOne
-    @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
     private ProductoBase productoBase;
 
-    @OneToMany(mappedBy = "productoPersonalizado")
-    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "productoPersonalizado", referencedColumnName = "id")
     private List<PersonalizacionConcreta> personalizacionesConcretas;
 
-    @OneToOne(mappedBy = "productoPersonalizado")
+    @OneToOne(cascade = CascadeType.ALL)
     private Publicacion publicacion;
 
     public ProductoPersonalizado() {
         this.personalizacionesConcretas = new ArrayList<>();
     }
 
-    public void agregarPersonalizacionConcreta(PersonalizacionConcreta personalizacionConcreta){
-        this.personalizacionesConcretas.add(personalizacionConcreta);
-        personalizacionConcreta.setProductoPersonalizado(this);
-    }
 }
