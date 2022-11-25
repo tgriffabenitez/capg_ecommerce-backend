@@ -24,30 +24,12 @@ public class Vendedor extends EntidadPersistente {
     @Column(name = "tienda")
     private String tienda;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @Column(name = "metodosDePago")
     private List<MetodoDePago> metodosDePago;
 
-    @OneToMany(mappedBy = "vendedor")
-    @JsonBackReference
-    private List<PersonalizacionConcreta> personalizacionesConcretas;
-
-    @OneToMany(mappedBy = "vendedor")
-    @JsonBackReference
-    private List<Publicacion> publicaciones;
-
     public Vendedor() {
         this.metodosDePago = new ArrayList<>();
-        this.personalizacionesConcretas = new ArrayList<>();
     }
 
-    public void agregarPersonalizacionConcreta(PersonalizacionConcreta personalizacionConcreta){
-        this.personalizacionesConcretas.add(personalizacionConcreta);
-        personalizacionConcreta.setVendedor(this);
-    }
-
-    public void agregarPublicacion(Publicacion publicacion){
-        this.publicaciones.add(publicacion);
-        publicacion.setVendedor(this);
-    }
 }

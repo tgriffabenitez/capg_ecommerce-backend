@@ -26,31 +26,16 @@ public class ProductoBase extends EntidadPersistente {
     @Column(name = "tiempoDeFabricacion", columnDefinition = "TIME")
     private LocalTime tiempoDeFabricacion;
 
-    @ManyToOne
-    @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
 
-    @OneToMany(mappedBy = "productoBase")
-    @JsonBackReference
-    private List<ProductoPersonalizado> productosPersonalizados;
-
-    @OneToMany(mappedBy = "productoBase")
-    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
     private List<PosiblePersonalizacion> posiblesPersonalizaciones;
 
     public ProductoBase() {
-        this.productosPersonalizados = new ArrayList<>();
         this.posiblesPersonalizaciones = new ArrayList<>();
     }
 
-    public void agregarProductoPersonalizado(ProductoPersonalizado productoPersonalizado){
-        this.productosPersonalizados.add(productoPersonalizado);
-        productoPersonalizado.setProductoBase(this);
-    }
-
-    public void agregarPosiblePersonalizacion(PosiblePersonalizacion posiblePersonalizacion){
-        this.posiblesPersonalizaciones.add(posiblePersonalizacion);
-        posiblePersonalizacion.setProductoBase(this);
-    }
 }

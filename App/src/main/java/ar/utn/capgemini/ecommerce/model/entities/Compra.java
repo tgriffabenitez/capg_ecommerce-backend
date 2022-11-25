@@ -32,17 +32,9 @@ public class Compra extends EntidadPersistente {
     @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
     private LocalDate fechaCambioEstado;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "carrito_id", referencedColumnName = "id")
     private Carrito carrito;
-
-    @ManyToOne
-    @JsonManagedReference
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    private Cliente cliente;
-
-    @OneToOne(mappedBy = "compra")
-    private Factura factura;
 
     public Compra() {
     }

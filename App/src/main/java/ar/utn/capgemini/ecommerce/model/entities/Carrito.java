@@ -23,22 +23,12 @@ public class Carrito extends EntidadPersistente {
     @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
     private LocalDate fechaCambioEstado;
 
-    @OneToMany(mappedBy = "carrito")
-    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "carrito_id", referencedColumnName = "id")
     private List<PublicacionCarrito> publicacionesPorCarrito;
-
-    @OneToOne(mappedBy = "carrito")
-    private Compra compra;
-
-    @OneToOne(mappedBy = "carrito")
-    private Cliente cliente;
 
     public Carrito() {
         this.publicacionesPorCarrito = new ArrayList<>();
     }
 
-    public void agregarPublicacionCarrito(PublicacionCarrito publicacionCarrito){
-        this.publicacionesPorCarrito.add(publicacionCarrito);
-        publicacionCarrito.setCarrito(this);
-    }
 }
