@@ -1,10 +1,8 @@
 package ar.utn.capgemini.ecommerce.model.entities;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
-
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Getter
@@ -16,10 +14,11 @@ public class PublicacionCarrito extends EntidadPersistente {
     @Column(name = "cantidadPublicaciones")
     private Integer cantidadPublicaciones;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "publicacion_id", referencedColumnName = "id")
     private Publicacion publicacion;
 
     public PublicacionCarrito() {
     }
+
 }

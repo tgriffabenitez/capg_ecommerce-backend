@@ -1,10 +1,8 @@
 package ar.utn.capgemini.ecommerce.model.entities;
 
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +22,7 @@ public class Vendedor extends EntidadPersistente {
     @Column(name = "tienda")
     private String tienda;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @Column(name = "metodosDePago")
     private List<MetodoDePago> metodosDePago;
 

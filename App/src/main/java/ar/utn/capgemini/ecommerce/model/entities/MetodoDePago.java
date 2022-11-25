@@ -4,7 +4,6 @@ import ar.utn.capgemini.ecommerce.model.enums.PAGO;
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,4 +21,5 @@ public class MetodoDePago extends EntidadPersistente {
     public MetodoDePago() {
 
     }
+
 }

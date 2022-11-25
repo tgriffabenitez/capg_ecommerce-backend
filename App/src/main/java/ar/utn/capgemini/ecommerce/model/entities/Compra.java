@@ -3,13 +3,13 @@ package ar.utn.capgemini.ecommerce.model.entities;
 import ar.utn.capgemini.ecommerce.model.enums.ESTADO;
 import ar.utn.capgemini.ecommerce.model.enums.PAGO;
 import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,10 +32,15 @@ public class Compra extends EntidadPersistente {
     @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
     private LocalDate fechaCambioEstado;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "carrito_id", referencedColumnName = "id")
-    private Carrito carrito;
+    @Column(name = "precioTotal")
+    private double precioTotal;
+
+    @OneToMany
+    @JoinColumn(name = "publicacionCarrito", referencedColumnName = "id")
+    private List<PublicacionCarrito> publicacionesCarrito;
 
     public Compra() {
+        this.publicacionesCarrito = new ArrayList<>();
     }
+
 }
