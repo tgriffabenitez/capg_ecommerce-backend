@@ -25,10 +25,6 @@ public class ProductoPersonalizado extends EntidadPersistente {
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
-
-    @OneToOne(mappedBy = "productoPersonalizado")
-    private Publicacion publicacion;
-
     public ProductoPersonalizado() {
         this.personalizacionesConcretas = new ArrayList<>();
     }
