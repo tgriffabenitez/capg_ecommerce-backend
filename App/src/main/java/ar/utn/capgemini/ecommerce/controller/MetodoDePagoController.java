@@ -20,8 +20,8 @@ public class MetodoDePagoController {
     }
 
     @PostMapping(path = {"", "/"})
-    public void agregarMetodoDePago(@RequestBody MetodoDePago metodoDePago){
-        metodoDePagoRepository.save(metodoDePago);
+    public MetodoDePago agregarMetodoDePago(@RequestBody MetodoDePago metodoDePago){
+        return metodoDePagoRepository.save(metodoDePago);
     }
 
 }

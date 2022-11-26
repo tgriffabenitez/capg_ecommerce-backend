@@ -20,8 +20,8 @@ public class VendedorController {
     }
 
     @PostMapping(path = {"", "/"})
-    public void agregarVendedor(@RequestBody Vendedor vendedor){
-        vendedorRepository.save(vendedor);
+    public Vendedor agregarVendedor(@RequestBody Vendedor vendedor){
+        return vendedorRepository.save(vendedor);
     }
 
 }
