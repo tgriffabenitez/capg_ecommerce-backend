@@ -15,7 +15,7 @@ public class PersonalizacionConcreta extends EntidadPersistente {
     private String detalle;
 
     @Column(name = "precioPersonalizacionConcreta")
-    private Integer precioPersonalizacionConcreta;
+    private double precioPersonalizacionConcreta;
 
     @ManyToOne
     @JoinColumn(name = "posiblePersonalizacion_id", referencedColumnName = "id")
