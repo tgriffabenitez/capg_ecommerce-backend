@@ -12,11 +12,11 @@ import javax.persistence.*;
 @Table(name = "posiblePersonalizacion")
 public class PosiblePersonalizacion extends EntidadPersistente {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tipoPersonalizacion_id", referencedColumnName = "id")
     private TipoPersonalizacion tipoPersonalizacion;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "areaPersonalizacion", referencedColumnName = "id")
     private AreaPersonalizacion areaPersonalizacion;
 
