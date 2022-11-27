@@ -1,9 +1,7 @@
 package ar.utn.capgemini.ecommerce.controller;
 
 import ar.utn.capgemini.ecommerce.model.entities.AreaPersonalizacion;
-import ar.utn.capgemini.ecommerce.model.entities.ProductoBase;
 import ar.utn.capgemini.ecommerce.repository.AreaPersonalizacionRepository;
-import ar.utn.capgemini.ecommerce.repository.ProductoBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
