@@ -8,10 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class EntidadPersistente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
     private Integer id;
 }
