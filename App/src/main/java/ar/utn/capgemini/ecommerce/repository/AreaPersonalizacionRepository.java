@@ -6,4 +6,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path = "areasPersonalizacion")
 public interface AreaPersonalizacionRepository extends JpaRepository<AreaPersonalizacion, Integer> {
+    AreaPersonalizacion findByDescripcion(String area);
+    boolean existsByDescripcion(String area);
 }

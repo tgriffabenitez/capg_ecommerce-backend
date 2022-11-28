@@ -21,6 +21,11 @@ public class AreaPersonalizacionController {
 
     @PostMapping(path = {"", "/"})
     public AreaPersonalizacion agregarArea(@RequestBody AreaPersonalizacion area){
+        String areaIngresada = area.getDescripcion();
+        boolean existeArea = areaPersonalizacionRepository.existsByDescripcion(areaIngresada);
+        if(existeArea){
+            return areaPersonalizacionRepository.findByDescripcion(areaIngresada);
+        }
         return areaPersonalizacionRepository.save(area);
     }
 
