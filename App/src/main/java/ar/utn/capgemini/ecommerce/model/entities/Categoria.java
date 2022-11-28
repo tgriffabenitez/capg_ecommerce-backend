@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Categoria extends EntidadPersistente {
 
     @Column(name = "descripcion")
-    private String descripcion;
+    private String descripcionCategoria;
 
     public Categoria() {
     }

@@ -23,7 +23,7 @@ public class Cliente extends EntidadPersistente {
     private String emailCliente;
 
     @Column(name = "contrasenia")
-    private String contrasenia;
+    private String contraseniaCliente;
 
     @OneToMany
     @JoinColumn(name = "compra_id", referencedColumnName = "id")

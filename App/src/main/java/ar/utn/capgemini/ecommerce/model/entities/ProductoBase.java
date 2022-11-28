@@ -14,14 +14,17 @@ import java.util.List;
 @Table(name = "productoBase")
 public class ProductoBase extends EntidadPersistente {
 
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name = "descripcionPrecioBase")
+    private String descripcionProductoBase;
 
-    @Column(name = "precioBase")
-    private double precioBase;
+    @Column(name = "precioProductoBase")
+    private double precioProductoBase;
 
     @Column(name = "tiempoDeFabricacion", columnDefinition = "TIME")
     private LocalTime tiempoDeFabricacion;
+
+    @Column(name = "urlProductoBase")
+    private String url;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")

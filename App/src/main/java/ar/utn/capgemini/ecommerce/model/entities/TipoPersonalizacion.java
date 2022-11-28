@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "tipoPersonalizacion")
 public class TipoPersonalizacion extends EntidadPersistente {
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcionTipoPersonalizacion")
     private String descripcion;
 
     public TipoPersonalizacion() {
