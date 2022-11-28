@@ -13,6 +13,9 @@ import java.util.List;
 @Table(name = "productoPersonalizado")
 public class ProductoPersonalizado extends EntidadPersistente {
 
+    @Column(name = "urlProductoPersonalizado")
+    private String url;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
     private ProductoBase productoBase;

@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "productoBase")
 public class ProductoBase extends EntidadPersistente {
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcionProductoBase")
     private String descripcion;
 
     @Column(name = "precioBase")
@@ -22,6 +22,9 @@ public class ProductoBase extends EntidadPersistente {
 
     @Column(name = "tiempoDeFabricacion", columnDefinition = "TIME")
     private LocalTime tiempoDeFabricacion;
+
+    @Column(name = "urlProductoBase")
+    private String url;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
