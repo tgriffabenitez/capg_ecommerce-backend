@@ -22,7 +22,7 @@ public class Vendedor extends EntidadPersistente {
     @Column(name = "tienda")
     private String tienda;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @Column(name = "metodosDePago")
     private List<MetodoDePago> metodosDePago;
 

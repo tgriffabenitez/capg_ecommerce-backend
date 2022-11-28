@@ -17,7 +17,7 @@ public class PersonalizacionConcreta extends EntidadPersistente {
     @Column(name = "precioPersonalizacionConcreta")
     private double precioPersonalizacionConcreta;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "posiblePersonalizacion_id", referencedColumnName = "id")
     private PosiblePersonalizacion posiblePersonalizacion;
 

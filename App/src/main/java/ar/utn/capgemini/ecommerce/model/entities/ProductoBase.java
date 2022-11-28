@@ -23,11 +23,11 @@ public class ProductoBase extends EntidadPersistente {
     @Column(name = "tiempoDeFabricacion", columnDefinition = "TIME")
     private LocalTime tiempoDeFabricacion;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
     private List<PosiblePersonalizacion> posiblesPersonalizaciones;
 
