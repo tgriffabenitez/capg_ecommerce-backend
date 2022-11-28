@@ -6,4 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path = "tiposPersonalizacion")
 public interface TipoPersonalizacionRepository extends JpaRepository<TipoPersonalizacion, Integer> {
+    TipoPersonalizacion findByDescripcion(String tipo);
+    boolean existsByDescripcion(String tipo);
+
 }

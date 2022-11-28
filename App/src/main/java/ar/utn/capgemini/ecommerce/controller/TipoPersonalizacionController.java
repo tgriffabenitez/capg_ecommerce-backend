@@ -21,6 +21,11 @@ public class TipoPersonalizacionController {
 
     @PostMapping(path = {"", "/"})
     public TipoPersonalizacion agregarTipoPersonalizacion(@RequestBody TipoPersonalizacion tipoPersonalizacion){
+        String tipoIngresado = tipoPersonalizacion.getDescripcion();
+        boolean existeArea = tipoPersonalizacionRepository.existsByDescripcion(tipoIngresado);
+        if(existeArea){
+            return tipoPersonalizacionRepository.findByDescripcion(tipoIngresado);
+        }
         return tipoPersonalizacionRepository.save(tipoPersonalizacion);
     }
 
