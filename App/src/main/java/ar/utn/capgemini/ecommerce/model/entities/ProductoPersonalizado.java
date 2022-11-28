@@ -13,15 +13,15 @@ import java.util.List;
 @Table(name = "productoPersonalizado")
 public class ProductoPersonalizado extends EntidadPersistente {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
     private ProductoBase productoBase;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "productoPersonalizado", referencedColumnName = "id")
     private List<PersonalizacionConcreta> personalizacionesConcretas;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
