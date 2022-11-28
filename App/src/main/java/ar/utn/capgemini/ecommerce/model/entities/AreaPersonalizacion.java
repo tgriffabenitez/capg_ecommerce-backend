@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class AreaPersonalizacion extends EntidadPersistente {
 
     @Column(name = "descripcionAreaPersonalizacion")
-    private String descripcion;
+    private String descripcionAreaPersonalizacion;
 
     public AreaPersonalizacion() {
     }

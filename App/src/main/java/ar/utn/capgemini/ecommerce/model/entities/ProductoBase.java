@@ -15,7 +15,7 @@ import java.util.List;
 public class ProductoBase extends EntidadPersistente {
 
     @Column(name = "descripcionProductoBase")
-    private String descripcion;
+    private String descripcionProductoBase;
 
     @Column(name = "precioBase")
     private double precioBase;
@@ -24,7 +24,7 @@ public class ProductoBase extends EntidadPersistente {
     private LocalTime tiempoDeFabricacion;
 
     @Column(name = "urlProductoBase")
-    private String url;
+    private String urlPrecioBase;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
