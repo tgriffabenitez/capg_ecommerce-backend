@@ -31,12 +31,12 @@ public class ProductoPersonalizadoController {
     }
 
     @DeleteMapping(path = {"/{productoPersonalizadoId}"})
-    public void  borrarProductoPersonalizadoId(@PathVariable("productoPersonalizadoId") Integer productoPersonalizadoId){
-        productoPersonalizadoRepository.deleteById(productoPersonalizadoId);
+    public void  borrarProductoPersonalizadoId(@PathVariable("productoPersonalizadoId") Integer id){
+        productoPersonalizadoRepository.deleteById(id);
     }
 
-    @PutMapping(path = {"/{productoPersonalizado}"})
-    public ProductoPersonalizado actualizarProductoBase(@PathVariable("prodcutoPersonalizadoId") @RequestBody Integer id, ProductoPersonalizado productoPersonalizado){
+    @PutMapping(path = {"/{productoPersonalizadoId}"})
+    public ProductoPersonalizado actualizarProductoPersonalizado(@PathVariable("productoPersonalizadoId") @RequestBody Integer id, ProductoPersonalizado productoPersonalizado){
         productoPersonalizado.setId(id);
         productoPersonalizadoRepository.save(productoPersonalizado);
         return productoPersonalizado;

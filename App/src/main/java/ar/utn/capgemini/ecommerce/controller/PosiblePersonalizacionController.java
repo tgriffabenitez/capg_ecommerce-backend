@@ -29,9 +29,9 @@ public class PosiblePersonalizacionController {
         return posiblePersonalizacionRepository.findAll();
     }
 
-    // FIXME: Buscar la forma en que en caso de existir el tipo y area no genere un nuevo id
+    // FIXME: Buscar la forma en que en caso de existir el tipo y area no genere un nuevo id la posiblePersonalizacion
     @PostMapping(path = {"", "/"})
-    public PosiblePersonalizacion agregarProductoBase(@RequestBody PosiblePersonalizacion posiblePersonalizacion){
+    public PosiblePersonalizacion agregarPosiblePersonalizacion(@RequestBody PosiblePersonalizacion posiblePersonalizacion){
         TipoPersonalizacion tipoPersonalizacion = posiblePersonalizacion.getTipoPersonalizacion();
         AreaPersonalizacion areaPersonalizacion = posiblePersonalizacion.getAreaPersonalizacion();
         boolean existeTipo = tipoPersonalizacionRepository.existsByDescripcion(tipoPersonalizacion.getDescripcion());
@@ -41,6 +41,18 @@ public class PosiblePersonalizacionController {
         }
 
         return posiblePersonalizacionRepository.save(posiblePersonalizacion);
+    }
+
+    @DeleteMapping(path = {"/{posiblePersonalizacionId}"})
+    public void  borrarPosiblePersonalizacionId(@PathVariable("posiblePersonalizacionId") Integer id){
+        posiblePersonalizacionRepository.deleteById(id);
+    }
+
+    @PutMapping(path = {"/{posiblePersonalizacionId}"})
+    public PosiblePersonalizacion actualizarPosiblePersonalizacion(@PathVariable("posiblePersonalizacionId") @RequestBody Integer id, PosiblePersonalizacion posiblePersonalizacion){
+        posiblePersonalizacion.setId(id);
+        posiblePersonalizacionRepository.save(posiblePersonalizacion);
+        return posiblePersonalizacion;
     }
 
 }

@@ -29,4 +29,16 @@ public class TipoPersonalizacionController {
         return tipoPersonalizacionRepository.save(tipoPersonalizacion);
     }
 
+    @DeleteMapping(path = {"/{tipoPersonalizacionId}"})
+    public void  borrarTipoPersonalizacionId(@PathVariable("tipoPersonalizacionId") Integer id){
+        tipoPersonalizacionRepository.deleteById(id);
+    }
+
+    @PutMapping(path = {"/{tipoPersonalizacionId}"})
+    public TipoPersonalizacion actualizarTipoPersonalizacion(@PathVariable("tipoPersonalizacionId") @RequestBody Integer id, TipoPersonalizacion tipoPersonalizacion){
+        tipoPersonalizacion.setId(id);
+        tipoPersonalizacionRepository.save(tipoPersonalizacion);
+        return tipoPersonalizacion;
+    }
+
 }

@@ -24,4 +24,17 @@ public class PersonalizacionConcretaController {
         return personalizacionConcretaRepository.save(personalizacionConcreta);
     }
 
+    @DeleteMapping(path = {"/{personalizacionConcretaId}"})
+    public void  borrarPersonalizacionConcretaId(@PathVariable("personalizacionConcretaId") Integer id){
+        personalizacionConcretaRepository.deleteById(id);
+    }
+
+    @PutMapping(path = {"/{personalizacionConcretaId}"})
+    public PersonalizacionConcreta actualizarPersonalizacionConcreta(@PathVariable("personalizacionConcretaId") @RequestBody Integer id,
+                                                                     PersonalizacionConcreta personalizacionConcreta){
+        personalizacionConcreta.setId(id);
+        personalizacionConcretaRepository.save(personalizacionConcreta);
+        return personalizacionConcreta;
+    }
+
 }

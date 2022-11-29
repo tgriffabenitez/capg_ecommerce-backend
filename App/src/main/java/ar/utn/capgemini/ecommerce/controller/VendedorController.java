@@ -29,4 +29,16 @@ public class VendedorController {
         return vendedorRepository.save(vendedor);
     }
 
+    @DeleteMapping(path = {"/{vendedorId}"})
+    public void  borrarTipoVendedorId(@PathVariable("vendedorId") Integer id){
+        vendedorRepository.deleteById(id);
+    }
+
+    @PutMapping(path = {"/{vendedorId}"})
+    public Vendedor actualizarVendedor(@PathVariable("vendedorId") @RequestBody Integer id, Vendedor vendedor){
+        vendedor.setId(id);
+        vendedorRepository.save(vendedor);
+        return vendedor;
+    }
+
 }

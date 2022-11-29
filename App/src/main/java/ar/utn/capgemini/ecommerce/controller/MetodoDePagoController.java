@@ -30,4 +30,16 @@ public class MetodoDePagoController {
         return metodoDePagoRepository.save(metodoDePago);
     }
 
+    @DeleteMapping(path = {"/{metosDePagoId}"})
+    public void  borrarMetodoDePagoId(@PathVariable("metosDePagoId") Integer id){
+        metodoDePagoRepository.deleteById(id);
+    }
+
+    @PutMapping(path = {"/{metodosDePagoId}"})
+    public MetodoDePago actualizarMetodoDePago(@PathVariable("metodosDePagoId") @RequestBody Integer id, MetodoDePago metodoDePago){
+        metodoDePago.setId(id);
+        metodoDePagoRepository.save(metodoDePago);
+        return metodoDePago;
+    }
+
 }

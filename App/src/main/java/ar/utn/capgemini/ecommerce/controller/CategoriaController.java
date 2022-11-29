@@ -29,4 +29,16 @@ public class CategoriaController {
         return categoriaRepository.save(categoria);
     }
 
+    @DeleteMapping(path = {"/{categoriasId}"})
+    public void  borrarCategoriaId(@PathVariable("categoriasId") Integer id){
+        categoriaRepository.deleteById(id);
+    }
+
+    @PutMapping(path = {"/{categoriasId}"})
+    public Categoria actualizarCategoria(@PathVariable("categoriasId") @RequestBody Integer id, Categoria categoria){
+        categoria.setId(id);
+        categoriaRepository.save(categoria);
+        return categoria;
+    }
+
 }

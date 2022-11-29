@@ -25,14 +25,15 @@ public class ProductoBaseController {
         return productoBaseRepository.findById(productoBaseId);
     }
 
+    // TODO: verificar que no se puedan introducir duplicados
     @PostMapping(path = {"", "/"})
     public ProductoBase agregarProductoBase(@RequestBody ProductoBase productoBase){
         return productoBaseRepository.save(productoBase);
     }
 
     @DeleteMapping(path = {"/{productoBaseId}"})
-    public void  borrarProductoBaseId(@PathVariable("productoBaseId") Integer productoBaseId){
-        productoBaseRepository.deleteById(productoBaseId);
+    public void  borrarProductoBaseId(@PathVariable("productoBaseId") Integer id){
+        productoBaseRepository.deleteById(id);
     }
 
     @PutMapping(path = {"/{productoBaseId}"})
