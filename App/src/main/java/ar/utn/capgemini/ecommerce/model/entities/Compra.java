@@ -43,7 +43,4 @@ public class Compra extends EntidadPersistente {
         this.publicacionesCarrito = new ArrayList<>();
     }
 
-    public void sumarPrecioTotal(ProductoBase productoBase, PersonalizacionConcreta personalizacionConcreta){
-        precioTotal = productoBase.getPrecioBase() + personalizacionConcreta.getPrecioPersonalizacionConcreta();
-    }
 }
