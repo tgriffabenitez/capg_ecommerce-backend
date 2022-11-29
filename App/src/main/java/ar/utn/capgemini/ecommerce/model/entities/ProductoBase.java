@@ -23,6 +23,9 @@ public class ProductoBase extends EntidadPersistente {
     @Column(name = "tiempoDeFabricacion", columnDefinition = "TIME")
     private LocalTime tiempoDeFabricacion;
 
+    @Column(name = "url")
+    private String url;
+
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
