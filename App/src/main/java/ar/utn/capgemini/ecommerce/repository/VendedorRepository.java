@@ -6,4 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path = "vendedores")
 public interface VendedorRepository extends JpaRepository<Vendedor, Integer> {
+    boolean existsByTienda(String nombreTienda);
+
+    Vendedor findByTienda(String nombreTienda);
 }

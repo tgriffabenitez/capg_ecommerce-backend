@@ -21,6 +21,11 @@ public class VendedorController {
 
     @PostMapping(path = {"", "/"})
     public Vendedor agregarVendedor(@RequestBody Vendedor vendedor){
+        String nombreTienda = vendedor.getTienda();
+        boolean existeTienda = vendedorRepository.existsByTienda(nombreTienda);
+        if(existeTienda){
+            return vendedorRepository.findByTienda(nombreTienda);
+        }
         return vendedorRepository.save(vendedor);
     }
 
