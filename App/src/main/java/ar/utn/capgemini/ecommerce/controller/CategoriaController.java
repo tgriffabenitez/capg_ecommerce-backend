@@ -21,6 +21,11 @@ public class CategoriaController {
 
     @PostMapping(path = {"", "/"})
     public Categoria agregarCategoria(@RequestBody Categoria categoria){
+        String categoriaIngresada = categoria.getDescripcion();
+        boolean existeCategoria = categoriaRepository.existsByDescripcion(categoriaIngresada);
+        if(existeCategoria){
+            return categoriaRepository.findByDescripcion(categoriaIngresada);
+        }
         return categoriaRepository.save(categoria);
     }
 
