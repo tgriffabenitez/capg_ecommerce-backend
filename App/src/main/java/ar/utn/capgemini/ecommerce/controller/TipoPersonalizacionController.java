@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.controller;
 import ar.utn.capgemini.ecommerce.model.entities.TipoPersonalizacion;
 import ar.utn.capgemini.ecommerce.repository.TipoPersonalizacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,11 +21,11 @@ public class TipoPersonalizacionController {
     }
 
     @PostMapping(path = {"", "/"})
-    public TipoPersonalizacion agregarTipoPersonalizacion(@RequestBody TipoPersonalizacion tipoPersonalizacion){
-        String tipoIngresado = tipoPersonalizacion.getDescripcion();
-        boolean existeArea = tipoPersonalizacionRepository.existsByDescripcion(tipoIngresado);
+    public TipoPersonalizacion agregarTipoPersonalizacion(@RequestBody @Validated TipoPersonalizacion tipoPersonalizacion){
+        String tipoIngresado = tipoPersonalizacion.getTipo();
+        boolean existeArea = tipoPersonalizacionRepository.existsByTipo(tipoIngresado);
         if(existeArea){
-            return tipoPersonalizacionRepository.findByDescripcion(tipoIngresado);
+            return tipoPersonalizacionRepository.findByTipo(tipoIngresado);
         }
         return tipoPersonalizacionRepository.save(tipoPersonalizacion);
     }
@@ -35,7 +36,8 @@ public class TipoPersonalizacionController {
     }
 
     @PutMapping(path = {"/{tipoPersonalizacionId}"})
-    public TipoPersonalizacion actualizarTipoPersonalizacion(@PathVariable("tipoPersonalizacionId") @RequestBody Integer id, TipoPersonalizacion tipoPersonalizacion){
+    public TipoPersonalizacion actualizarTipoPersonalizacion(@PathVariable("tipoPersonalizacionId") @RequestBody @Validated
+                                                                 Integer id, TipoPersonalizacion tipoPersonalizacion){
         tipoPersonalizacion.setId(id);
         tipoPersonalizacionRepository.save(tipoPersonalizacion);
         return tipoPersonalizacion;

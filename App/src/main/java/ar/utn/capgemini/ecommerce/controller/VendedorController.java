@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.controller;
 import ar.utn.capgemini.ecommerce.model.entities.Vendedor;
 import ar.utn.capgemini.ecommerce.repository.VendedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class VendedorController {
     }
 
     @PostMapping(path = {"", "/"})
-    public Vendedor agregarVendedor(@RequestBody Vendedor vendedor){
+    public Vendedor agregarVendedor(@RequestBody @Validated Vendedor vendedor){
         String nombreTienda = vendedor.getTienda();
         boolean existeTienda = vendedorRepository.existsByTienda(nombreTienda);
         if(existeTienda){
@@ -35,7 +36,7 @@ public class VendedorController {
     }
 
     @PutMapping(path = {"/{vendedorId}"})
-    public Vendedor actualizarVendedor(@PathVariable("vendedorId") @RequestBody Integer id, Vendedor vendedor){
+    public Vendedor actualizarVendedor(@PathVariable("vendedorId") @RequestBody @Validated Integer id, Vendedor vendedor){
         vendedor.setId(id);
         vendedorRepository.save(vendedor);
         return vendedor;

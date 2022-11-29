@@ -4,6 +4,7 @@ import ar.utn.capgemini.ecommerce.model.entities.MetodoDePago;
 import ar.utn.capgemini.ecommerce.model.enums.PAGO;
 import ar.utn.capgemini.ecommerce.repository.MetodoDePagoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class MetodoDePagoController {
     }
 
     @PostMapping(path = {"", "/"})
-    public MetodoDePago agregarMetodoDePago(@RequestBody MetodoDePago metodoDePago){
+    public MetodoDePago agregarMetodoDePago(@RequestBody @Validated MetodoDePago metodoDePago){
         PAGO formaDePago = metodoDePago.getFormaDePago();
         boolean existeMetodoDePago = metodoDePagoRepository.existsByFormaDePago(formaDePago);
         if(existeMetodoDePago){
@@ -36,7 +37,7 @@ public class MetodoDePagoController {
     }
 
     @PutMapping(path = {"/{metodosDePagoId}"})
-    public MetodoDePago actualizarMetodoDePago(@PathVariable("metodosDePagoId") @RequestBody Integer id, MetodoDePago metodoDePago){
+    public MetodoDePago actualizarMetodoDePago(@PathVariable("metodosDePagoId") @RequestBody @Validated Integer id, MetodoDePago metodoDePago){
         metodoDePago.setId(id);
         metodoDePagoRepository.save(metodoDePago);
         return metodoDePago;

@@ -7,6 +7,7 @@ import ar.utn.capgemini.ecommerce.repository.AreaPersonalizacionRepository;
 import ar.utn.capgemini.ecommerce.repository.PosiblePersonalizacionRepository;
 import ar.utn.capgemini.ecommerce.repository.TipoPersonalizacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,11 +32,11 @@ public class PosiblePersonalizacionController {
 
     // FIXME: Buscar la forma en que en caso de existir el tipo y area no genere un nuevo id la posiblePersonalizacion
     @PostMapping(path = {"", "/"})
-    public PosiblePersonalizacion agregarPosiblePersonalizacion(@RequestBody PosiblePersonalizacion posiblePersonalizacion){
+    public PosiblePersonalizacion agregarPosiblePersonalizacion(@RequestBody @Validated PosiblePersonalizacion posiblePersonalizacion){
         TipoPersonalizacion tipoPersonalizacion = posiblePersonalizacion.getTipoPersonalizacion();
         AreaPersonalizacion areaPersonalizacion = posiblePersonalizacion.getAreaPersonalizacion();
-        boolean existeTipo = tipoPersonalizacionRepository.existsByDescripcion(tipoPersonalizacion.getDescripcion());
-        boolean existeArea = tipoPersonalizacionRepository.existsByDescripcion(areaPersonalizacion.getDescripcion());
+        boolean existeTipo = tipoPersonalizacionRepository.existsByTipo(tipoPersonalizacion.getTipo());
+        boolean existeArea = tipoPersonalizacionRepository.existsByTipo(areaPersonalizacion.getArea());
         if(existeTipo && existeArea){
             return  posiblePersonalizacionRepository.findByTipoPersonalizacionAndAreaPersonalizacion(tipoPersonalizacion, areaPersonalizacion);
         }
@@ -49,7 +50,9 @@ public class PosiblePersonalizacionController {
     }
 
     @PutMapping(path = {"/{posiblePersonalizacionId}"})
-    public PosiblePersonalizacion actualizarPosiblePersonalizacion(@PathVariable("posiblePersonalizacionId") @RequestBody Integer id, PosiblePersonalizacion posiblePersonalizacion){
+    public PosiblePersonalizacion actualizarPosiblePersonalizacion(@PathVariable("posiblePersonalizacionId") @RequestBody @Validated
+                                                                        Integer id,
+                                                                        PosiblePersonalizacion posiblePersonalizacion){
         posiblePersonalizacion.setId(id);
         posiblePersonalizacionRepository.save(posiblePersonalizacion);
         return posiblePersonalizacion;

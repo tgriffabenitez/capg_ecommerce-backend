@@ -4,6 +4,8 @@ import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
@@ -11,8 +13,10 @@ import javax.persistence.*;
 @Table(name = "areaPersonalizacion")
 public class AreaPersonalizacion extends EntidadPersistente {
 
-    @Column(name = "descripcion")
-    private String descripcion;
+    @NotBlank
+    @NotEmpty
+    @Column(name = "area")
+    private String area;
 
     public AreaPersonalizacion() {
     }

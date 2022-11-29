@@ -4,6 +4,8 @@ import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @Table(name = "productoPersonalizado")
 public class ProductoPersonalizado extends EntidadPersistente {
 
+    @NotBlank
+    @NotEmpty
     @Column(name = "url")
     private String url;
 

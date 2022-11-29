@@ -6,6 +6,7 @@ import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -17,24 +18,35 @@ import java.util.List;
 @Table(name = "compra")
 public class Compra extends EntidadPersistente {
 
+    @NotNull
+    @Past
     @Column(name = "fechaDeCompra", columnDefinition = "DATE")
     private LocalDate fechaDeCompra;
 
+    @NotNull
+    @Past
     @Column(name = "horaDeCompra", columnDefinition = "TIME")
     private LocalTime horaDeCompra;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PAGO metodoDePago;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private ESTADO estadoDeCompra;
 
+    @NotNull
+    @Past
     @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
     private LocalDate fechaCambioEstado;
 
+    @NotNull
+    @Positive
     @Column(name = "precioTotal")
     private double precioTotal;
 
+    @NotNull
     @OneToMany
     @JoinColumn(name = "publicacionCarrito", referencedColumnName = "id")
     private List<PublicacionCarrito> publicacionesCarrito;

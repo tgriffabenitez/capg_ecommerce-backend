@@ -4,6 +4,10 @@ import ar.utn.capgemini.ecommerce.model.persist.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,18 +17,30 @@ import java.util.List;
 @Table(name = "cliente")
 public class Cliente extends EntidadPersistente {
 
-    @Column(name = "nombreCliente")
+    @NotBlank
+    @NotEmpty
+    @Column(name = "nombre")
     private String nombreCliente;
 
-    @Column(name = "apellidoCliente")
+
+    @NotBlank
+    @NotEmpty
+    @Column(name = "apellido")
     private String apellidoCliente;
 
-    @Column(name = "emailCliente")
+    @NotBlank
+    @NotEmpty
+    @Email
+    @Column(name = "email")
     private String emailCliente;
 
+
+    @NotBlank
+    @NotEmpty
     @Column(name = "contrasenia")
     private String contrasenia;
 
+    @NotNull
     @OneToMany
     @JoinColumn(name = "compra_id", referencedColumnName = "id")
     private List<Compra> compras;

@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path = "categorias")
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
-    boolean existsByDescripcion(String categoriaIngresada);
+    boolean existsByCategoria(String categoriaIngresada);
 
-    Categoria findByDescripcion(String categoriaIngresada);
+    Categoria findByCategoria(String categoria);
 }

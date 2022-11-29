@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.controller;
 import ar.utn.capgemini.ecommerce.model.entities.ProductoPersonalizado;
 import ar.utn.capgemini.ecommerce.repository.ProductoPersonalizadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class ProductoPersonalizadoController {
     }
 
     @PostMapping(path = {"", "/"})
-    public ProductoPersonalizado agregarProductoPersonalizado(@RequestBody ProductoPersonalizado productoPersonalizado){
+    public ProductoPersonalizado agregarProductoPersonalizado(@RequestBody @Validated ProductoPersonalizado productoPersonalizado){
         return productoPersonalizadoRepository.save(productoPersonalizado);
     }
 
@@ -36,7 +37,8 @@ public class ProductoPersonalizadoController {
     }
 
     @PutMapping(path = {"/{productoPersonalizadoId}"})
-    public ProductoPersonalizado actualizarProductoPersonalizado(@PathVariable("productoPersonalizadoId") @RequestBody Integer id, ProductoPersonalizado productoPersonalizado){
+    public ProductoPersonalizado actualizarProductoPersonalizado(@PathVariable("productoPersonalizadoId") @RequestBody @Validated
+                                                                     Integer id, ProductoPersonalizado productoPersonalizado){
         productoPersonalizado.setId(id);
         productoPersonalizadoRepository.save(productoPersonalizado);
         return productoPersonalizado;

@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.controller;
 import ar.utn.capgemini.ecommerce.model.entities.ProductoBase;
 import ar.utn.capgemini.ecommerce.repository.ProductoBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class ProductoBaseController {
 
     // TODO: verificar que no se puedan introducir duplicados
     @PostMapping(path = {"", "/"})
-    public ProductoBase agregarProductoBase(@RequestBody ProductoBase productoBase){
+    public ProductoBase agregarProductoBase(@RequestBody @Validated ProductoBase productoBase){
         return productoBaseRepository.save(productoBase);
     }
 
@@ -37,7 +38,7 @@ public class ProductoBaseController {
     }
 
     @PutMapping(path = {"/{productoBaseId}"})
-    public ProductoBase actualizarProductoBase(@PathVariable("productoBaseId") @RequestBody Integer id, ProductoBase productoBase){
+    public ProductoBase actualizarProductoBase(@PathVariable("productoBaseId") @RequestBody @Validated Integer id, ProductoBase productoBase){
         productoBase.setId(id);
         productoBaseRepository.save(productoBase);
         return productoBase;

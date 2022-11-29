@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.controller;
 import ar.utn.capgemini.ecommerce.model.entities.AreaPersonalizacion;
 import ar.utn.capgemini.ecommerce.repository.AreaPersonalizacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,11 +21,11 @@ public class AreaPersonalizacionController {
     }
 
     @PostMapping(path = {"", "/"})
-    public AreaPersonalizacion agregarArea(@RequestBody AreaPersonalizacion area){
-        String areaIngresada = area.getDescripcion();
-        boolean existeArea = areaPersonalizacionRepository.existsByDescripcion(areaIngresada);
+    public AreaPersonalizacion agregarArea(@RequestBody @Validated AreaPersonalizacion area){
+        String areaIngresada = area.getArea();
+        boolean existeArea = areaPersonalizacionRepository.existsByArea(areaIngresada);
         if(existeArea){
-            return areaPersonalizacionRepository.findByDescripcion(areaIngresada);
+            return areaPersonalizacionRepository.findByArea(areaIngresada);
         }
         return areaPersonalizacionRepository.save(area);
     }
@@ -35,7 +36,7 @@ public class AreaPersonalizacionController {
     }
 
     @PutMapping(path = {"/{areaPersonalizacionId}"})
-    public AreaPersonalizacion actualizarAreaPersonalizacion(@PathVariable("areaPersonalizacionId") @RequestBody Integer id, AreaPersonalizacion areaPersonalizacion){
+    public AreaPersonalizacion actualizarAreaPersonalizacion(@PathVariable("areaPersonalizacionId") @RequestBody @Validated Integer id, AreaPersonalizacion areaPersonalizacion){
         areaPersonalizacion.setId(id);
         areaPersonalizacionRepository.save(areaPersonalizacion);
         return areaPersonalizacion;

@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.controller;
 import ar.utn.capgemini.ecommerce.model.entities.PersonalizacionConcreta;
 import ar.utn.capgemini.ecommerce.repository.PersonalizacionConcretaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class PersonalizacionConcretaController {
     }
 
     @PostMapping(path = {"", "/"})
-    public PersonalizacionConcreta agregarPersonalizacionConcreta(@RequestBody PersonalizacionConcreta personalizacionConcreta){
+    public PersonalizacionConcreta agregarPersonalizacionConcreta(@RequestBody @Validated PersonalizacionConcreta personalizacionConcreta){
         return personalizacionConcretaRepository.save(personalizacionConcreta);
     }
 
@@ -30,8 +31,9 @@ public class PersonalizacionConcretaController {
     }
 
     @PutMapping(path = {"/{personalizacionConcretaId}"})
-    public PersonalizacionConcreta actualizarPersonalizacionConcreta(@PathVariable("personalizacionConcretaId") @RequestBody Integer id,
-                                                                     PersonalizacionConcreta personalizacionConcreta){
+    public PersonalizacionConcreta actualizarPersonalizacionConcreta(@PathVariable("personalizacionConcretaId") @RequestBody @Validated
+                                                                         Integer id,
+                                                                         PersonalizacionConcreta personalizacionConcreta){
         personalizacionConcreta.setId(id);
         personalizacionConcretaRepository.save(personalizacionConcreta);
         return personalizacionConcreta;
