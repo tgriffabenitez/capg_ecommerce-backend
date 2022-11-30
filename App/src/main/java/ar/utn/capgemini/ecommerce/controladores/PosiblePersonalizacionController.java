@@ -7,10 +7,11 @@ import ar.utn.capgemini.ecommerce.repositorios.AreaPersonalizacionRepository;
 import ar.utn.capgemini.ecommerce.repositorios.PosiblePersonalizacionRepository;
 import ar.utn.capgemini.ecommerce.repositorios.TipoPersonalizacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "posiblesPersonalizaciones")
@@ -26,8 +27,8 @@ public class PosiblePersonalizacionController {
     public AreaPersonalizacionRepository areaPersonalizacionRepository;
 
     @GetMapping(path = {"", "/"})
-    public List<PosiblePersonalizacion> obtenerPosiblePersonalizacion(){
-        return posiblePersonalizacionRepository.findAll();
+    public Page<PosiblePersonalizacion> obtenerPosiblePersonalizacion(Pageable pagina){
+        return posiblePersonalizacionRepository.findAll(pagina);
     }
 
     // FIXME: Buscar la forma en que en caso de existir el tipo y area no genere un nuevo id la posiblePersonalizacion

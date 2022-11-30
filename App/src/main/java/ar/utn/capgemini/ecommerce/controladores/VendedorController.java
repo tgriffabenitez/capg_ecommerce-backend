@@ -3,10 +3,10 @@ package ar.utn.capgemini.ecommerce.controladores;
 import ar.utn.capgemini.ecommerce.modelo.entidades.personas.Vendedor;
 import ar.utn.capgemini.ecommerce.repositorios.VendedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/vendedores")
@@ -16,8 +16,8 @@ public class VendedorController {
     private VendedorRepository vendedorRepository;
 
     @GetMapping(path = {"", "/"})
-    public List<Vendedor> obtenerVendedores(){
-        return vendedorRepository.findAll();
+    public Page<Vendedor> obtenerVendedores(Pageable pagina){
+        return vendedorRepository.findAll(pagina);
     }
 
     @PostMapping(path = {"", "/"})

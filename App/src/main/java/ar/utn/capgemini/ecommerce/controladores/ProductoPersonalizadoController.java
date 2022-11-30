@@ -3,10 +3,11 @@ package ar.utn.capgemini.ecommerce.controladores;
 import ar.utn.capgemini.ecommerce.modelo.entidades.productos.ProductoPersonalizado;
 import ar.utn.capgemini.ecommerce.repositorios.ProductoPersonalizadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -17,8 +18,8 @@ public class ProductoPersonalizadoController {
     private ProductoPersonalizadoRepository productoPersonalizadoRepository;
 
     @GetMapping(path = {"", "/"})
-    public List<ProductoPersonalizado> obtenerProductosPersonalizados(){
-        return productoPersonalizadoRepository.findAll();
+    public Page<ProductoPersonalizado> obtenerProductosPersonalizados(Pageable pagina){
+        return productoPersonalizadoRepository.findAll(pagina);
     }
 
     @GetMapping(path = {"/{productoPersonalizadoId}"})

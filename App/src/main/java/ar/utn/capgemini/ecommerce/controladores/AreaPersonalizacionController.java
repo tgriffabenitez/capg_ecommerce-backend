@@ -31,7 +31,7 @@ public class AreaPersonalizacionController {
     }
 
     @DeleteMapping(path = {"/{areaPersonalizacionId}"})
-    public void  borrarAreaPersonalizacionId(@PathVariable("areaPersonalizacionId") Integer id){
+    public void borrarAreaPersonalizacionId(@PathVariable("areaPersonalizacionId") Integer id){
         areaPersonalizacionRepository.deleteById(id);
     }
 

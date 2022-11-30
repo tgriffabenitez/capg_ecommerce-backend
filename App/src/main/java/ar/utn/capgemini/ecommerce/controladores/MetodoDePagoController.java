@@ -4,10 +4,11 @@ import ar.utn.capgemini.ecommerce.modelo.entidades.publicaciones.MetodoDePago;
 import ar.utn.capgemini.ecommerce.modelo.enums.PAGO;
 import ar.utn.capgemini.ecommerce.repositorios.MetodoDePagoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/metodosDePago")
@@ -17,8 +18,8 @@ public class MetodoDePagoController {
     private MetodoDePagoRepository metodoDePagoRepository;
 
     @GetMapping(path = {"", "/"})
-    public List<MetodoDePago> obtenerMetodoDePago(){
-        return metodoDePagoRepository.findAll();
+    public Page<MetodoDePago> obtenerMetodoDePago(Pageable pagina){
+        return metodoDePagoRepository.findAll(pagina);
     }
 
     @PostMapping(path = {"", "/"})

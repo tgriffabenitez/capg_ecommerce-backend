@@ -3,10 +3,11 @@ package ar.utn.capgemini.ecommerce.controladores;
 import ar.utn.capgemini.ecommerce.modelo.entidades.productos.ProductoBase;
 import ar.utn.capgemini.ecommerce.repositorios.ProductoBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -17,8 +18,8 @@ public class ProductoBaseController {
     public ProductoBaseRepository productoBaseRepository;
 
     @GetMapping(path = {"", "/"})
-    public List<ProductoBase> obtenerProductosBase(){
-        return productoBaseRepository.findAll();
+    public Page<ProductoBase> obtenerProductosBase(Pageable pagina){
+        return productoBaseRepository.findAll(pagina);
     }
 
     @GetMapping(path = {"/{productoBaseId}"})

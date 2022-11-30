@@ -3,10 +3,11 @@ package ar.utn.capgemini.ecommerce.controladores;
 import ar.utn.capgemini.ecommerce.modelo.entidades.productos.PersonalizacionConcreta;
 import ar.utn.capgemini.ecommerce.repositorios.PersonalizacionConcretaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/personalizacionConcreta")
@@ -16,8 +17,8 @@ public class PersonalizacionConcretaController {
     private PersonalizacionConcretaRepository personalizacionConcretaRepository;
 
     @GetMapping(path = {"", "/"})
-    public List<PersonalizacionConcreta> obtenerPersonalizacionConcreta(){
-        return personalizacionConcretaRepository.findAll();
+    public Page<PersonalizacionConcreta> obtenerPersonalizacionConcreta(Pageable pagina){
+        return personalizacionConcretaRepository.findAll(pagina);
     }
 
     @PostMapping(path = {"", "/"})
