@@ -28,6 +28,7 @@ public class PersonalizacionConcretaController {
         return personalizacionConcretaRepository.findById(id);
     }
 
+    // TODO: Crear la logica para evitar que repitan de id los valores ingresados
     @PostMapping(path = {"", "/"})
     public PersonalizacionConcreta agregarPersonalizacionConcreta(@RequestBody @Validated PersonalizacionConcreta personalizacionConcreta){
         return personalizacionConcretaRepository.save(personalizacionConcreta);

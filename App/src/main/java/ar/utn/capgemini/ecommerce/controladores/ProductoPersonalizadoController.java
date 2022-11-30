@@ -22,6 +22,7 @@ public class ProductoPersonalizadoController {
         return productoPersonalizadoRepository.findAll(pagina);
     }
 
+    //TODO: Crear la logica para que no se generen id's duplicados
     @GetMapping(path = {"/{productoPersonalizadoId}"})
     public Optional<ProductoPersonalizado> obtenerProductoPersonalizadoId(@PathVariable("productoPersonalizadoId") Integer id){
         return productoPersonalizadoRepository.findById(id);
