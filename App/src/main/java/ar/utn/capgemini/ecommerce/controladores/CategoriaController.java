@@ -30,10 +30,8 @@ public class CategoriaController {
 
     @PostMapping(path = {"", "/"})
     public Categoria agregarCategoria(@RequestBody @Validated Categoria categoria){
-        String categoriaIngresada = categoria.getCategoria();
-        boolean existeCategoria = categoriaRepository.existsByCategoria(categoriaIngresada);
-        if(existeCategoria){
-            return categoriaRepository.findByCategoria(categoriaIngresada);
+        if(categoriaRepository.existsByCategoria(categoria.getCategoria())){
+            return categoriaRepository.findByCategoria(categoria.getCategoria());
         }
         return categoriaRepository.save(categoria);
     }
