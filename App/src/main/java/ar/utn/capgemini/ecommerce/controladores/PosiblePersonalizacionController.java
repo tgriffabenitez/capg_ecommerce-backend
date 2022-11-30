@@ -1,8 +1,6 @@
 package ar.utn.capgemini.ecommerce.controladores;
 
-import ar.utn.capgemini.ecommerce.modelo.entidades.productos.AreaPersonalizacion;
 import ar.utn.capgemini.ecommerce.modelo.entidades.productos.PosiblePersonalizacion;
-import ar.utn.capgemini.ecommerce.modelo.entidades.productos.TipoPersonalizacion;
 import ar.utn.capgemini.ecommerce.repositorios.AreaPersonalizacionRepository;
 import ar.utn.capgemini.ecommerce.repositorios.PosiblePersonalizacionRepository;
 import ar.utn.capgemini.ecommerce.repositorios.TipoPersonalizacionRepository;
@@ -37,17 +35,13 @@ public class PosiblePersonalizacionController {
         return posiblePersonalizacionRepository.findById(id);
     }
 
-    // FIXME: Buscar la forma en que en caso de existir el tipo y area no genere un nuevo id la posiblePersonalizacion
     @PostMapping(path = {"", "/"})
     public PosiblePersonalizacion agregarPosiblePersonalizacion(@RequestBody @Validated PosiblePersonalizacion posiblePersonalizacion){
-        TipoPersonalizacion tipoPersonalizacion = posiblePersonalizacion.getTipoPersonalizacion();
-        AreaPersonalizacion areaPersonalizacion = posiblePersonalizacion.getAreaPersonalizacion();
-        boolean existeTipo = tipoPersonalizacionRepository.existsByTipo(tipoPersonalizacion.getTipo());
-        boolean existeArea = tipoPersonalizacionRepository.existsByTipo(areaPersonalizacion.getArea());
-        if(existeTipo && existeArea){
-            return  posiblePersonalizacionRepository.findByTipoPersonalizacionAndAreaPersonalizacion(tipoPersonalizacion, areaPersonalizacion);
+        Integer areaId = posiblePersonalizacion.getAreaPersonalizacion().getId();
+        Integer tipoId = posiblePersonalizacion.getTipoPersonalizacion().getId();
+        if (posiblePersonalizacionRepository.existsByAreaPersonalizacionIdAndTipoPersonalizacionId(areaId, tipoId)){
+            return posiblePersonalizacionRepository.findByTipoPersonalizacionAndAreaPersonalizacion(posiblePersonalizacion.getTipoPersonalizacion(), posiblePersonalizacion.getAreaPersonalizacion());
         }
-
         return posiblePersonalizacionRepository.save(posiblePersonalizacion);
     }
 
@@ -57,9 +51,7 @@ public class PosiblePersonalizacionController {
     }
 
     @PutMapping(path = {"/{posiblePersonalizacionId}"})
-    public PosiblePersonalizacion actualizarPosiblePersonalizacion(@PathVariable("posiblePersonalizacionId") @RequestBody @Validated
-                                                                        Integer id,
-                                                                        PosiblePersonalizacion posiblePersonalizacion){
+    public PosiblePersonalizacion actualizarPosiblePersonalizacion(@PathVariable("posiblePersonalizacionId") @RequestBody @Validated Integer id, PosiblePersonalizacion posiblePersonalizacion){
         posiblePersonalizacion.setId(id);
         posiblePersonalizacionRepository.save(posiblePersonalizacion);
         return posiblePersonalizacion;

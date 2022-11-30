@@ -11,4 +11,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface PosiblePersonalizacionRepository extends JpaRepository<PosiblePersonalizacion, Integer> {
     PosiblePersonalizacion findByTipoPersonalizacionAndAreaPersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion);
 
+    boolean existsByAreaPersonalizacionIdAndTipoPersonalizacionId(Integer areaId, Integer tipoId);
 }
