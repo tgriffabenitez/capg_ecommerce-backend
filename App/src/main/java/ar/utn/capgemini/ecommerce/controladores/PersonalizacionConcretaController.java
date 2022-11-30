@@ -28,9 +28,13 @@ public class PersonalizacionConcretaController {
         return personalizacionConcretaRepository.findById(id);
     }
 
-    // TODO: Crear la logica para evitar que repitan de id los valores ingresados
     @PostMapping(path = {"", "/"})
     public PersonalizacionConcreta agregarPersonalizacionConcreta(@RequestBody @Validated PersonalizacionConcreta personalizacionConcreta){
+       Integer posibleId = personalizacionConcreta.getPosiblePersonalizacion().getId();
+       String detalle = personalizacionConcreta.getDetalle();
+       if(personalizacionConcretaRepository.existsByPosiblePersonalizacionIdAndDetalle(posibleId, detalle)){
+           return personalizacionConcretaRepository.findByPosiblePersonalizacionAndDetalle(personalizacionConcreta.getPosiblePersonalizacion(), personalizacionConcreta.getDetalle());
+       }
         return personalizacionConcretaRepository.save(personalizacionConcreta);
     }
 
@@ -40,9 +44,7 @@ public class PersonalizacionConcretaController {
     }
 
     @PutMapping(path = {"/{personalizacionConcretaId}"})
-    public PersonalizacionConcreta actualizarPersonalizacionConcreta(@PathVariable("personalizacionConcretaId") @RequestBody @Validated
-                                                                         Integer id,
-                                                                         PersonalizacionConcreta personalizacionConcreta){
+    public PersonalizacionConcreta actualizarPersonalizacionConcreta(@PathVariable("personalizacionConcretaId") @RequestBody @Validated Integer id, PersonalizacionConcreta personalizacionConcreta){
         personalizacionConcreta.setId(id);
         personalizacionConcretaRepository.save(personalizacionConcreta);
         return personalizacionConcreta;
