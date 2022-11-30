@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping(path = "categorias")
@@ -19,6 +21,11 @@ public class CategoriaController {
     @GetMapping(path = {"", "/"})
     public Page<Categoria> obtenerCategoria(Pageable pagina){
         return categoriaRepository.findAll(pagina);
+    }
+
+    @GetMapping(path = {"/{categoriaId}"})
+    public Optional<Categoria> obtenerCategoriaId(@PathVariable("categoriaId") Integer id){
+        return categoriaRepository.findById(id);
     }
 
     @PostMapping(path = {"", "/"})

@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/areaPersonalizacion")
 public class AreaPersonalizacionController {
@@ -18,6 +20,11 @@ public class AreaPersonalizacionController {
     @GetMapping(path = {"", "/"})
     public Page<AreaPersonalizacion> obtenerArea(Pageable pagina){
         return areaPersonalizacionRepository.findAll(pagina);
+    }
+
+    @GetMapping(path = {"/{areaPersonalizacionId}"})
+    public Optional<AreaPersonalizacion> obtenerAreaId(@PathVariable("areaPersonalizacionId") Integer id){
+        return areaPersonalizacionRepository.findById(id);
     }
 
     @PostMapping(path = {"", "/"})

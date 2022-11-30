@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping(path = "/personalizacionConcreta")
@@ -19,6 +21,11 @@ public class PersonalizacionConcretaController {
     @GetMapping(path = {"", "/"})
     public Page<PersonalizacionConcreta> obtenerPersonalizacionConcreta(Pageable pagina){
         return personalizacionConcretaRepository.findAll(pagina);
+    }
+
+    @GetMapping(path = {"/{personalizacionConcretaId}"})
+    public Optional<PersonalizacionConcreta> obtenerPersonalizacionConcreta(@PathVariable("personalizacionConcretaId") Integer id){
+        return personalizacionConcretaRepository.findById(id);
     }
 
     @PostMapping(path = {"", "/"})

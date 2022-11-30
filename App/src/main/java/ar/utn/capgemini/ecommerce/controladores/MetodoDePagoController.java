@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping(path = "/metodosDePago")
@@ -20,6 +22,11 @@ public class MetodoDePagoController {
     @GetMapping(path = {"", "/"})
     public Page<MetodoDePago> obtenerMetodoDePago(Pageable pagina){
         return metodoDePagoRepository.findAll(pagina);
+    }
+
+    @GetMapping(path = {"/{metodosDePagoId}"})
+    public Optional<MetodoDePago> obtenerMetodoDePago(@PathVariable("metodosDePagoId") Integer id){
+        return metodoDePagoRepository.findById(id);
     }
 
     @PostMapping(path = {"", "/"})

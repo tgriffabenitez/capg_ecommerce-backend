@@ -23,8 +23,8 @@ public class ProductoPersonalizadoController {
     }
 
     @GetMapping(path = {"/{productoPersonalizadoId}"})
-    public Optional<ProductoPersonalizado> obtenerProductoPersonalizadoId(@PathVariable("productoPersonalizadoId") Integer productoPersonalizadoId){
-        return productoPersonalizadoRepository.findById(productoPersonalizadoId);
+    public Optional<ProductoPersonalizado> obtenerProductoPersonalizadoId(@PathVariable("productoPersonalizadoId") Integer id){
+        return productoPersonalizadoRepository.findById(id);
     }
 
     @PostMapping(path = {"", "/"})

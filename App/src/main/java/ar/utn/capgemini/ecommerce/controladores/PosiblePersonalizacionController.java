@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping(path = "posiblesPersonalizaciones")
@@ -29,6 +31,10 @@ public class PosiblePersonalizacionController {
     @GetMapping(path = {"", "/"})
     public Page<PosiblePersonalizacion> obtenerPosiblePersonalizacion(Pageable pagina){
         return posiblePersonalizacionRepository.findAll(pagina);
+    }
+    @GetMapping(path = {"/{posiblePersonalizacionId}"})
+    public Optional<PosiblePersonalizacion> obtenerPosiblePersonalizacion(@PathVariable("posiblePersonalizacionId") Integer id){
+        return posiblePersonalizacionRepository.findById(id);
     }
 
     // FIXME: Buscar la forma en que en caso de existir el tipo y area no genere un nuevo id la posiblePersonalizacion
