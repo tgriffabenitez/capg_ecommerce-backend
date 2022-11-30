@@ -1,7 +1,6 @@
 package ar.utn.capgemini.ecommerce.controladores;
 
 import ar.utn.capgemini.ecommerce.modelo.entidades.publicaciones.MetodoDePago;
-import ar.utn.capgemini.ecommerce.modelo.enums.PAGO;
 import ar.utn.capgemini.ecommerce.repositorios.MetodoDePagoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,10 +30,8 @@ public class MetodoDePagoController {
 
     @PostMapping(path = {"", "/"})
     public MetodoDePago agregarMetodoDePago(@RequestBody @Validated MetodoDePago metodoDePago){
-        PAGO formaDePago = metodoDePago.getFormaDePago();
-        boolean existeMetodoDePago = metodoDePagoRepository.existsByFormaDePago(formaDePago);
-        if(existeMetodoDePago){
-            return metodoDePagoRepository.findByFormaDePago(formaDePago);
+        if(metodoDePagoRepository.existsByFormaDePago(metodoDePago.getFormaDePago())){
+            return metodoDePagoRepository.findByFormaDePago(metodoDePago.getFormaDePago());
         }
         return metodoDePagoRepository.save(metodoDePago);
     }
