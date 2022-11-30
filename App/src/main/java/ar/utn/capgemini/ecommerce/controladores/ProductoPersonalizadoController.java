@@ -22,12 +22,12 @@ public class ProductoPersonalizadoController {
         return productoPersonalizadoRepository.findAll(pagina);
     }
 
-    //TODO: Crear la logica para que no se generen id's duplicados
     @GetMapping(path = {"/{productoPersonalizadoId}"})
     public Optional<ProductoPersonalizado> obtenerProductoPersonalizadoId(@PathVariable("productoPersonalizadoId") Integer id){
         return productoPersonalizadoRepository.findById(id);
     }
 
+    // TODO: Falta hacer la logica para que no se repitan los id's
     @PostMapping(path = {"", "/"})
     public ProductoPersonalizado agregarProductoPersonalizado(@RequestBody @Validated ProductoPersonalizado productoPersonalizado){
         return productoPersonalizadoRepository.save(productoPersonalizado);
