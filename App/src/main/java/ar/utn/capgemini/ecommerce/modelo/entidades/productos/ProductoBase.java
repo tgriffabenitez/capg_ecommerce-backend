@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.modelo.entidades.productos;
 import ar.utn.capgemini.ecommerce.modelo.entidades.persistentes.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -35,17 +36,24 @@ public class ProductoBase extends EntidadPersistente {
     @NotBlank
     @NotEmpty
     @Column(name = "url")
-    private String url;
+    private String precioBaseUrl;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
 
-    @NotNull
     @OneToMany
     @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
     private List<PosiblePersonalizacion> posiblesPersonalizaciones;
+
+    public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String precioBaseUrl, Categoria categoria) {
+        this.descripcion = descripcion;
+        this.precioBase = precioBase;
+        this.tiempoDeFabricacion = tiempoDeFabricacion;
+        this.precioBaseUrl = precioBaseUrl;
+        this.categoria = categoria;
+    }
 
     public ProductoBase() {
         this.posiblesPersonalizaciones = new ArrayList<>();

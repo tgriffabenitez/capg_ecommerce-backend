@@ -23,6 +23,11 @@ public class PosiblePersonalizacion extends EntidadPersistente {
     @JoinColumn(name = "areaPersonalizacion", referencedColumnName = "id")
     private AreaPersonalizacion areaPersonalizacion;
 
+    public PosiblePersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion) {
+        this.tipoPersonalizacion = tipoPersonalizacion;
+        this.areaPersonalizacion = areaPersonalizacion;
+    }
+
     public PosiblePersonalizacion() {
     }
 

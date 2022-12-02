@@ -5,6 +5,7 @@ import ar.utn.capgemini.ecommerce.modelo.enums.PAGO;
 import ar.utn.capgemini.ecommerce.modelo.entidades.persistentes.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -46,10 +47,18 @@ public class Compra extends EntidadPersistente {
     @Column(name = "precioTotal")
     private double precioTotal;
 
-    @NotNull
     @OneToMany
     @JoinColumn(name = "publicacionCarrito", referencedColumnName = "id")
     private List<PublicacionCarrito> publicacionesCarrito;
+
+    public Compra(LocalDate fechaDeCompra, LocalTime horaDeCompra, PAGO metodoDePago, ESTADO estadoDeCompra, LocalDate fechaCambioEstado, double precioTotal) {
+        this.fechaDeCompra = fechaDeCompra;
+        this.horaDeCompra = horaDeCompra;
+        this.metodoDePago = metodoDePago;
+        this.estadoDeCompra = estadoDeCompra;
+        this.fechaCambioEstado = fechaCambioEstado;
+        this.precioTotal = precioTotal;
+    }
 
     public Compra() {
         this.publicacionesCarrito = new ArrayList<>();

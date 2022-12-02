@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.modelo.entidades.productos;
 import ar.utn.capgemini.ecommerce.modelo.entidades.persistentes.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -25,10 +26,15 @@ public class PersonalizacionConcreta extends EntidadPersistente {
     @Column(name = "precioPersonalizacionConcreta")
     private double precioPersonalizacionConcreta;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "posiblePersonalizacion_id", referencedColumnName = "id")
     private PosiblePersonalizacion posiblePersonalizacion;
+
+    public PersonalizacionConcreta(String detalle, double precioPersonalizacionConcreta, PosiblePersonalizacion posiblePersonalizacion) {
+        this.detalle = detalle;
+        this.precioPersonalizacionConcreta = precioPersonalizacionConcreta;
+        this.posiblePersonalizacion = posiblePersonalizacion;
+    }
 
     public PersonalizacionConcreta() {
     }

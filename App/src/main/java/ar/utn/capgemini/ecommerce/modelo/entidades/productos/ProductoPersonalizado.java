@@ -4,6 +4,7 @@ import ar.utn.capgemini.ecommerce.modelo.entidades.personas.Vendedor;
 import ar.utn.capgemini.ecommerce.modelo.entidades.persistentes.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -19,7 +20,7 @@ public class ProductoPersonalizado extends EntidadPersistente {
     @NotBlank
     @NotEmpty
     @Column(name = "url")
-    private String url;
+    private String productoPersonalizadoUrl;
 
     @ManyToOne
     @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
@@ -32,6 +33,12 @@ public class ProductoPersonalizado extends EntidadPersistente {
     @ManyToOne
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
+
+    public ProductoPersonalizado(String productoPersonalizadoUrl, ProductoBase productoBase, Vendedor vendedor) {
+        this.productoPersonalizadoUrl = productoPersonalizadoUrl;
+        this.productoBase = productoBase;
+        this.vendedor = vendedor;
+    }
 
     public ProductoPersonalizado() {
         this.personalizacionesConcretas = new ArrayList<>();

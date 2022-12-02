@@ -2,8 +2,8 @@ package ar.utn.capgemini.ecommerce.repositorios;
 
 import ar.utn.capgemini.ecommerce.modelo.entidades.productos.ProductoPersonalizado;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(path = "productoPersonalizaco")
+@Repository
 public interface ProductoPersonalizadoRepository extends JpaRepository<ProductoPersonalizado, Integer> {
 }

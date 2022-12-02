@@ -4,10 +4,10 @@ import ar.utn.capgemini.ecommerce.modelo.entidades.productos.AreaPersonalizacion
 import ar.utn.capgemini.ecommerce.modelo.entidades.productos.PosiblePersonalizacion;
 import ar.utn.capgemini.ecommerce.modelo.entidades.productos.TipoPersonalizacion;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
 
-@RepositoryRestResource(path = "posiblesPersonalizaciones")
+@Repository
 public interface PosiblePersonalizacionRepository extends JpaRepository<PosiblePersonalizacion, Integer> {
     PosiblePersonalizacion findByTipoPersonalizacionAndAreaPersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion);
 

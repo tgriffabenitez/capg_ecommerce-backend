@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.modelo.entidades.productos;
 import ar.utn.capgemini.ecommerce.modelo.entidades.persistentes.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -17,6 +18,10 @@ public class Categoria extends EntidadPersistente {
     @NotEmpty
     @Column(name = "categoria")
     private String categoria;
+
+    public Categoria(String categoria) {
+        this.categoria = categoria;
+    }
 
     public Categoria() {
     }
