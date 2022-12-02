@@ -40,6 +40,13 @@ public class Vendedor extends EntidadPersistente {
     @Column(name = "metodosDePago")
     private List<MetodoDePago> metodosDePago;
 
+    public Vendedor(String nombreVendedor, String apellidoVendedor, String tienda, String emailVendedor) {
+        this.nombreVendedor = nombreVendedor;
+        this.apellidoVendedor = apellidoVendedor;
+        this.tienda = tienda;
+        this.emailVendedor = emailVendedor;
+    }
+
     public Vendedor() {
         this.metodosDePago = new ArrayList<>();
     }

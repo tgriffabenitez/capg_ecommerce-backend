@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
 @Getter
@@ -20,7 +20,12 @@ public class Publicacion extends EntidadPersistente {
     private ESTADO estadoPublicacion;
 
     @NotNull
-    @Past
+    @PastOrPresent
+    @Column(name = "fechaDeAlta", columnDefinition = "DATE")
+    private LocalDate fechaDeAlta;
+
+    @NotNull
+    @PastOrPresent
     @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
     private LocalDate fechaCambioEstado;
 
@@ -29,9 +34,10 @@ public class Publicacion extends EntidadPersistente {
     @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
     private ProductoPersonalizado productoPersonalizado;
 
-    public Publicacion(ESTADO estadoPublicacion, LocalDate fechaCambioEstado, ProductoPersonalizado productoPersonalizado) {
+    public Publicacion(ESTADO estadoPublicacion, LocalDate fechaCambioEstado, LocalDate fechaDeAlta, ProductoPersonalizado productoPersonalizado) {
         this.estadoPublicacion = estadoPublicacion;
         this.fechaCambioEstado = fechaCambioEstado;
+        this.fechaDeAlta = fechaDeAlta;
         this.productoPersonalizado = productoPersonalizado;
     }
 
