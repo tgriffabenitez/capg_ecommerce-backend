@@ -19,7 +19,6 @@ import java.util.List;
 @SpringBootApplication
 public class EcommerceApplication {
 
-
     private static final Logger LOG = LoggerFactory.getLogger(EcommerceApplication.class);
 
     @Autowired
