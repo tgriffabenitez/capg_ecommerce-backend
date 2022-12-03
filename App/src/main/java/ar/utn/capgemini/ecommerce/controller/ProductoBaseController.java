@@ -53,7 +53,7 @@ public class ProductoBaseController {
     public ResponseEntity<ProductoBase> crearProductoBase(@RequestBody @Valid ProductoBaseDTO productoBaseDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             Categoria categoria = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
-            ProductoBase productoBase = new ProductoBase(productoBaseDTO.getDescripcion(), productoBaseDTO.getPrecioBase(), productoBaseDTO.getTiempoDeFabricacion(), productoBaseDTO.getProductoBaseUrl(), categoria, true, LocalDate.now(), null);
+            ProductoBase productoBase = new ProductoBase(productoBaseDTO.getDescripcion(), productoBaseDTO.getPrecioBase(), productoBaseDTO.getTiempoDeFabricacion(), productoBaseDTO.getProductoBaseUrl(), categoria, LocalDate.now());
 
             productoBaseRepository.save(productoBase);
             return new ResponseEntity<>(productoBase, HttpStatus.CREATED);

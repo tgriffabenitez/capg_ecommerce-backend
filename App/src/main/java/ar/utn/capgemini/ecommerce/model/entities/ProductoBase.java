@@ -56,7 +56,7 @@ public class ProductoBase extends EntidadPersistente {
     @Column(name = "fechaDeBaja")
     private LocalDate fechaDeBaja;
 
-    public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria, boolean estaActivo, LocalDate fechaDeAlta, LocalDate fechaDeBaja) {
+    public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria, LocalDate fechaDeAlta) {
         this.descripcion = descripcion;
         this.precioBase = precioBase;
         this.tiempoDeFabricacion = tiempoDeFabricacion;
