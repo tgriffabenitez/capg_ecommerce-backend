@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +15,6 @@ import java.util.List;
 @Entity
 @Table(name = "productoBase")
 public class ProductoBase extends EntidadPersistente {
-
-    @Column(name = "estado")
-    private boolean estaActivo;
 
     @NotBlank
     @NotEmpty
@@ -39,7 +34,7 @@ public class ProductoBase extends EntidadPersistente {
     @NotBlank
     @NotEmpty
     @Column(name = "url")
-    private String precioBaseUrl;
+    private String productoBaseUrl;
 
     @NotNull
     @ManyToOne
@@ -50,13 +45,26 @@ public class ProductoBase extends EntidadPersistente {
     @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
     private List<PosiblePersonalizacion> posiblesPersonalizaciones;
 
-    public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String precioBaseUrl, Categoria categoria, boolean estaActivo) {
+    @Column(name = "estado")
+    private boolean estaActivo;
+
+    @PastOrPresent
+    @Column(name = "fechaDeAlta")
+    private LocalDate fechaDeAlta;
+
+    @PastOrPresent
+    @Column(name = "fechaDeBaja")
+    private LocalDate fechaDeBaja;
+
+    public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria, boolean estaActivo, LocalDate fechaDeAlta, LocalDate fechaDeBaja) {
         this.descripcion = descripcion;
         this.precioBase = precioBase;
         this.tiempoDeFabricacion = tiempoDeFabricacion;
-        this.precioBaseUrl = precioBaseUrl;
+        this.productoBaseUrl = productoBaseUrl;
         this.categoria = categoria;
         this.estaActivo = true;
+        this.fechaDeAlta = fechaDeAlta;
+        this.fechaDeBaja = null;
     }
 
     public ProductoBase() {

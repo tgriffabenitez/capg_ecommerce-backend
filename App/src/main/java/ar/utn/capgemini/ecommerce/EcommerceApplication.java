@@ -84,23 +84,23 @@ public class EcommerceApplication {
             PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5, true));
             List<PosiblePersonalizacion> posibles5 = Collections.singletonList(posible5);
 
-            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 1500.55, 3, "url 1", categoria1, true));
+            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 1500.55, 3, "url 1", categoria1, true, LocalDate.now(), null));
             base1.setPosiblesPersonalizaciones(posibles1);
             productoBaseRepository.save(base1);
 
-            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 1500.55, 3, "url 2", categoria2, true));
+            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 1500.55, 3, "url 2", categoria2, true, LocalDate.now(), null));
             base2.setPosiblesPersonalizaciones(posibles2);
             productoBaseRepository.save(base2);
 
-            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 1500.55, 3, "url 3", categoria3, true));
+            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 1500.55, 3, "url 3", categoria3, true, LocalDate.now(), null));
             base3.setPosiblesPersonalizaciones(posibles3);
             productoBaseRepository.save(base3);
 
-            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 1500.55, 3, "url 4", categoria4, true));
+            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 1500.55, 3, "url 4", categoria4, true, LocalDate.now(), null));
             base4.setPosiblesPersonalizaciones(posibles4);
             productoBaseRepository.save(base4);
 
-            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 1500.55, 3, "url 5", categoria5, true));
+            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 1500.55, 3, "url 5", categoria5, true, LocalDate.now(), null));
             base5.setPosiblesPersonalizaciones(posibles5);
             productoBaseRepository.save(base5);
 

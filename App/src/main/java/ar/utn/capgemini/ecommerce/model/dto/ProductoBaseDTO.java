@@ -16,15 +16,15 @@ public class ProductoBaseDTO {
     @Positive
     private Integer tiempoDeFabricacion;
     @NotBlank
-    private String productoBaseurl;
+    private String productoBaseUrl;
     @Positive
     private Integer categoriaId;
 
-    public ProductoBaseDTO(String descripcion, Double precioBase, Integer tiempoDeFabricacion, String productoBaseurl, Integer categoriaId) {
+    public ProductoBaseDTO(String descripcion, Double precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Integer categoriaId) {
         this.descripcion = descripcion;
         this.precioBase = precioBase;
         this.tiempoDeFabricacion = tiempoDeFabricacion;
-        this.productoBaseurl = productoBaseurl;
+        this.productoBaseUrl = productoBaseUrl;
         this.categoriaId = categoriaId;
     }
 

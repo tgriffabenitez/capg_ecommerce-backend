@@ -1,5 +1,6 @@
 package ar.utn.capgemini.ecommerce.controller;
 
+import ar.utn.capgemini.ecommerce.model.dto.PosiblePersonalizacionDTO;
 import ar.utn.capgemini.ecommerce.model.dto.ProductoBaseDTO;
 import ar.utn.capgemini.ecommerce.model.entities.*;
 import ar.utn.capgemini.ecommerce.repository.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 
 @RestController
@@ -30,12 +32,13 @@ public class ProductoBaseController {
     @Autowired
     public AreaPersonalizacionRepository areaPersonalizacionRepository;
 
-    @GetMapping("/productosBase")
+    /* ===============================================================================================================*/
+    @GetMapping("/productosBase/")
     public Page<ProductoBase> obtenerProductos(Pageable pagina) {
         return productoBaseRepository.findAll(pagina);
     }
 
-    @GetMapping(path = {"/productosBase/{id}"})
+    @GetMapping("/productosBase/{id}")
     public ResponseEntity<ProductoBase> obtenerProductoPorId(@PathVariable Integer id) {
         if (productoBaseRepository.existsById(id)) {
             ProductoBase productoEncontrado = productoBaseRepository.findById(id).get();
@@ -45,24 +48,11 @@ public class ProductoBaseController {
         }
     }
 
-    @Transactional
-    @DeleteMapping(path = {"/productosBase/{id}"})
-    public ResponseEntity<ProductoBase> darProductoDeBaja(@PathVariable Integer id) {
-        if (productoBaseRepository.existsById(id)) {
-            ProductoBase productoBase = productoBaseRepository.findById(id).get();
-            productoBase.setEstaActivo(false);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PostMapping(path = {"/productosBase"})
+    @PostMapping("/productosBase/")
     public ResponseEntity<ProductoBase> crearProductoBase(@RequestBody @Valid ProductoBaseDTO productoBaseDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             Categoria categoria = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
-            ProductoBase productoBase = new ProductoBase(productoBaseDTO.getDescripcion(), productoBaseDTO.getPrecioBase(),
-                    productoBaseDTO.getTiempoDeFabricacion(), productoBaseDTO.getProductoBaseurl(), categoria, true);
+            ProductoBase productoBase = new ProductoBase(productoBaseDTO.getDescripcion(), productoBaseDTO.getPrecioBase(), productoBaseDTO.getTiempoDeFabricacion(), productoBaseDTO.getProductoBaseUrl(), categoria, true, LocalDate.now(), null);
 
             productoBaseRepository.save(productoBase);
             return new ResponseEntity<>(productoBase, HttpStatus.CREATED);
@@ -71,12 +61,43 @@ public class ProductoBaseController {
         }
     }
 
-    @GetMapping(path = "/productosBase/categorias")
+    @Transactional
+    @PatchMapping("/productosBase/{id}")
+    public ResponseEntity<ProductoBase> modificarProductoBase(@PathVariable Integer id, @RequestBody ProductoBaseDTO productoBaseDTO) {
+        if (productoBaseRepository.existsById(id)) {
+            Categoria categoriaNueva = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
+            ProductoBase productoBase = productoBaseRepository.findById(id).get();
+            productoBase.setCategoria(categoriaNueva);
+            productoBase.setPrecioBase(productoBaseDTO.getPrecioBase());
+            productoBase.setProductoBaseUrl(productoBaseDTO.getProductoBaseUrl());
+            productoBase.setDescripcion(productoBaseDTO.getDescripcion());
+            productoBase.setTiempoDeFabricacion(productoBaseDTO.getTiempoDeFabricacion());
+            return new ResponseEntity<>(productoBase, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Transactional
+    @DeleteMapping("/productosBase/{id}")
+    public ResponseEntity<ProductoBase> darProductoDeBaja(@PathVariable Integer id) {
+        if (productoBaseRepository.existsById(id)) {
+            ProductoBase productoBase = productoBaseRepository.findById(id).get();
+            productoBase.setEstaActivo(false);
+            productoBase.setFechaDeBaja(LocalDate.now());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /* =================================================================================*/
+    @GetMapping("/productosBase/categorias")
     public Page<Categoria> obtenerCategorias(Pageable pagina) {
         return categoriaRepository.findAll(pagina);
     }
 
-    @GetMapping(path = {"/productosBase/categorias/{id}"})
+    @GetMapping("/productosBase/categorias/{id}")
     public ResponseEntity<Categoria> obtenerCategoriaPorId(@PathVariable Integer id) {
         if (categoriaRepository.existsById(id)) {
             Categoria categoriaEncontrada = categoriaRepository.findById(id).get();
@@ -87,7 +108,7 @@ public class ProductoBaseController {
     }
 
     @Transactional
-    @DeleteMapping(path = {"/productosBase/categorias/{id}"})
+    @DeleteMapping("/productosBase/categorias/{id}")
     public ResponseEntity<Categoria> darCategoriaDeBaja(@PathVariable Integer id) {
         if (categoriaRepository.existsById(id)) {
             Categoria categoria = categoriaRepository.findById(id).get();
@@ -99,6 +120,7 @@ public class ProductoBaseController {
         }
     }
 
+    /* ===============================================================================================================*/
     @GetMapping(path = "/productosBase/posiblesPersonalizaciones")
     public Page<PosiblePersonalizacion> obtenerPosiblesPersonalizaciones(Pageable pagina) {
         return posiblePersonalizacionRepository.findAll(pagina);
@@ -127,6 +149,8 @@ public class ProductoBaseController {
         }
     }
 
+
+    /* ===============================================================================================================*/
     @GetMapping(path = "/productosBase/tiposPersonalizaciones")
     public Page<TipoPersonalizacion> obtenerTiposPersonalizaciones(Pageable pagina) {
         return tipoPersonalizacionRepository.findAll(pagina);
@@ -155,6 +179,7 @@ public class ProductoBaseController {
         }
     }
 
+    /* ===============================================================================================================*/
     @GetMapping(path = "/productosBase/areasPersonalizaciones")
     public Page<AreaPersonalizacion> obtenerAreasPersonalizaciones(Pageable pagina) {
         return areaPersonalizacionRepository.findAll(pagina);
@@ -178,6 +203,17 @@ public class ProductoBaseController {
             areaPersonalizacion.setEstaActivo(false);
             areaPersonalizacionRepository.save(areaPersonalizacion);
             return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/productosBase/areasPersonalizaciones/")
+    public ResponseEntity<AreaPersonalizacion> agregarAreaPersonalizacion(@RequestBody @Valid PosiblePersonalizacionDTO posiblePersonalizacionDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            AreaPersonalizacion area = areaPersonalizacionRepository.findById(posiblePersonalizacionDTO.getAreaPersonalizacionId()).get();
+            areaPersonalizacionRepository.save(area);
+            return new ResponseEntity<>(area, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
