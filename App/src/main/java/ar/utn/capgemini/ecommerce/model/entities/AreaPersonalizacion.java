@@ -28,10 +28,15 @@ public class AreaPersonalizacion extends EntidadPersistente {
     @PastOrPresent
     private LocalDate fechaDeBaja;
 
+    @PastOrPresent
+    @Column(name = "fechaUltimaModificacion")
+    private LocalDate fechaUltimaModificacion;
+
     public AreaPersonalizacion(String area, LocalDate fechaDeAlta) {
         this.area = area;
         this.estaActivo = true;
         this.fechaDeAlta = fechaDeAlta;
+        this.fechaUltimaModificacion = null;
         this.fechaDeBaja = null;
     }
 

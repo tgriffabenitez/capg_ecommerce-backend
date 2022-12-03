@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 @RestController
@@ -49,7 +50,7 @@ public class ProductoBaseController {
         }
     }
 
-    @PostMapping("/productosBase/")
+    @PostMapping("/productosBase")
     public ResponseEntity<ProductoBase> crearProductoBase(@RequestBody @Valid ProductoBaseDTO productoBaseDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             Categoria categoria = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
@@ -73,6 +74,7 @@ public class ProductoBaseController {
             productoBase.setProductoBaseUrl(productoBaseDTO.getProductoBaseUrl());
             productoBase.setDescripcion(productoBaseDTO.getDescripcion());
             productoBase.setTiempoDeFabricacion(productoBaseDTO.getTiempoDeFabricacion());
+            productoBase.setFechaUltimaModificacion(LocalDate.now());
             return new ResponseEntity<>(productoBase, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -86,7 +88,7 @@ public class ProductoBaseController {
             ProductoBase productoBase = productoBaseRepository.findById(id).get();
             productoBase.setEstaActivo(false);
             productoBase.setFechaDeBaja(LocalDate.now());
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(productoBase, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -115,23 +117,24 @@ public class ProductoBaseController {
             Categoria categoria = categoriaRepository.findById(id).get();
             categoria.setEstaActivo(false);
             categoria.setFechaDeBaja(LocalDate.now());
+            categoria.setFechaUltimaModificacion(LocalDate.now());
             categoriaRepository.save(categoria);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(categoria, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("/productosBase/categorias")
-    public ResponseEntity<Integer> crearCategoria(@RequestBody @Valid CategoriaDTO categoriaDTO, BindingResult bindingResult) {
+    public ResponseEntity<Categoria> crearCategoria(@RequestBody @Valid CategoriaDTO categoriaDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             if (categoriaRepository.existsByCategoria(categoriaDTO.getCategoria())) {
                 Categoria categoriaExistente = categoriaRepository.findByCategoria(categoriaDTO.getCategoria());
-                return new ResponseEntity<>(categoriaExistente.getId(), HttpStatus.OK);
+                return new ResponseEntity<>(categoriaExistente, HttpStatus.OK);
             } else {
                 Categoria categoriaNueva = new Categoria(categoriaDTO.getCategoria(), LocalDate.now());
                 categoriaRepository.save(categoriaNueva);
-                return new ResponseEntity<>(HttpStatus.CREATED);
+                return new ResponseEntity<>(categoriaNueva, HttpStatus.CREATED);
             }
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -144,6 +147,7 @@ public class ProductoBaseController {
         if (categoriaRepository.existsById(id)) {
             Categoria categoria = categoriaRepository.findById(id).get();
             categoria.setCategoria(categoriaDTO.getCategoria());
+            categoria.setFechaUltimaModificacion(LocalDate.now());
             return new ResponseEntity<>(categoria, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -28,11 +28,16 @@ public class TipoPersonalizacion extends EntidadPersistente {
     @PastOrPresent
     private LocalDate fechaDeBaja;
 
+    @PastOrPresent
+    @Column(name = "fechaUltimaModificacion")
+    private LocalDate fechaUltimaModificacion;
+
     public TipoPersonalizacion(String tipo, LocalDate fechaDeAlta) {
         this.tipo = tipo;
         this.estaActivo = true;
         this.fechaDeAlta = fechaDeAlta;
         this.fechaDeBaja = null;
+        this.fechaUltimaModificacion = null;
     }
 
     public TipoPersonalizacion() {

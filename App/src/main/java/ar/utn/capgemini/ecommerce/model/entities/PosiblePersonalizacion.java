@@ -26,10 +26,16 @@ public class PosiblePersonalizacion extends EntidadPersistente {
     private AreaPersonalizacion areaPersonalizacion;
 
     @PastOrPresent
+    @Column(name = "fechaDeAlta")
     private LocalDate fechaDeAlta;
 
     @PastOrPresent
+    @Column(name = "fechaDeBaja")
     private LocalDate fechaDeBaja;
+
+    @PastOrPresent
+    @Column(name = "fechaUltimaModificacion")
+    private LocalDate fechaUltimaModificacion;
 
     public PosiblePersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion, LocalDate fechaDeAlta) {
         this.tipoPersonalizacion = tipoPersonalizacion;
@@ -37,6 +43,7 @@ public class PosiblePersonalizacion extends EntidadPersistente {
         this.estaActivo = true;
         this.fechaDeAlta = fechaDeAlta;
         this.fechaDeBaja = null;
+        this.fechaUltimaModificacion = null;
     }
 
     public PosiblePersonalizacion() {
