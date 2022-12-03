@@ -14,13 +14,17 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "categoria")
 public class Categoria extends EntidadPersistente {
 
+    @Column(name = "estado")
+    private boolean estaActivo;
+
     @NotBlank
     @NotEmpty
     @Column(name = "categoria")
     private String categoria;
 
-    public Categoria(String categoria) {
+    public Categoria(String categoria, boolean estaActivo) {
         this.categoria = categoria;
+        this.estaActivo = true;
     }
 
     public Categoria() {

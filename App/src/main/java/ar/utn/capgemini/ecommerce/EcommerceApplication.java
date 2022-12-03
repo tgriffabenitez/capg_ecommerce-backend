@@ -67,11 +67,11 @@ public class EcommerceApplication {
             AreaPersonalizacion area4 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Capucha"));
             AreaPersonalizacion area5 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Piernas"));
 
-            Categoria categoria1 = cagoriaRepository.save(new Categoria("Remera"));
-            Categoria categoria2 = cagoriaRepository.save(new Categoria("Buzo"));
-            Categoria categoria3 = cagoriaRepository.save(new Categoria("Campera"));
-            Categoria categoria4 = cagoriaRepository.save(new Categoria("Pantalones"));
-            Categoria categoria5 = cagoriaRepository.save(new Categoria("Zapatos"));
+            Categoria categoria1 = cagoriaRepository.save(new Categoria("Remera", true));
+            Categoria categoria2 = cagoriaRepository.save(new Categoria("Buzo", true));
+            Categoria categoria3 = cagoriaRepository.save(new Categoria("Campera", true));
+            Categoria categoria4 = cagoriaRepository.save(new Categoria("Pantalones", true));
+            Categoria categoria5 = cagoriaRepository.save(new Categoria("Zapatos", true));
 
             PosiblePersonalizacion posible1 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo1, area1));
             List<PosiblePersonalizacion> posibles1 = Collections.singletonList(posible1);

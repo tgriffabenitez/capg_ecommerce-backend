@@ -87,6 +87,8 @@ public class ProductoBaseController {
     public ResponseEntity<Categoria> darCategoriaDeBaja(@PathVariable Integer id) {
         if (categoriaRepository.existsById(id)) {
             Categoria categoria = categoriaRepository.findById(id).get();
+            categoria.setEstaActivo(false);
+            categoriaRepository.save(categoria);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
