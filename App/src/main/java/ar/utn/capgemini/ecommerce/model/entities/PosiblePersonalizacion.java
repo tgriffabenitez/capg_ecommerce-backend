@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -15,20 +17,26 @@ public class PosiblePersonalizacion extends EntidadPersistente {
 
     @Column(name = "estado")
     private boolean estaActivo;
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "tipoPersonalizacion_id", referencedColumnName = "id")
     private TipoPersonalizacion tipoPersonalizacion;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "areaPersonalizacion", referencedColumnName = "id")
     private AreaPersonalizacion areaPersonalizacion;
 
-    public PosiblePersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion, boolean estaActivo) {
+    @PastOrPresent
+    private LocalDate fechaDeAlta;
+
+    @PastOrPresent
+    private LocalDate fechaDeBaja;
+
+    public PosiblePersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion, LocalDate fechaDeAlta) {
         this.tipoPersonalizacion = tipoPersonalizacion;
         this.areaPersonalizacion = areaPersonalizacion;
         this.estaActivo = true;
+        this.fechaDeAlta = fechaDeAlta;
+        this.fechaDeBaja = null;
     }
 
     public PosiblePersonalizacion() {

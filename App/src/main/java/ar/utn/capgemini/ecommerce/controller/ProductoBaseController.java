@@ -179,6 +179,24 @@ public class ProductoBaseController {
         }
     }
 
+    @PostMapping("/productosBase/posiblesPersonalizaciones")
+    public ResponseEntity<PosiblePersonalizacion> crearPosiblePersonalizacion(@RequestBody PosiblePersonalizacionDTO posibleDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            if (areaPersonalizacionRepository.existsByArea(posibleDTO.getAreaPersonalizacion()) && tipoPersonalizacionRepository.existsByTipo(posibleDTO.getTipoPersonalizacion())) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                AreaPersonalizacion areaNueva = new AreaPersonalizacion(posibleDTO.getAreaPersonalizacion(), LocalDate.now());
+                TipoPersonalizacion tipoNuevo = new TipoPersonalizacion(posibleDTO.getTipoPersonalizacion(), LocalDate.now());
+                PosiblePersonalizacion posibleNuevo = new PosiblePersonalizacion(tipoNuevo, areaNueva, LocalDate.now());
+                posiblePersonalizacionRepository.save(posibleNuevo);
+                return new ResponseEntity<>(posibleNuevo, HttpStatus.OK);
+            }
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     /* ===============================================================================================================*/
     @GetMapping(path = "/productosBase/tiposPersonalizaciones")
@@ -206,6 +224,22 @@ public class ProductoBaseController {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/productosBase/posiblesPersonalizaciones/tipos")
+    public ResponseEntity<TipoPersonalizacion> crearTipoPersonalizacion(@RequestBody @Valid PosiblePersonalizacionDTO tipoDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            if (tipoPersonalizacionRepository.existsByTipo(tipoDTO.getTipoPersonalizacion())) {
+                TipoPersonalizacion tipoExistente = tipoPersonalizacionRepository.findByTipo(tipoDTO.getTipoPersonalizacion());
+                return new ResponseEntity<>(tipoExistente, HttpStatus.OK);
+            } else {
+                TipoPersonalizacion tipoNuevo = new TipoPersonalizacion(tipoDTO.getTipoPersonalizacion(), LocalDate.now());
+                tipoPersonalizacionRepository.save(tipoNuevo);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -238,15 +272,21 @@ public class ProductoBaseController {
         }
     }
 
-    @PostMapping("/productosBase/areasPersonalizaciones/")
-    public ResponseEntity<AreaPersonalizacion> agregarAreaPersonalizacion(@RequestBody @Valid PosiblePersonalizacionDTO posiblePersonalizacionDTO, BindingResult bindingResult) {
+    @PostMapping("/productosBase/posiblesPersonalizaciones/areas")
+    public ResponseEntity<AreaPersonalizacion> crearAreaPersonalizacion(@RequestBody @Valid PosiblePersonalizacionDTO areaDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            AreaPersonalizacion area = areaPersonalizacionRepository.findById(posiblePersonalizacionDTO.getAreaPersonalizacionId()).get();
-            areaPersonalizacionRepository.save(area);
-            return new ResponseEntity<>(area, HttpStatus.CREATED);
+            if (areaPersonalizacionRepository.existsByArea(areaDTO.getTipoPersonalizacion())) {
+                AreaPersonalizacion areaExistente = areaPersonalizacionRepository.findByArea(areaDTO.getAreaPersonalizacion());
+                return new ResponseEntity<>(areaExistente, HttpStatus.OK);
+            } else {
+                AreaPersonalizacion areaNueva = new AreaPersonalizacion(areaDTO.getTipoPersonalizacion(), LocalDate.now());
+                areaPersonalizacionRepository.save(areaNueva);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
 }

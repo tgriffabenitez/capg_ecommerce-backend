@@ -9,13 +9,13 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class PosiblePersonalizacionDTO {
     @NotBlank
-    private Integer tipoPersonalizacionId;
+    private String tipoPersonalizacion;
     @NotBlank
-    private Integer areaPersonalizacionId;
+    private String areaPersonalizacion;
 
-    public PosiblePersonalizacionDTO(Integer tipoPersonalizacionId, Integer areaPersonalizacionId) {
-        this.tipoPersonalizacionId = tipoPersonalizacionId;
-        this.areaPersonalizacionId = areaPersonalizacionId;
+    public PosiblePersonalizacionDTO(String tipoPersonalizacion, String areaPersonalizacion) {
+        this.tipoPersonalizacion = tipoPersonalizacion;
+        this.areaPersonalizacion = areaPersonalizacion;
     }
 
     public PosiblePersonalizacionDTO() {
