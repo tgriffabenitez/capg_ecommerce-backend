@@ -2,8 +2,10 @@ package ar.utn.capgemini.ecommerce.controller;
 
 import ar.utn.capgemini.ecommerce.model.dto.ProductoBaseDTO;
 import ar.utn.capgemini.ecommerce.model.entities.Categoria;
+import ar.utn.capgemini.ecommerce.model.entities.PosiblePersonalizacion;
 import ar.utn.capgemini.ecommerce.model.entities.ProductoBase;
 import ar.utn.capgemini.ecommerce.repository.CategoriaRepository;
+import ar.utn.capgemini.ecommerce.repository.PosiblePersonalizacionRepository;
 import ar.utn.capgemini.ecommerce.repository.ProductoBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,8 @@ public class ProductoBaseController {
     public ProductoBaseRepository productoBaseRepository;
     @Autowired
     public CategoriaRepository categoriaRepository;
+    @Autowired
+    public PosiblePersonalizacionRepository posiblePersonalizacionRepository;
 
     @GetMapping("/productosBase")
     public Page<ProductoBase> obtenerProductos(Pageable pagina) {
@@ -95,6 +99,33 @@ public class ProductoBaseController {
         }
     }
 
+    @GetMapping(path = "/productosBase/posiblesPersonalizaciones")
+    public Page<PosiblePersonalizacion> obtenerPosiblesPersonalizaciones(Pageable pagina) {
+        return posiblePersonalizacionRepository.findAll(pagina);
+    }
+
+    @GetMapping(path = {"/productosBase/posiblesPersonalizaciones/{id}"})
+    public ResponseEntity<PosiblePersonalizacion> obtenerPosiblesPersonalizacionesPorId(@PathVariable Integer id) {
+        if (posiblePersonalizacionRepository.existsById(id)) {
+            PosiblePersonalizacion posiblePersonalizacionEncontrada = posiblePersonalizacionRepository.findById(id).get();
+            return new ResponseEntity<>(posiblePersonalizacionEncontrada, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Transactional
+    @DeleteMapping(path = {"/productosBase/posiblesPersonalizaciones/{id}"})
+    public ResponseEntity<PosiblePersonalizacion> darPosiblePersonalizacionDeBaja(@PathVariable Integer id) {
+        if (posiblePersonalizacionRepository.existsById(id)) {
+            PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(id).get();
+            posiblePersonalizacion.setEstaActivo(false);
+            posiblePersonalizacionRepository.save(posiblePersonalizacion);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 

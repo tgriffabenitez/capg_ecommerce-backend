@@ -73,15 +73,15 @@ public class EcommerceApplication {
             Categoria categoria4 = cagoriaRepository.save(new Categoria("Pantalones", true));
             Categoria categoria5 = cagoriaRepository.save(new Categoria("Zapatos", true));
 
-            PosiblePersonalizacion posible1 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo1, area1));
+            PosiblePersonalizacion posible1 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo1, area1, true));
             List<PosiblePersonalizacion> posibles1 = Collections.singletonList(posible1);
-            PosiblePersonalizacion posible2 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo2, area2));
+            PosiblePersonalizacion posible2 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo2, area2, true));
             List<PosiblePersonalizacion> posibles2 = Collections.singletonList(posible2);
-            PosiblePersonalizacion posible3 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo3, area3));
+            PosiblePersonalizacion posible3 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo3, area3, true));
             List<PosiblePersonalizacion> posibles3 = Collections.singletonList(posible3);
-            PosiblePersonalizacion posible4 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo4, area4));
+            PosiblePersonalizacion posible4 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo4, area4, true));
             List<PosiblePersonalizacion> posibles4 = Collections.singletonList(posible4);
-            PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5));
+            PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5, true));
             List<PosiblePersonalizacion> posibles5 = Collections.singletonList(posible5);
 
             ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 1500.55, 3, "url 1", categoria1, true));

@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 @Table(name = "posiblePersonalizacion")
 public class PosiblePersonalizacion extends EntidadPersistente {
 
+    @Column(name = "estado")
+    private boolean estaActivo;
     @NotNull
     @ManyToOne
     @JoinColumn(name = "tipoPersonalizacion_id", referencedColumnName = "id")
@@ -23,9 +25,10 @@ public class PosiblePersonalizacion extends EntidadPersistente {
     @JoinColumn(name = "areaPersonalizacion", referencedColumnName = "id")
     private AreaPersonalizacion areaPersonalizacion;
 
-    public PosiblePersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion) {
+    public PosiblePersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion, boolean estaActivo) {
         this.tipoPersonalizacion = tipoPersonalizacion;
         this.areaPersonalizacion = areaPersonalizacion;
+        this.estaActivo = true;
     }
 
     public PosiblePersonalizacion() {
