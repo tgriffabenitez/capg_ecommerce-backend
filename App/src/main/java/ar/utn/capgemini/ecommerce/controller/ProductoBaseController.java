@@ -3,6 +3,7 @@ package ar.utn.capgemini.ecommerce.controller;
 import ar.utn.capgemini.ecommerce.model.dto.CategoriaDTO;
 import ar.utn.capgemini.ecommerce.model.dto.PosiblePersonalizacionDTO;
 import ar.utn.capgemini.ecommerce.model.dto.ProductoBaseDTO;
+import ar.utn.capgemini.ecommerce.model.dto.TipoPersonalizacionDTO;
 import ar.utn.capgemini.ecommerce.model.entities.*;
 import ar.utn.capgemini.ecommerce.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.List;
 
 
 @RestController
@@ -134,7 +135,7 @@ public class ProductoBaseController {
             } else {
                 Categoria categoriaNueva = new Categoria(categoriaDTO.getCategoria(), LocalDate.now());
                 categoriaRepository.save(categoriaNueva);
-                return new ResponseEntity<>(categoriaNueva, HttpStatus.CREATED);
+                return new ResponseEntity<>(categoriaNueva, HttpStatus.OK);
             }
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -160,11 +161,12 @@ public class ProductoBaseController {
         return posiblePersonalizacionRepository.findAll(pagina);
     }
 
-    @GetMapping(path = {"/productosBase/posiblesPersonalizaciones/{id}"})
-    public ResponseEntity<PosiblePersonalizacion> obtenerPosiblesPersonalizacionesPorId(@PathVariable Integer id) {
-        if (posiblePersonalizacionRepository.existsById(id)) {
-            PosiblePersonalizacion posiblePersonalizacionEncontrada = posiblePersonalizacionRepository.findById(id).get();
-            return new ResponseEntity<>(posiblePersonalizacionEncontrada, HttpStatus.OK);
+    @GetMapping(path = {"/productosBase/{id}/posiblesPersonalizaciones"})
+    public ResponseEntity<List<PosiblePersonalizacion>> obtenerPosiblesPersonalizacionesPorId(@PathVariable Integer id) {
+        if (productoBaseRepository.existsById(id)) {
+            ProductoBase productoBase = productoBaseRepository.findById(id).get();
+            List<PosiblePersonalizacion> posibles = productoBase.getPosiblesPersonalizaciones();
+            return new ResponseEntity<>(posibles, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -176,39 +178,53 @@ public class ProductoBaseController {
         if (posiblePersonalizacionRepository.existsById(id)) {
             PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(id).get();
             posiblePersonalizacion.setEstaActivo(false);
-            posiblePersonalizacionRepository.save(posiblePersonalizacion);
-            return new ResponseEntity<>(HttpStatus.OK);
+            posiblePersonalizacion.setFechaDeBaja(LocalDate.now());
+            posiblePersonalizacion.setFechaUltimaModificacion(LocalDate.now());
+            return new ResponseEntity<>(posiblePersonalizacion, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/productosBase/posiblesPersonalizaciones")
-    public ResponseEntity<PosiblePersonalizacion> crearPosiblePersonalizacion(@RequestBody PosiblePersonalizacionDTO posibleDTO, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            if (areaPersonalizacionRepository.existsByArea(posibleDTO.getAreaPersonalizacion()) && tipoPersonalizacionRepository.existsByTipo(posibleDTO.getTipoPersonalizacion())) {
-                return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("/productosBase/{id}/posiblesPersonalizaciones")
+    public ResponseEntity<PosiblePersonalizacion> crearPosiblePersonalizacion(@PathVariable Integer id, @RequestBody PosiblePersonalizacionDTO posibleDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors() && productoBaseRepository.existsById(id)) {
+            ProductoBase productoBase = productoBaseRepository.findById(id).get();
+            boolean existeArea = areaPersonalizacionRepository.existsByArea(posibleDTO.getAreaPersonalizacion());
+            boolean existeTipo = tipoPersonalizacionRepository.existsByTipo(posibleDTO.getTipoPersonalizacion());
+
+            if (existeTipo && existeArea) {
+                TipoPersonalizacion tipoExiste = tipoPersonalizacionRepository.findByTipo(posibleDTO.getTipoPersonalizacion());
+                AreaPersonalizacion areaExiste = areaPersonalizacionRepository.findByArea(posibleDTO.getAreaPersonalizacion());
+                PosiblePersonalizacion posibleExiste = posiblePersonalizacionRepository.findByTipoPersonalizacionAndAreaPersonalizacion(tipoExiste, areaExiste);
+                productoBase.agregarPosiblePersonalizacion(posibleExiste);
+                return new ResponseEntity<>(posibleExiste, HttpStatus.OK);
+
             } else {
-                AreaPersonalizacion areaNueva = new AreaPersonalizacion(posibleDTO.getAreaPersonalizacion(), LocalDate.now());
                 TipoPersonalizacion tipoNuevo = new TipoPersonalizacion(posibleDTO.getTipoPersonalizacion(), LocalDate.now());
+                tipoNuevo.setFechaDeAlta(LocalDate.now());
+                tipoPersonalizacionRepository.save(tipoNuevo);
+                AreaPersonalizacion areaNueva = new AreaPersonalizacion(posibleDTO.getAreaPersonalizacion(), LocalDate.now());
+                areaNueva.setFechaDeAlta(LocalDate.now());
+                areaPersonalizacionRepository.save(areaNueva);
                 PosiblePersonalizacion posibleNuevo = new PosiblePersonalizacion(tipoNuevo, areaNueva, LocalDate.now());
                 posiblePersonalizacionRepository.save(posibleNuevo);
+                productoBase.agregarPosiblePersonalizacion(posibleNuevo);
+                productoBaseRepository.save(productoBase);
                 return new ResponseEntity<>(posibleNuevo, HttpStatus.OK);
             }
-
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 
     /* ===============================================================================================================*/
-    @GetMapping(path = "/productosBase/tiposPersonalizaciones")
+    @GetMapping(path = "/productosBase/posiblesPersonalizaciones/tipo")
     public Page<TipoPersonalizacion> obtenerTiposPersonalizaciones(Pageable pagina) {
         return tipoPersonalizacionRepository.findAll(pagina);
     }
 
-    @GetMapping(path = {"/productosBase/tiposPersonalizaciones/{id}"})
+    @GetMapping(path = {"/productosBase/posiblesPersonalizaciones/tipo/{id}"})
     public ResponseEntity<TipoPersonalizacion> obtenerTipoPersonalizacionPorId(@PathVariable Integer id) {
         if (tipoPersonalizacionRepository.existsById(id)) {
             TipoPersonalizacion tipoPersonalizacion = tipoPersonalizacionRepository.findById(id).get();
@@ -219,7 +235,7 @@ public class ProductoBaseController {
     }
 
     @Transactional
-    @DeleteMapping(path = {"/productosBase/tiposPersonalizaciones/{id}"})
+    @DeleteMapping(path = {"/productosBase/posiblesPersonalizaciones/tipo/{id}"})
     public ResponseEntity<TipoPersonalizacion> darTipoPersonalizacionDeBaja(@PathVariable Integer id) {
         if (tipoPersonalizacionRepository.existsById(id)) {
             TipoPersonalizacion tipoPersonalizacion = tipoPersonalizacionRepository.findById(id).get();
@@ -227,20 +243,22 @@ public class ProductoBaseController {
             tipoPersonalizacionRepository.save(tipoPersonalizacion);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("/productosBase/posiblesPersonalizaciones/tipos")
-    public ResponseEntity<TipoPersonalizacion> crearTipoPersonalizacion(@RequestBody @Valid PosiblePersonalizacionDTO tipoDTO, BindingResult bindingResult) {
+    @PostMapping("/productosBase/posiblesPersonalizaciones/tipo")
+    public ResponseEntity<TipoPersonalizacion> crearTipoPersonalizacion(@RequestBody @Valid TipoPersonalizacionDTO tipoDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
+
             if (tipoPersonalizacionRepository.existsByTipo(tipoDTO.getTipoPersonalizacion())) {
                 TipoPersonalizacion tipoExistente = tipoPersonalizacionRepository.findByTipo(tipoDTO.getTipoPersonalizacion());
                 return new ResponseEntity<>(tipoExistente, HttpStatus.OK);
             } else {
                 TipoPersonalizacion tipoNuevo = new TipoPersonalizacion(tipoDTO.getTipoPersonalizacion(), LocalDate.now());
+                tipoNuevo.setFechaDeAlta(LocalDate.now());
                 tipoPersonalizacionRepository.save(tipoNuevo);
-                return new ResponseEntity<>(HttpStatus.CREATED);
+                return new ResponseEntity<>(tipoNuevo, HttpStatus.OK);
             }
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -248,12 +266,12 @@ public class ProductoBaseController {
     }
 
     /* ===============================================================================================================*/
-    @GetMapping(path = "/productosBase/areasPersonalizaciones")
+    @GetMapping(path = "/productosBase/posiblesPersonalizaciones/area")
     public Page<AreaPersonalizacion> obtenerAreasPersonalizaciones(Pageable pagina) {
         return areaPersonalizacionRepository.findAll(pagina);
     }
 
-    @GetMapping(path = {"/productosBase/areasPersonalizaciones/{id}"})
+    @GetMapping(path = {"/productosBase/posiblesPersonalizaciones/area/{id}"})
     public ResponseEntity<AreaPersonalizacion> obtenerAreaPersonalizacionPorId(@PathVariable Integer id) {
         if (areaPersonalizacionRepository.existsById(id)) {
             AreaPersonalizacion areaPersonalizacion = areaPersonalizacionRepository.findById(id).get();
@@ -264,7 +282,7 @@ public class ProductoBaseController {
     }
 
     @Transactional
-    @DeleteMapping(path = {"/productosBase/areasPersonalizaciones/{id}"})
+    @DeleteMapping(path = {"/productosBase/posiblesPersonalizaciones/area/{id}"})
     public ResponseEntity<AreaPersonalizacion> darAreaPersonalizacionDeBaja(@PathVariable Integer id) {
         if (areaPersonalizacionRepository.existsById(id)) {
             AreaPersonalizacion areaPersonalizacion = areaPersonalizacionRepository.findById(id).get();
@@ -276,7 +294,7 @@ public class ProductoBaseController {
         }
     }
 
-    @PostMapping("/productosBase/posiblesPersonalizaciones/areas")
+    @PostMapping("/productosBase/posiblesPersonalizaciones/area")
     public ResponseEntity<AreaPersonalizacion> crearAreaPersonalizacion(@RequestBody @Valid PosiblePersonalizacionDTO areaDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             if (areaPersonalizacionRepository.existsByArea(areaDTO.getTipoPersonalizacion())) {
@@ -284,13 +302,13 @@ public class ProductoBaseController {
                 return new ResponseEntity<>(areaExistente, HttpStatus.OK);
             } else {
                 AreaPersonalizacion areaNueva = new AreaPersonalizacion(areaDTO.getTipoPersonalizacion(), LocalDate.now());
+                areaNueva.setFechaDeAlta(LocalDate.now());
                 areaPersonalizacionRepository.save(areaNueva);
-                return new ResponseEntity<>(HttpStatus.CREATED);
+                return new ResponseEntity<>(areaNueva, HttpStatus.OK);
             }
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-
-}
+} // fin ProductoBaseController

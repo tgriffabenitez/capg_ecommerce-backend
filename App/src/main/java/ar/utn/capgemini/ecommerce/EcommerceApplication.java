@@ -55,7 +55,6 @@ public class EcommerceApplication {
         LOG.info("Cargando datos en la base de datos");
 
         return (args) -> {
-            /*
             TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo UTN", LocalDate.now()));
             TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo Ferrari", LocalDate.now()));
             TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Degrade", LocalDate.now()));
@@ -191,7 +190,6 @@ public class EcommerceApplication {
             PublicacionCarrito carrito3 = carritoRepository.save(new PublicacionCarrito(3, publicacion3));
             PublicacionCarrito carrito4 = carritoRepository.save(new PublicacionCarrito(4, publicacion4));
             PublicacionCarrito carrito5 = carritoRepository.save(new PublicacionCarrito(5, publicacion5));
-*/
         };
     }
 }

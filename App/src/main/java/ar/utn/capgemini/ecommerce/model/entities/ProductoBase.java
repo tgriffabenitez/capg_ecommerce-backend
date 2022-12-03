@@ -76,4 +76,8 @@ public class ProductoBase extends EntidadPersistente {
         this.posiblesPersonalizaciones = new ArrayList<>();
     }
 
+    public void agregarPosiblePersonalizacion(PosiblePersonalizacion posible) {
+        this.posiblesPersonalizaciones.add(posible);
+    }
+
 }
