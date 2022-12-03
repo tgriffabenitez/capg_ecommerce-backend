@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
@@ -16,11 +15,10 @@ import java.time.LocalDate;
 @Table(name = "categoria")
 public class Categoria extends EntidadPersistente {
 
-    @NotBlank
-    @NotEmpty
     @Column(name = "categoria")
     private String categoria;
 
+    @NotNull
     @Column(name = "estado")
     private boolean estaActivo;
 
@@ -32,11 +30,11 @@ public class Categoria extends EntidadPersistente {
     @Column(name = "fechaDeBaja")
     private LocalDate fechaDeBaja;
 
-    public Categoria(String categoria, boolean estaActivo, LocalDate fechaDeAlta, LocalDate fechaDeBaja) {
+    public Categoria(String categoria, LocalDate fechaDeAlta) {
         this.categoria = categoria;
-        this.estaActivo = true;
         this.fechaDeAlta = fechaDeAlta;
-        this.fechaDeBaja = fechaDeBaja;
+        this.fechaDeBaja = null;
+        this.estaActivo = true;
     }
 
     public Categoria() {

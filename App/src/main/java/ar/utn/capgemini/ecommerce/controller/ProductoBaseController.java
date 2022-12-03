@@ -5,7 +5,6 @@ import ar.utn.capgemini.ecommerce.model.dto.PosiblePersonalizacionDTO;
 import ar.utn.capgemini.ecommerce.model.dto.ProductoBaseDTO;
 import ar.utn.capgemini.ecommerce.model.entities.*;
 import ar.utn.capgemini.ecommerce.repository.*;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -130,7 +129,7 @@ public class ProductoBaseController {
                 Categoria categoriaExistente = categoriaRepository.findByCategoria(categoriaDTO.getCategoria());
                 return new ResponseEntity<>(categoriaExistente.getId(), HttpStatus.OK);
             } else {
-                Categoria categoriaNueva = new Categoria(categoriaDTO.getCategoria(), true, LocalDate.now(), null);
+                Categoria categoriaNueva = new Categoria(categoriaDTO.getCategoria(), LocalDate.now());
                 categoriaRepository.save(categoriaNueva);
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
