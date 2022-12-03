@@ -1,9 +1,6 @@
 package ar.utn.capgemini.ecommerce.controller;
 
-import ar.utn.capgemini.ecommerce.model.dto.CategoriaDTO;
-import ar.utn.capgemini.ecommerce.model.dto.PosiblePersonalizacionDTO;
-import ar.utn.capgemini.ecommerce.model.dto.ProductoBaseDTO;
-import ar.utn.capgemini.ecommerce.model.dto.TipoPersonalizacionDTO;
+import ar.utn.capgemini.ecommerce.model.dto.*;
 import ar.utn.capgemini.ecommerce.model.entities.*;
 import ar.utn.capgemini.ecommerce.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -295,13 +292,13 @@ public class ProductoBaseController {
     }
 
     @PostMapping("/productosBase/posiblesPersonalizaciones/area")
-    public ResponseEntity<AreaPersonalizacion> crearAreaPersonalizacion(@RequestBody @Valid PosiblePersonalizacionDTO areaDTO, BindingResult bindingResult) {
+    public ResponseEntity<AreaPersonalizacion> crearAreaPersonalizacion(@RequestBody @Valid AreaPersonalizacionDTO areaDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            if (areaPersonalizacionRepository.existsByArea(areaDTO.getTipoPersonalizacion())) {
+            if (areaPersonalizacionRepository.existsByArea(areaDTO.getAreaPersonalizacion())) {
                 AreaPersonalizacion areaExistente = areaPersonalizacionRepository.findByArea(areaDTO.getAreaPersonalizacion());
                 return new ResponseEntity<>(areaExistente, HttpStatus.OK);
             } else {
-                AreaPersonalizacion areaNueva = new AreaPersonalizacion(areaDTO.getTipoPersonalizacion(), LocalDate.now());
+                AreaPersonalizacion areaNueva = new AreaPersonalizacion(areaDTO.getAreaPersonalizacion(), LocalDate.now());
                 areaNueva.setFechaDeAlta(LocalDate.now());
                 areaPersonalizacionRepository.save(areaNueva);
                 return new ResponseEntity<>(areaNueva, HttpStatus.OK);
