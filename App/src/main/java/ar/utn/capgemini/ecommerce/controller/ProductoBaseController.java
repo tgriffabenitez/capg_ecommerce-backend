@@ -1,9 +1,11 @@
 package ar.utn.capgemini.ecommerce.controller;
 
+import ar.utn.capgemini.ecommerce.model.dto.CategoriaDTO;
 import ar.utn.capgemini.ecommerce.model.dto.PosiblePersonalizacionDTO;
 import ar.utn.capgemini.ecommerce.model.dto.ProductoBaseDTO;
 import ar.utn.capgemini.ecommerce.model.entities.*;
 import ar.utn.capgemini.ecommerce.repository.*;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -113,10 +115,39 @@ public class ProductoBaseController {
         if (categoriaRepository.existsById(id)) {
             Categoria categoria = categoriaRepository.findById(id).get();
             categoria.setEstaActivo(false);
+            categoria.setFechaDeBaja(LocalDate.now());
             categoriaRepository.save(categoria);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/productosBase/categorias")
+    public ResponseEntity<Integer> crearCategoria(@RequestBody @Valid CategoriaDTO categoriaDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            if (categoriaRepository.existsByCategoria(categoriaDTO.getCategoria())) {
+                Categoria categoriaExistente = categoriaRepository.findByCategoria(categoriaDTO.getCategoria());
+                return new ResponseEntity<>(categoriaExistente.getId(), HttpStatus.OK);
+            } else {
+                Categoria categoriaNueva = new Categoria(categoriaDTO.getCategoria(), true, LocalDate.now(), null);
+                categoriaRepository.save(categoriaNueva);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Transactional
+    @PatchMapping("/productosBase/categorias/{id}")
+    public ResponseEntity<Categoria> modificarCategoria(@PathVariable Integer id, @RequestBody CategoriaDTO categoriaDTO) {
+        if (categoriaRepository.existsById(id)) {
+            Categoria categoria = categoriaRepository.findById(id).get();
+            categoria.setCategoria(categoriaDTO.getCategoria());
+            return new ResponseEntity<>(categoria, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

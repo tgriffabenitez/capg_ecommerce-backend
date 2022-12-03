@@ -67,11 +67,11 @@ public class EcommerceApplication {
             AreaPersonalizacion area4 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Capucha", true));
             AreaPersonalizacion area5 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Piernas", true));
 
-            Categoria categoria1 = cagoriaRepository.save(new Categoria("Remera", true));
-            Categoria categoria2 = cagoriaRepository.save(new Categoria("Buzo", true));
-            Categoria categoria3 = cagoriaRepository.save(new Categoria("Campera", true));
-            Categoria categoria4 = cagoriaRepository.save(new Categoria("Pantalones", true));
-            Categoria categoria5 = cagoriaRepository.save(new Categoria("Zapatos", true));
+            Categoria categoria1 = cagoriaRepository.save(new Categoria("Remera", true, LocalDate.now(), null));
+            Categoria categoria2 = cagoriaRepository.save(new Categoria("Buzo", true, LocalDate.now(), null));
+            Categoria categoria3 = cagoriaRepository.save(new Categoria("Campera", true, LocalDate.now(), null));
+            Categoria categoria4 = cagoriaRepository.save(new Categoria("Pantalones", true, LocalDate.now(), null));
+            Categoria categoria5 = cagoriaRepository.save(new Categoria("Zapatos", true, LocalDate.now(), null));
 
             PosiblePersonalizacion posible1 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo1, area1, true));
             List<PosiblePersonalizacion> posibles1 = Collections.singletonList(posible1);
@@ -144,7 +144,6 @@ public class EcommerceApplication {
             vendedor5.setMetodosDePago(metodoPago5);
             vendedorRepository.save(vendedor5);
 
-
             PersonalizacionConcreta concreta1 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 1", 1500.55, posible1));
             List<PersonalizacionConcreta> concretas1 = Collections.singletonList(concreta1);
 
@@ -191,7 +190,6 @@ public class EcommerceApplication {
             PublicacionCarrito carrito3 = carritoRepository.save(new PublicacionCarrito(3, publicacion3));
             PublicacionCarrito carrito4 = carritoRepository.save(new PublicacionCarrito(4, publicacion4));
             PublicacionCarrito carrito5 = carritoRepository.save(new PublicacionCarrito(5, publicacion5));
-
 
         };
     }
