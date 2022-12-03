@@ -1,5 +1,6 @@
 package ar.utn.capgemini.ecommerce.model.entities;
 
+import ar.utn.capgemini.ecommerce.model.utils.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,9 @@ import java.util.List;
 @Entity
 @Table(name = "productoBase")
 public class ProductoBase extends EntidadPersistente {
+
+    @Column(name = "estado")
+    private boolean estaActivo;
 
     @NotBlank
     @NotEmpty
@@ -46,12 +50,13 @@ public class ProductoBase extends EntidadPersistente {
     @JoinColumn(name = "productoBase_id", referencedColumnName = "id")
     private List<PosiblePersonalizacion> posiblesPersonalizaciones;
 
-    public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String precioBaseUrl, Categoria categoria) {
+    public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String precioBaseUrl, Categoria categoria, boolean estaActivo) {
         this.descripcion = descripcion;
         this.precioBase = precioBase;
         this.tiempoDeFabricacion = tiempoDeFabricacion;
         this.precioBaseUrl = precioBaseUrl;
         this.categoria = categoria;
+        this.estaActivo = true;
     }
 
     public ProductoBase() {

@@ -55,7 +55,6 @@ public class EcommerceApplication {
         LOG.info("Cargando datos en la base de datos");
 
         return (args) -> {
-
             TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo UTN"));
             TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo Ferrari"));
             TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Degrade"));
@@ -85,23 +84,23 @@ public class EcommerceApplication {
             PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5));
             List<PosiblePersonalizacion> posibles5 = Collections.singletonList(posible5);
 
-            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 1500.55, 3, "url 1", categoria1));
+            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 1500.55, 3, "url 1", categoria1, true));
             base1.setPosiblesPersonalizaciones(posibles1);
             productoBaseRepository.save(base1);
 
-            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 1500.55, 3, "url 2", categoria2));
+            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 1500.55, 3, "url 2", categoria2, true));
             base2.setPosiblesPersonalizaciones(posibles2);
             productoBaseRepository.save(base2);
 
-            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 1500.55, 3, "url 3", categoria3));
+            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 1500.55, 3, "url 3", categoria3, true));
             base3.setPosiblesPersonalizaciones(posibles3);
             productoBaseRepository.save(base3);
 
-            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 1500.55, 3, "url 4", categoria4));
+            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 1500.55, 3, "url 4", categoria4, true));
             base4.setPosiblesPersonalizaciones(posibles4);
             productoBaseRepository.save(base4);
 
-            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 1500.55, 3, "url 5", categoria5));
+            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 1500.55, 3, "url 5", categoria5, true));
             base5.setPosiblesPersonalizaciones(posibles5);
             productoBaseRepository.save(base5);
 
@@ -181,17 +180,18 @@ public class EcommerceApplication {
             personalizado5.setPersonalizacionesConcretas(concretas5);
             productoPersonalizadoRepository.save(personalizado5);
 
-            Publicacion publicacion1 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDate.now(), LocalDate.now(), personalizado1));
-            Publicacion publicacion2 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDate.now(), LocalDate.now(), personalizado2));
-            Publicacion publicacion3 = publicacionRepository.save(new Publicacion(ESTADO.CANCELADO, LocalDate.now(), LocalDate.now(), personalizado3));
-            Publicacion publicacion4 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDate.now(), LocalDate.now(), personalizado4));
-            Publicacion publicacion5 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDate.now(), LocalDate.now(), personalizado5));
+            Publicacion publicacion1 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDate.now(), personalizado1));
+            Publicacion publicacion2 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDate.now(), personalizado2));
+            Publicacion publicacion3 = publicacionRepository.save(new Publicacion(ESTADO.CANCELADO, LocalDate.now(), personalizado3));
+            Publicacion publicacion4 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDate.now(), personalizado4));
+            Publicacion publicacion5 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDate.now(), personalizado5));
 
             PublicacionCarrito carrito1 = carritoRepository.save(new PublicacionCarrito(1, publicacion1));
             PublicacionCarrito carrito2 = carritoRepository.save(new PublicacionCarrito(2, publicacion2));
             PublicacionCarrito carrito3 = carritoRepository.save(new PublicacionCarrito(3, publicacion3));
             PublicacionCarrito carrito4 = carritoRepository.save(new PublicacionCarrito(4, publicacion4));
             PublicacionCarrito carrito5 = carritoRepository.save(new PublicacionCarrito(5, publicacion5));
+
 
         };
     }

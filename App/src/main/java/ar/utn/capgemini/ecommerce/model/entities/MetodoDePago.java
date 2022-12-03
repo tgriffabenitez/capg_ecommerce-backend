@@ -1,5 +1,6 @@
 package ar.utn.capgemini.ecommerce.model.entities;
 
+import ar.utn.capgemini.ecommerce.model.utils.EntidadPersistente;
 import ar.utn.capgemini.ecommerce.model.utils.PAGO;
 import lombok.Getter;
 import lombok.Setter;

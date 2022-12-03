@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model.entities;
 
 import ar.utn.capgemini.ecommerce.model.utils.ESTADO;
+import ar.utn.capgemini.ecommerce.model.utils.EntidadPersistente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,10 +20,6 @@ public class Publicacion extends EntidadPersistente {
     @Enumerated(EnumType.STRING)
     private ESTADO estadoPublicacion;
 
-    @NotNull
-    @PastOrPresent
-    @Column(name = "fechaDeAlta", columnDefinition = "DATE")
-    private LocalDate fechaDeAlta;
 
     @NotNull
     @PastOrPresent
@@ -34,10 +31,9 @@ public class Publicacion extends EntidadPersistente {
     @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
     private ProductoPersonalizado productoPersonalizado;
 
-    public Publicacion(ESTADO estadoPublicacion, LocalDate fechaCambioEstado, LocalDate fechaDeAlta, ProductoPersonalizado productoPersonalizado) {
+    public Publicacion(ESTADO estadoPublicacion, LocalDate fechaCambioEstado, ProductoPersonalizado productoPersonalizado) {
         this.estadoPublicacion = estadoPublicacion;
         this.fechaCambioEstado = fechaCambioEstado;
-        this.fechaDeAlta = fechaDeAlta;
         this.productoPersonalizado = productoPersonalizado;
     }
 
