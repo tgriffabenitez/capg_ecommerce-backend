@@ -55,17 +55,17 @@ public class EcommerceApplication {
         LOG.info("Cargando datos en la base de datos");
 
         return (args) -> {
-            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo UTN"));
-            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo Ferrari"));
-            TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Degrade"));
-            TipoPersonalizacion tipo4 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Emoji"));
-            TipoPersonalizacion tipo5 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Texto ABC"));
+            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo UTN", true));
+            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo Ferrari", true));
+            TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Degrade", true));
+            TipoPersonalizacion tipo4 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Emoji", true));
+            TipoPersonalizacion tipo5 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Texto ABC", true));
 
-            AreaPersonalizacion area1 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Espalda"));
-            AreaPersonalizacion area2 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Dorso"));
-            AreaPersonalizacion area3 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Cuello"));
-            AreaPersonalizacion area4 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Capucha"));
-            AreaPersonalizacion area5 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Piernas"));
+            AreaPersonalizacion area1 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Espalda", true));
+            AreaPersonalizacion area2 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Dorso", true));
+            AreaPersonalizacion area3 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Cuello", true));
+            AreaPersonalizacion area4 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Capucha", true));
+            AreaPersonalizacion area5 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Piernas", true));
 
             Categoria categoria1 = cagoriaRepository.save(new Categoria("Remera", true));
             Categoria categoria2 = cagoriaRepository.save(new Categoria("Buzo", true));

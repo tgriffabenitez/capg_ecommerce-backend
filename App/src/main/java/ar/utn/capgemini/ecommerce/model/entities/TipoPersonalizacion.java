@@ -14,13 +14,17 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "tipoPersonalizacion")
 public class TipoPersonalizacion extends EntidadPersistente {
 
+    @Column(name = "estado")
+    private boolean estaActivo;
+
     @NotBlank
     @NotEmpty
     @Column(name = "descripcion")
     private String tipo;
 
-    public TipoPersonalizacion(String tipo) {
+    public TipoPersonalizacion(String tipo, boolean estaActivo) {
         this.tipo = tipo;
+        this.estaActivo = true;
     }
 
     public TipoPersonalizacion() {

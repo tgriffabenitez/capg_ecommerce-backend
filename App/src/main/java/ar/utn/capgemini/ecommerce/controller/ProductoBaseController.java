@@ -1,12 +1,8 @@
 package ar.utn.capgemini.ecommerce.controller;
 
 import ar.utn.capgemini.ecommerce.model.dto.ProductoBaseDTO;
-import ar.utn.capgemini.ecommerce.model.entities.Categoria;
-import ar.utn.capgemini.ecommerce.model.entities.PosiblePersonalizacion;
-import ar.utn.capgemini.ecommerce.model.entities.ProductoBase;
-import ar.utn.capgemini.ecommerce.repository.CategoriaRepository;
-import ar.utn.capgemini.ecommerce.repository.PosiblePersonalizacionRepository;
-import ar.utn.capgemini.ecommerce.repository.ProductoBaseRepository;
+import ar.utn.capgemini.ecommerce.model.entities.*;
+import ar.utn.capgemini.ecommerce.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +25,10 @@ public class ProductoBaseController {
     public CategoriaRepository categoriaRepository;
     @Autowired
     public PosiblePersonalizacionRepository posiblePersonalizacionRepository;
+    @Autowired
+    public TipoPersonalizacionRepository tipoPersonalizacionRepository;
+    @Autowired
+    public AreaPersonalizacionRepository areaPersonalizacionRepository;
 
     @GetMapping("/productosBase")
     public Page<ProductoBase> obtenerProductos(Pageable pagina) {
@@ -127,47 +127,60 @@ public class ProductoBaseController {
         }
     }
 
+    @GetMapping(path = "/productosBase/tiposPersonalizaciones")
+    public Page<TipoPersonalizacion> obtenerTiposPersonalizaciones(Pageable pagina) {
+        return tipoPersonalizacionRepository.findAll(pagina);
+    }
 
+    @GetMapping(path = {"/productosBase/tiposPersonalizaciones/{id}"})
+    public ResponseEntity<TipoPersonalizacion> obtenerTipoPersonalizacionPorId(@PathVariable Integer id) {
+        if (tipoPersonalizacionRepository.existsById(id)) {
+            TipoPersonalizacion tipoPersonalizacion = tipoPersonalizacionRepository.findById(id).get();
+            return new ResponseEntity<>(tipoPersonalizacion, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
+    @Transactional
+    @DeleteMapping(path = {"/productosBase/tiposPersonalizaciones/{id}"})
+    public ResponseEntity<TipoPersonalizacion> darTipoPersonalizacionDeBaja(@PathVariable Integer id) {
+        if (tipoPersonalizacionRepository.existsById(id)) {
+            TipoPersonalizacion tipoPersonalizacion = tipoPersonalizacionRepository.findById(id).get();
+            tipoPersonalizacion.setEstaActivo(false);
+            tipoPersonalizacionRepository.save(tipoPersonalizacion);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
+    @GetMapping(path = "/productosBase/areasPersonalizaciones")
+    public Page<AreaPersonalizacion> obtenerAreasPersonalizaciones(Pageable pagina) {
+        return areaPersonalizacionRepository.findAll(pagina);
+    }
 
+    @GetMapping(path = {"/productosBase/areasPersonalizaciones/{id}"})
+    public ResponseEntity<AreaPersonalizacion> obtenerAreaPersonalizacionPorId(@PathVariable Integer id) {
+        if (areaPersonalizacionRepository.existsById(id)) {
+            AreaPersonalizacion areaPersonalizacion = areaPersonalizacionRepository.findById(id).get();
+            return new ResponseEntity<>(areaPersonalizacion, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    1) post producto/id/posible
-    2) post posible
-    * /{productoBaseId}/posible
-    *
-*/
+    @Transactional
+    @DeleteMapping(path = {"/productosBase/areasPersonalizaciones/{id}"})
+    public ResponseEntity<AreaPersonalizacion> darAreaPersonalizacionDeBaja(@PathVariable Integer id) {
+        if (areaPersonalizacionRepository.existsById(id)) {
+            AreaPersonalizacion areaPersonalizacion = areaPersonalizacionRepository.findById(id).get();
+            areaPersonalizacion.setEstaActivo(false);
+            areaPersonalizacionRepository.save(areaPersonalizacion);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

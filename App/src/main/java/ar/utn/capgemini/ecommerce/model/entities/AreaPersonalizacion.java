@@ -14,13 +14,17 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "areaPersonalizacion")
 public class AreaPersonalizacion extends EntidadPersistente {
 
+    @Column(name = "estado")
+    private boolean estaActivo;
+
     @NotBlank
     @NotEmpty
     @Column(name = "area")
     private String area;
 
-    public AreaPersonalizacion(String area) {
+    public AreaPersonalizacion(String area, boolean estaActivo) {
         this.area = area;
+        this.estaActivo = true;
     }
 
     public AreaPersonalizacion() {
