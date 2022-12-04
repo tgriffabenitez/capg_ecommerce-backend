@@ -7,6 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,14 +35,37 @@ public class ProductoPersonalizado extends EntidadPersistente {
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
-    public ProductoPersonalizado(String productoPersonalizadoUrl, ProductoBase productoBase, Vendedor vendedor) {
+    @PastOrPresent
+    @Column(name = "fechaDeAlta", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeAlta;
+
+    @PastOrPresent
+    @Column(name = "fechaDeBaja", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeBaja;
+
+    @PastOrPresent
+    @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
+    private LocalDateTime fechaUltimaModificacion;
+
+    @Column(name = "estado")
+    private boolean estaActivo;
+
+    public ProductoPersonalizado(String productoPersonalizadoUrl, ProductoBase productoBase, Vendedor vendedor, LocalDateTime fechaDeAlta) {
         this.productoPersonalizadoUrl = productoPersonalizadoUrl;
         this.productoBase = productoBase;
         this.vendedor = vendedor;
+        this.fechaDeAlta = fechaDeAlta;
+        this.fechaDeBaja = null;
+        this.fechaUltimaModificacion = null;
+        this.estaActivo = true;
     }
 
     public ProductoPersonalizado() {
         this.personalizacionesConcretas = new ArrayList<>();
+    }
+
+    public void agregarPersonalizacionConcreta(PersonalizacionConcreta personalizacionConcreta) {
+        this.personalizacionesConcretas.add(personalizacionConcreta);
     }
 
 }

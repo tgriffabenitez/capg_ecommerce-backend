@@ -48,15 +48,15 @@ public class ProductoBase extends EntidadPersistente {
     private boolean estaActivo;
 
     @PastOrPresent
-    @Column(name = "fechaDeAlta")
+    @Column(name = "fechaDeAlta", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeAlta;
 
     @PastOrPresent
-    @Column(name = "fechaDeBaja")
+    @Column(name = "fechaDeBaja", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeBaja;
 
     @PastOrPresent
-    @Column(name = "fechaUltimaModificacion")
+    @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaUltimaModificacion;
 
     public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria, LocalDateTime fechaDeAlta) {

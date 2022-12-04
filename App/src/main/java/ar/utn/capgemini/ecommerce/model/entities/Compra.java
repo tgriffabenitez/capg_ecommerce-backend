@@ -20,12 +20,12 @@ public class Compra extends EntidadPersistente {
 
     @NotNull
     @Past
-    @Column(name = "fechaDeCompra", columnDefinition = "TIMESTAMP")
+    @Column(name = "fechaDeCompra", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeCompra;
 
     @NotNull
     @Past
-    @Column(name = "horaDeCompra", columnDefinition = "TIMESTAMP")
+    @Column(name = "horaDeCompra", columnDefinition = "DATETIME")
     private LocalDateTime horaDeCompra;
 
     @NotNull
@@ -38,7 +38,7 @@ public class Compra extends EntidadPersistente {
 
     @NotNull
     @Past
-    @Column(name = "fechaCambioEstado", columnDefinition = "TIMESTAMP")
+    @Column(name = "fechaCambioEstado", columnDefinition = "DATETIME")
     private LocalDateTime fechaCambioEstado;
 
     @NotNull

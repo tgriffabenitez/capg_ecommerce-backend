@@ -144,38 +144,38 @@ public class EcommerceApplication {
             vendedor5.setMetodosDePago(metodoPago5);
             vendedorRepository.save(vendedor5);
 
-            PersonalizacionConcreta concreta1 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 1", 1500.55, posible1));
+            PersonalizacionConcreta concreta1 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 1", 1500.55, posible1, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas1 = Collections.singletonList(concreta1);
 
-            PersonalizacionConcreta concreta2 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 2", 1500.55, posible2));
+            PersonalizacionConcreta concreta2 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 2", 1500.55, posible2, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas2 = Collections.singletonList(concreta2);
 
-            PersonalizacionConcreta concreta3 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 3", 1500.55, posible3));
+            PersonalizacionConcreta concreta3 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 3", 1500.55, posible3, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas3 = Collections.singletonList(concreta3);
 
-            PersonalizacionConcreta concreta4 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 4", 1500.55, posible4));
+            PersonalizacionConcreta concreta4 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 4", 1500.55, posible4, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas4 = Collections.singletonList(concreta4);
 
-            PersonalizacionConcreta concreta5 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 5", 1500.55, posible5));
+            PersonalizacionConcreta concreta5 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 5", 1500.55, posible5, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas5 = Collections.singletonList(concreta5);
 
-            ProductoPersonalizado personalizado1 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 1", base1, vendedor1));
+            ProductoPersonalizado personalizado1 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 1", base1, vendedor1, LocalDateTime.now()));
             personalizado1.setPersonalizacionesConcretas(concretas1);
             productoPersonalizadoRepository.save(personalizado1);
 
-            ProductoPersonalizado personalizado2 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 2", base2, vendedor2));
+            ProductoPersonalizado personalizado2 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 2", base2, vendedor2, LocalDateTime.now()));
             personalizado2.setPersonalizacionesConcretas(concretas2);
             productoPersonalizadoRepository.save(personalizado2);
 
-            ProductoPersonalizado personalizado3 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 3", base3, vendedor3));
+            ProductoPersonalizado personalizado3 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 3", base3, vendedor3, LocalDateTime.now()));
             personalizado3.setPersonalizacionesConcretas(concretas3);
             productoPersonalizadoRepository.save(personalizado3);
 
-            ProductoPersonalizado personalizado4 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 4", base4, vendedor4));
+            ProductoPersonalizado personalizado4 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 4", base4, vendedor4, LocalDateTime.now()));
             personalizado4.setPersonalizacionesConcretas(concretas4);
             productoPersonalizadoRepository.save(personalizado4);
 
-            ProductoPersonalizado personalizado5 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 5", base5, vendedor5));
+            ProductoPersonalizado personalizado5 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 5", base5, vendedor5, LocalDateTime.now()));
             personalizado5.setPersonalizacionesConcretas(concretas5);
             productoPersonalizadoRepository.save(personalizado5);
 
