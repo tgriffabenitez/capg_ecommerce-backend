@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,16 +21,18 @@ public class TipoPersonalizacion extends EntidadPersistente {
     private String tipo;
 
     @PastOrPresent
-    private LocalDate fechaDeAlta;
+    @Column(name = "fechaCreacion", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeAlta;
 
     @PastOrPresent
-    private LocalDate fechaDeBaja;
+    @Column(name = "fechaDeBaja", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeBaja;
 
     @PastOrPresent
-    @Column(name = "fechaUltimaModificacion")
-    private LocalDate fechaUltimaModificacion;
+    @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
+    private LocalDateTime fechaUltimaModificacion;
 
-    public TipoPersonalizacion(String tipo, LocalDate fechaDeAlta) {
+    public TipoPersonalizacion(String tipo, LocalDateTime fechaDeAlta) {
         this.tipo = tipo;
         this.estaActivo = true;
         this.fechaDeAlta = fechaDeAlta;

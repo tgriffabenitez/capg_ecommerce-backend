@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,15 +23,15 @@ public class Publicacion extends EntidadPersistente {
 
     @NotNull
     @PastOrPresent
-    @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
-    private LocalDate fechaCambioEstado;
+    @Column(name = "fechaCambioEstado", columnDefinition = "TIMESTAMP")
+    private LocalDateTime fechaCambioEstado;
 
     @NotNull
     @OneToOne
     @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
     private ProductoPersonalizado productoPersonalizado;
 
-    public Publicacion(ESTADO estadoPublicacion, LocalDate fechaCambioEstado, ProductoPersonalizado productoPersonalizado) {
+    public Publicacion(ESTADO estadoPublicacion, LocalDateTime fechaCambioEstado, ProductoPersonalizado productoPersonalizado) {
         this.estadoPublicacion = estadoPublicacion;
         this.fechaCambioEstado = fechaCambioEstado;
         this.productoPersonalizado = productoPersonalizado;

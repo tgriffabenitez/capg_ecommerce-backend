@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -52,7 +52,7 @@ public class ProductoBaseController {
     public ResponseEntity<ProductoBase> crearProductoBase(@RequestBody @Valid ProductoBaseDTO productoBaseDTO, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             Categoria categoria = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
-            ProductoBase productoBase = new ProductoBase(productoBaseDTO.getDescripcion(), productoBaseDTO.getPrecioBase(), productoBaseDTO.getTiempoDeFabricacion(), productoBaseDTO.getProductoBaseUrl(), categoria, LocalDate.now());
+            ProductoBase productoBase = new ProductoBase(productoBaseDTO.getDescripcion(), productoBaseDTO.getPrecioBase(), productoBaseDTO.getTiempoDeFabricacion(), productoBaseDTO.getProductoBaseUrl(), categoria, LocalDateTime.now());
 
             productoBaseRepository.save(productoBase);
             return new ResponseEntity<>(productoBase, HttpStatus.CREATED);
@@ -72,7 +72,7 @@ public class ProductoBaseController {
             productoBase.setProductoBaseUrl(productoBaseDTO.getProductoBaseUrl());
             productoBase.setDescripcion(productoBaseDTO.getDescripcion());
             productoBase.setTiempoDeFabricacion(productoBaseDTO.getTiempoDeFabricacion());
-            productoBase.setFechaUltimaModificacion(LocalDate.now());
+            productoBase.setFechaUltimaModificacion(LocalDateTime.now());
             return new ResponseEntity<>(productoBase, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -85,7 +85,7 @@ public class ProductoBaseController {
         if (productoBaseRepository.existsById(id)) {
             ProductoBase productoBase = productoBaseRepository.findById(id).get();
             productoBase.setEstaActivo(false);
-            productoBase.setFechaDeBaja(LocalDate.now());
+            productoBase.setFechaDeBaja(LocalDateTime.now());
             return new ResponseEntity<>(productoBase, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -114,8 +114,8 @@ public class ProductoBaseController {
         if (categoriaRepository.existsById(id)) {
             Categoria categoria = categoriaRepository.findById(id).get();
             categoria.setEstaActivo(false);
-            categoria.setFechaDeBaja(LocalDate.now());
-            categoria.setFechaUltimaModificacion(LocalDate.now());
+            categoria.setFechaDeBaja(LocalDateTime.now());
+            categoria.setFechaUltimaModificacion(LocalDateTime.now());
             categoriaRepository.save(categoria);
             return new ResponseEntity<>(categoria, HttpStatus.OK);
         } else {
@@ -130,7 +130,7 @@ public class ProductoBaseController {
                 Categoria categoriaExistente = categoriaRepository.findByCategoria(categoriaDTO.getCategoria());
                 return new ResponseEntity<>(categoriaExistente, HttpStatus.OK);
             } else {
-                Categoria categoriaNueva = new Categoria(categoriaDTO.getCategoria(), LocalDate.now());
+                Categoria categoriaNueva = new Categoria(categoriaDTO.getCategoria(), LocalDateTime.now());
                 categoriaRepository.save(categoriaNueva);
                 return new ResponseEntity<>(categoriaNueva, HttpStatus.OK);
             }
@@ -145,7 +145,7 @@ public class ProductoBaseController {
         if (categoriaRepository.existsById(id)) {
             Categoria categoria = categoriaRepository.findById(id).get();
             categoria.setCategoria(categoriaDTO.getCategoria());
-            categoria.setFechaUltimaModificacion(LocalDate.now());
+            categoria.setFechaUltimaModificacion(LocalDateTime.now());
             return new ResponseEntity<>(categoria, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -175,8 +175,8 @@ public class ProductoBaseController {
         if (posiblePersonalizacionRepository.existsById(id)) {
             PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(id).get();
             posiblePersonalizacion.setEstaActivo(false);
-            posiblePersonalizacion.setFechaDeBaja(LocalDate.now());
-            posiblePersonalizacion.setFechaUltimaModificacion(LocalDate.now());
+            posiblePersonalizacion.setFechaDeBaja(LocalDateTime.now());
+            posiblePersonalizacion.setFechaUltimaModificacion(LocalDateTime.now());
             return new ResponseEntity<>(posiblePersonalizacion, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -198,13 +198,13 @@ public class ProductoBaseController {
                 return new ResponseEntity<>(posibleExiste, HttpStatus.OK);
 
             } else {
-                TipoPersonalizacion tipoNuevo = new TipoPersonalizacion(posibleDTO.getTipoPersonalizacion(), LocalDate.now());
-                tipoNuevo.setFechaDeAlta(LocalDate.now());
+                TipoPersonalizacion tipoNuevo = new TipoPersonalizacion(posibleDTO.getTipoPersonalizacion(), LocalDateTime.now());
+                tipoNuevo.setFechaDeAlta(LocalDateTime.now());
                 tipoPersonalizacionRepository.save(tipoNuevo);
-                AreaPersonalizacion areaNueva = new AreaPersonalizacion(posibleDTO.getAreaPersonalizacion(), LocalDate.now());
-                areaNueva.setFechaDeAlta(LocalDate.now());
+                AreaPersonalizacion areaNueva = new AreaPersonalizacion(posibleDTO.getAreaPersonalizacion(), LocalDateTime.now());
+                areaNueva.setFechaDeAlta(LocalDateTime.now());
                 areaPersonalizacionRepository.save(areaNueva);
-                PosiblePersonalizacion posibleNuevo = new PosiblePersonalizacion(tipoNuevo, areaNueva, LocalDate.now());
+                PosiblePersonalizacion posibleNuevo = new PosiblePersonalizacion(tipoNuevo, areaNueva, LocalDateTime.now());
                 posiblePersonalizacionRepository.save(posibleNuevo);
                 productoBase.agregarPosiblePersonalizacion(posibleNuevo);
                 productoBaseRepository.save(productoBase);
@@ -252,8 +252,8 @@ public class ProductoBaseController {
                 TipoPersonalizacion tipoExistente = tipoPersonalizacionRepository.findByTipo(tipoDTO.getTipoPersonalizacion());
                 return new ResponseEntity<>(tipoExistente, HttpStatus.OK);
             } else {
-                TipoPersonalizacion tipoNuevo = new TipoPersonalizacion(tipoDTO.getTipoPersonalizacion(), LocalDate.now());
-                tipoNuevo.setFechaDeAlta(LocalDate.now());
+                TipoPersonalizacion tipoNuevo = new TipoPersonalizacion(tipoDTO.getTipoPersonalizacion(), LocalDateTime.now());
+                tipoNuevo.setFechaDeAlta(LocalDateTime.now());
                 tipoPersonalizacionRepository.save(tipoNuevo);
                 return new ResponseEntity<>(tipoNuevo, HttpStatus.OK);
             }
@@ -298,8 +298,8 @@ public class ProductoBaseController {
                 AreaPersonalizacion areaExistente = areaPersonalizacionRepository.findByArea(areaDTO.getAreaPersonalizacion());
                 return new ResponseEntity<>(areaExistente, HttpStatus.OK);
             } else {
-                AreaPersonalizacion areaNueva = new AreaPersonalizacion(areaDTO.getAreaPersonalizacion(), LocalDate.now());
-                areaNueva.setFechaDeAlta(LocalDate.now());
+                AreaPersonalizacion areaNueva = new AreaPersonalizacion(areaDTO.getAreaPersonalizacion(), LocalDateTime.now());
+                areaNueva.setFechaDeAlta(LocalDateTime.now());
                 areaPersonalizacionRepository.save(areaNueva);
                 return new ResponseEntity<>(areaNueva, HttpStatus.OK);
             }

@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,18 +23,18 @@ public class Categoria extends EntidadPersistente {
     private boolean estaActivo;
 
     @PastOrPresent
-    @Column(name = "fechaDeAlta")
-    private LocalDate fechaDeAlta;
+    @Column(name = "fechaDeAlta", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeAlta;
 
     @PastOrPresent
-    @Column(name = "fechaDeBaja")
-    private LocalDate fechaDeBaja;
+    @Column(name = "fechaDeBaja", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeBaja;
 
     @PastOrPresent
-    @Column(name = "fechaUltimaModificacion")
-    private LocalDate fechaUltimaModificacion;
+    @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
+    private LocalDateTime fechaUltimaModificacion;
 
-    public Categoria(String categoria, LocalDate fechaDeAlta) {
+    public Categoria(String categoria, LocalDateTime fechaDeAlta) {
         this.categoria = categoria;
         this.fechaDeAlta = fechaDeAlta;
         this.fechaDeBaja = null;

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,17 +50,17 @@ public class ProductoBase extends EntidadPersistente {
 
     @PastOrPresent
     @Column(name = "fechaDeAlta")
-    private LocalDate fechaDeAlta;
+    private LocalDateTime fechaDeAlta;
 
     @PastOrPresent
     @Column(name = "fechaDeBaja")
-    private LocalDate fechaDeBaja;
+    private LocalDateTime fechaDeBaja;
 
     @PastOrPresent
     @Column(name = "fechaUltimaModificacion")
-    private LocalDate fechaUltimaModificacion;
+    private LocalDateTime fechaUltimaModificacion;
 
-    public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria, LocalDate fechaDeAlta) {
+    public ProductoBase(String descripcion, double precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria, LocalDateTime fechaDeAlta) {
         this.descripcion = descripcion;
         this.precioBase = precioBase;
         this.tiempoDeFabricacion = tiempoDeFabricacion;

@@ -8,8 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +20,13 @@ public class Compra extends EntidadPersistente {
 
     @NotNull
     @Past
-    @Column(name = "fechaDeCompra", columnDefinition = "DATE")
-    private LocalDate fechaDeCompra;
+    @Column(name = "fechaDeCompra", columnDefinition = "TIMESTAMP")
+    private LocalDateTime fechaDeCompra;
 
     @NotNull
     @Past
-    @Column(name = "horaDeCompra", columnDefinition = "TIME")
-    private LocalTime horaDeCompra;
+    @Column(name = "horaDeCompra", columnDefinition = "TIMESTAMP")
+    private LocalDateTime horaDeCompra;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -39,8 +38,8 @@ public class Compra extends EntidadPersistente {
 
     @NotNull
     @Past
-    @Column(name = "fechaCambioEstado", columnDefinition = "DATE")
-    private LocalDate fechaCambioEstado;
+    @Column(name = "fechaCambioEstado", columnDefinition = "TIMESTAMP")
+    private LocalDateTime fechaCambioEstado;
 
     @NotNull
     @Positive
@@ -51,7 +50,7 @@ public class Compra extends EntidadPersistente {
     @JoinColumn(name = "publicacionCarrito", referencedColumnName = "id")
     private List<PublicacionCarrito> publicacionesCarrito;
 
-    public Compra(LocalDate fechaDeCompra, LocalTime horaDeCompra, PAGO metodoDePago, ESTADO estadoDeCompra, LocalDate fechaCambioEstado, double precioTotal) {
+    public Compra(LocalDateTime fechaDeCompra, LocalDateTime horaDeCompra, PAGO metodoDePago, ESTADO estadoDeCompra, LocalDateTime fechaCambioEstado, double precioTotal) {
         this.fechaDeCompra = fechaDeCompra;
         this.horaDeCompra = horaDeCompra;
         this.metodoDePago = metodoDePago;

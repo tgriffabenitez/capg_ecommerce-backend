@@ -12,7 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,52 +55,52 @@ public class EcommerceApplication {
         LOG.info("Cargando datos en la base de datos");
 
         return (args) -> {
-            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo UTN", LocalDate.now()));
-            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo Ferrari", LocalDate.now()));
-            TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Degrade", LocalDate.now()));
-            TipoPersonalizacion tipo4 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Emoji", LocalDate.now()));
-            TipoPersonalizacion tipo5 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Texto ABC", LocalDate.now()));
+            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo UTN", LocalDateTime.now()));
+            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo Ferrari", LocalDateTime.now()));
+            TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Degrade", LocalDateTime.now()));
+            TipoPersonalizacion tipo4 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Emoji", LocalDateTime.now()));
+            TipoPersonalizacion tipo5 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Texto ABC", LocalDateTime.now()));
 
-            AreaPersonalizacion area1 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Espalda", LocalDate.now()));
-            AreaPersonalizacion area2 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Dorso", LocalDate.now()));
-            AreaPersonalizacion area3 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Cuello", LocalDate.now()));
-            AreaPersonalizacion area4 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Capucha", LocalDate.now()));
-            AreaPersonalizacion area5 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Piernas", LocalDate.now()));
+            AreaPersonalizacion area1 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Espalda", LocalDateTime.now()));
+            AreaPersonalizacion area2 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Dorso", LocalDateTime.now()));
+            AreaPersonalizacion area3 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Cuello", LocalDateTime.now()));
+            AreaPersonalizacion area4 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Capucha", LocalDateTime.now()));
+            AreaPersonalizacion area5 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Piernas", LocalDateTime.now()));
 
-            Categoria categoria1 = cagoriaRepository.save(new Categoria("Remera", LocalDate.now()));
-            Categoria categoria2 = cagoriaRepository.save(new Categoria("Buzo", LocalDate.now()));
-            Categoria categoria3 = cagoriaRepository.save(new Categoria("Campera", LocalDate.now()));
-            Categoria categoria4 = cagoriaRepository.save(new Categoria("Pantalones", LocalDate.now()));
-            Categoria categoria5 = cagoriaRepository.save(new Categoria("Zapatos", LocalDate.now()));
+            Categoria categoria1 = cagoriaRepository.save(new Categoria("Remera", LocalDateTime.now()));
+            Categoria categoria2 = cagoriaRepository.save(new Categoria("Buzo", LocalDateTime.now()));
+            Categoria categoria3 = cagoriaRepository.save(new Categoria("Campera", LocalDateTime.now()));
+            Categoria categoria4 = cagoriaRepository.save(new Categoria("Pantalones", LocalDateTime.now()));
+            Categoria categoria5 = cagoriaRepository.save(new Categoria("Zapatos", LocalDateTime.now()));
 
-            PosiblePersonalizacion posible1 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo1, area1, LocalDate.now()));
+            PosiblePersonalizacion posible1 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo1, area1, LocalDateTime.now()));
             List<PosiblePersonalizacion> posibles1 = Collections.singletonList(posible1);
-            PosiblePersonalizacion posible2 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo2, area2, LocalDate.now()));
+            PosiblePersonalizacion posible2 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo2, area2, LocalDateTime.now()));
             List<PosiblePersonalizacion> posibles2 = Collections.singletonList(posible2);
-            PosiblePersonalizacion posible3 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo3, area3, LocalDate.now()));
+            PosiblePersonalizacion posible3 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo3, area3, LocalDateTime.now()));
             List<PosiblePersonalizacion> posibles3 = Collections.singletonList(posible3);
-            PosiblePersonalizacion posible4 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo4, area4, LocalDate.now()));
+            PosiblePersonalizacion posible4 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo4, area4, LocalDateTime.now()));
             List<PosiblePersonalizacion> posibles4 = Collections.singletonList(posible4);
-            PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5, LocalDate.now()));
+            PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5, LocalDateTime.now()));
             List<PosiblePersonalizacion> posibles5 = Collections.singletonList(posible5);
 
-            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 1500.55, 3, "url 1", categoria1, LocalDate.now()));
+            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 1500.55, 3, "url 1", categoria1, LocalDateTime.now()));
             base1.setPosiblesPersonalizaciones(posibles1);
             productoBaseRepository.save(base1);
 
-            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 1500.55, 3, "url 2", categoria2, LocalDate.now()));
+            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 1500.55, 3, "url 2", categoria2, LocalDateTime.now()));
             base2.setPosiblesPersonalizaciones(posibles2);
             productoBaseRepository.save(base2);
 
-            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 1500.55, 3, "url 3", categoria3, LocalDate.now()));
+            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 1500.55, 3, "url 3", categoria3, LocalDateTime.now()));
             base3.setPosiblesPersonalizaciones(posibles3);
             productoBaseRepository.save(base3);
 
-            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 1500.55, 3, "url 4", categoria4, LocalDate.now()));
+            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 1500.55, 3, "url 4", categoria4, LocalDateTime.now()));
             base4.setPosiblesPersonalizaciones(posibles4);
             productoBaseRepository.save(base4);
 
-            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 1500.55, 3, "url 5", categoria5, LocalDate.now()));
+            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 1500.55, 3, "url 5", categoria5, LocalDateTime.now()));
             base5.setPosiblesPersonalizaciones(posibles5);
             productoBaseRepository.save(base5);
 
@@ -179,11 +179,11 @@ public class EcommerceApplication {
             personalizado5.setPersonalizacionesConcretas(concretas5);
             productoPersonalizadoRepository.save(personalizado5);
 
-            Publicacion publicacion1 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDate.now(), personalizado1));
-            Publicacion publicacion2 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDate.now(), personalizado2));
-            Publicacion publicacion3 = publicacionRepository.save(new Publicacion(ESTADO.CANCELADO, LocalDate.now(), personalizado3));
-            Publicacion publicacion4 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDate.now(), personalizado4));
-            Publicacion publicacion5 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDate.now(), personalizado5));
+            Publicacion publicacion1 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDateTime.now(), personalizado1));
+            Publicacion publicacion2 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDateTime.now(), personalizado2));
+            Publicacion publicacion3 = publicacionRepository.save(new Publicacion(ESTADO.CANCELADO, LocalDateTime.now(), personalizado3));
+            Publicacion publicacion4 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDateTime.now(), personalizado4));
+            Publicacion publicacion5 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDateTime.now(), personalizado5));
 
             PublicacionCarrito carrito1 = carritoRepository.save(new PublicacionCarrito(1, publicacion1));
             PublicacionCarrito carrito2 = carritoRepository.save(new PublicacionCarrito(2, publicacion2));

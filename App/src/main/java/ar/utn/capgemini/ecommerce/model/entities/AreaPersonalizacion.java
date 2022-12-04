@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,16 +21,18 @@ public class AreaPersonalizacion extends EntidadPersistente {
     private String area;
 
     @PastOrPresent
-    private LocalDate fechaDeAlta;
+    @Column(name = "fechaDeAlta", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeAlta;
 
     @PastOrPresent
-    private LocalDate fechaDeBaja;
+    @Column(name = "fechaDeBaja", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeBaja;
 
     @PastOrPresent
-    @Column(name = "fechaUltimaModificacion")
-    private LocalDate fechaUltimaModificacion;
+    @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
+    private LocalDateTime fechaUltimaModificacion;
 
-    public AreaPersonalizacion(String area, LocalDate fechaDeAlta) {
+    public AreaPersonalizacion(String area, LocalDateTime fechaDeAlta) {
         this.area = area;
         this.estaActivo = true;
         this.fechaDeAlta = fechaDeAlta;
