@@ -36,7 +36,6 @@ public class ProductoBase extends EntidadPersistente {
     @Column(name = "url")
     private String productoBaseUrl;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;

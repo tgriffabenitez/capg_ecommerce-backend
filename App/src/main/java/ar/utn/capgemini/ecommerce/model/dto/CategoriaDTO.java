@@ -9,9 +9,9 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class CategoriaDTO {
     @NotBlank
-    private String categoria;
+    private Integer categoria;
 
-    public CategoriaDTO(String categoria) {
+    public CategoriaDTO(Integer categoria) {
         this.categoria = categoria;
     }
 
