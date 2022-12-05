@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +49,15 @@ public class ProductoPersonalizado extends EntidadPersistente {
     @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaUltimaModificacion;
 
+    @Positive
+    @Column(name = "preciototal")
+    private BigDecimal precioTotal;
+
     @Column(name = "estado")
     private boolean estaActivo;
 
     public ProductoPersonalizado(String productoPersonalizadoUrl, ProductoBase productoBase, Vendedor vendedor, LocalDateTime fechaDeAlta) {
+        this.personalizacionesConcretas = new ArrayList<>();
         this.productoPersonalizadoUrl = productoPersonalizadoUrl;
         this.productoBase = productoBase;
         this.vendedor = vendedor;
@@ -66,6 +73,14 @@ public class ProductoPersonalizado extends EntidadPersistente {
 
     public void agregarPersonalizacionConcreta(PersonalizacionConcreta personalizacionConcreta) {
         this.personalizacionesConcretas.add(personalizacionConcreta);
+    }
+
+    public BigDecimal precioTotal() {
+        BigDecimal precioTotal = this.productoBase.getPrecioBase();
+        for (PersonalizacionConcreta personalizacionConcreta : this.personalizacionesConcretas) {
+            precioTotal = precioTotal.add(personalizacionConcreta.getPrecioPersonalizacion());
+        }
+        return precioTotal;
     }
 
 }
