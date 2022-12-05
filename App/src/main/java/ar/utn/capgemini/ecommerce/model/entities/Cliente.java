@@ -73,7 +73,7 @@ public class Cliente extends EntidadPersistente {
     @JoinColumn(name = "compra_id", referencedColumnName = "id")
     private List<Carrito> carritos;
 
-    public Cliente(String nombre, String apellido, String email, String telefono, String contrasenia, String direccionCalle, String direccionNumero, String direccionPiso, String direccionDepto, LocalDateTime fechaDeAlta) {
+    public Cliente(String nombre, String apellido, String email, String telefono, String contrasenia, String direccionCalle, String direccionNumero, String direccionPiso, String direccionDepto) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -84,7 +84,7 @@ public class Cliente extends EntidadPersistente {
         this.direccionPiso = direccionPiso;
         this.direccionDepto = direccionDepto;
         this.estaActivo = true;
-        this.fechaAlta = fechaDeAlta;
+        this.fechaAlta = LocalDateTime.now();
         this.fechaBaja = null;
         this.fechaUltimaModificacion = null;
     }

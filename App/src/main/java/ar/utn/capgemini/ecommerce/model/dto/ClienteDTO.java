@@ -27,7 +27,8 @@ public class ClienteDTO {
     @NotBlank
     private String direccionPiso;
     @NotBlank
-    private String direccionDepartamento;
-    @NotBlank
-    private List<Carrito> carritos;
+    private String direccionDepto;
+
+
+//    private List<Carrito> carritos;
 }

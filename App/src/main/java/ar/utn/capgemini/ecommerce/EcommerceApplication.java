@@ -188,11 +188,11 @@ public class EcommerceApplication {
             Publicacion publicacion4 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDateTime.now(), personalizado4));
             Publicacion publicacion5 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDateTime.now(), personalizado5));
 
-            Cliente cliente1 = clienteRepository.save(new Cliente("Nombre 1", "Apellido 1", "cliente1@gmail.com", "12345678", "contrasenia1", "Rosario", "402", "4", "B", LocalDateTime.now()));
-            Cliente cliente2 = clienteRepository.save(new Cliente("Nombre 2", "Apellido 2", "cliente2@gmail.com", "12345678", "contrasenia2", "Av. Rivadavia", "6900", "3", "3", LocalDateTime.now()));
-            Cliente cliente3 = clienteRepository.save(new Cliente("Nombre 3", "Apellido 3", "cliente3@gmail.com", "12345678", "contrasenia3", "Av. San Juan", "1234", "15", "A", LocalDateTime.now()));
-            Cliente cliente4 = clienteRepository.save(new Cliente("Nombre 4", "Apellido 4", "cliente4@gmail.com", "12345678", "contrasenia4", "Viamonte", "723", "7", "2", LocalDateTime.now()));
-            Cliente cliente5 = clienteRepository.save(new Cliente("Nombre 5", "Apellido 5", "cliente5@gmail.com", "12345678", "contrasenia5", "Uriburur", "865", "1", "C", LocalDateTime.now()));
+            Cliente cliente1 = clienteRepository.save(new Cliente("Nombre 1", "Apellido 1", "cliente1@gmail.com", "12345678", "contrasenia1", "Rosario", "402", "4", "B"));
+            Cliente cliente2 = clienteRepository.save(new Cliente("Nombre 2", "Apellido 2", "cliente2@gmail.com", "12345678", "contrasenia2", "Av. Rivadavia", "6900", "3", "3"));
+            Cliente cliente3 = clienteRepository.save(new Cliente("Nombre 3", "Apellido 3", "cliente3@gmail.com", "12345678", "contrasenia3", "Av. San Juan", "1234", "15", "A"));
+            Cliente cliente4 = clienteRepository.save(new Cliente("Nombre 4", "Apellido 4", "cliente4@gmail.com", "12345678", "contrasenia4", "Viamonte", "723", "7", "2"));
+            Cliente cliente5 = clienteRepository.save(new Cliente("Nombre 5", "Apellido 5", "cliente5@gmail.com", "12345678", "contrasenia5", "Uriburur", "865", "1", "C"));
 
 
             PublicacionPorCarrito carrito1 = carritoRepository.save(new PublicacionPorCarrito(5, publicacion1));
