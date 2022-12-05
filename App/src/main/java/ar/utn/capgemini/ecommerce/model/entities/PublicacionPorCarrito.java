@@ -25,7 +25,7 @@ public class PublicacionPorCarrito extends EntidadPersistente {
     private Publicacion publicacion;
 
     @NotNull
-    @Positive
+    @PositiveOrZero
     @Column(name = "subtotal")
     private BigDecimal subtotal;
 
@@ -33,6 +33,7 @@ public class PublicacionPorCarrito extends EntidadPersistente {
     public PublicacionPorCarrito(Integer cantidadPublicaciones, Publicacion publicacion) {
         this.cantidadPublicaciones = cantidadPublicaciones;
         this.publicacion = publicacion;
+        this.subtotal = BigDecimal.valueOf(0.0);
     }
 
     public PublicacionPorCarrito() {

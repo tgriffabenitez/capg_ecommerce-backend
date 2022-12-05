@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -34,7 +34,7 @@ public class Publicacion extends EntidadPersistente {
     private ProductoPersonalizado productoPersonalizado;
 
     @NotNull
-    @Positive
+    @PositiveOrZero
     @Column(name = "precio")
     private BigDecimal precio;
 
@@ -42,6 +42,7 @@ public class Publicacion extends EntidadPersistente {
         this.estadoPublicacion = estadoPublicacion;
         this.fechaCambioEstado = fechaCambioEstado;
         this.productoPersonalizado = productoPersonalizado;
+        this.precio = BigDecimal.valueOf(0.0);
 
     }
 
