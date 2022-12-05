@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -113,7 +114,7 @@ public class ProductoPersonalizadoController {
             ProductoPersonalizado productoPersonalizado = productoPersonalizadoRepository.findById(id).get();
             PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(personalizacionConcretaDTO.getPosiblePersonalizacionId()).get();
 
-            PersonalizacionConcreta personalizacionConcreta = new PersonalizacionConcreta(personalizacionConcretaDTO.getDetalle(), personalizacionConcretaDTO.getPrecioPersonalizacionConcreta(), posiblePersonalizacion, LocalDateTime.now());
+            PersonalizacionConcreta personalizacionConcreta = new PersonalizacionConcreta(personalizacionConcretaDTO.getDetalle(), personalizacionConcretaDTO.getPrecioPersonalizacion(), posiblePersonalizacion, LocalDateTime.now());
             personalizacionConcretaRepository.save(personalizacionConcreta);
 
             productoPersonalizado.agregarPersonalizacionConcreta(personalizacionConcreta);
@@ -165,13 +166,13 @@ public class ProductoPersonalizadoController {
 
         if (!bindingResult.hasErrors() && existeProductoPersonalizado && existePersonalizacionConcreta) {
             String detalleNuevo = personalizacionConcretaDTO.getDetalle();
-            Double precioNuevo = personalizacionConcretaDTO.getPrecioPersonalizacionConcreta();
+            BigDecimal precioNuevo = personalizacionConcretaDTO.getPrecioPersonalizacion();
 
             if (existePosiblePersonalizacion) {
                 PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(personalizacionConcretaDTO.getPosiblePersonalizacionId()).get();
                 PersonalizacionConcreta personalizacionConcreta = personalizacionConcretaRepository.findById(personalizacionConcretaId).get();
                 personalizacionConcreta.setDetalle(detalleNuevo);
-                personalizacionConcreta.setPrecioPersonalizacionConcreta(precioNuevo);
+                personalizacionConcreta.setPrecioPersonalizacion(precioNuevo);
                 personalizacionConcreta.setPosiblePersonalizacion(posiblePersonalizacion);
                 personalizacionConcreta.setFechaUltimaModificacion(LocalDateTime.now());
                 return new ResponseEntity<>("Se actualizaco correctamente la personalizacion concreta", HttpStatus.OK);
