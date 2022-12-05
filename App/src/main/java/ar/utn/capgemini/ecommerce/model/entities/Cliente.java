@@ -40,7 +40,7 @@ public class Cliente extends EntidadPersistente {
 
     @OneToMany
     @JoinColumn(name = "compra_id", referencedColumnName = "id")
-    private List<Compra> compras;
+    private List<Carrito> carritos;
 
     public Cliente(String nombreCliente, String apellidoCliente, String emailCliente, String contrasenia) {
         this.nombreCliente = nombreCliente;
@@ -50,7 +50,11 @@ public class Cliente extends EntidadPersistente {
     }
 
     public Cliente() {
-        this.compras = new ArrayList<>();
+        this.carritos = new ArrayList<>();
+    }
+
+    public void agregarCompra(Carrito carrito) {
+        this.carritos.add(carrito);
     }
 
 }

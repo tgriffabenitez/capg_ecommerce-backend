@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "compra")
-public class Compra extends EntidadPersistente {
+public class Carrito extends EntidadPersistente {
 
     @NotNull
     @Past
@@ -50,7 +50,7 @@ public class Compra extends EntidadPersistente {
     @JoinColumn(name = "publicacionCarrito", referencedColumnName = "id")
     private List<PublicacionCarrito> publicacionesCarrito;
 
-    public Compra(LocalDateTime fechaDeCompra, LocalDateTime horaDeCompra, PAGO metodoDePago, ESTADO estadoDeCompra, LocalDateTime fechaCambioEstado, double precioTotal) {
+    public Carrito(LocalDateTime fechaDeCompra, LocalDateTime horaDeCompra, PAGO metodoDePago, ESTADO estadoDeCompra, LocalDateTime fechaCambioEstado, double precioTotal) {
         this.fechaDeCompra = fechaDeCompra;
         this.horaDeCompra = horaDeCompra;
         this.metodoDePago = metodoDePago;
@@ -59,7 +59,7 @@ public class Compra extends EntidadPersistente {
         this.precioTotal = precioTotal;
     }
 
-    public Compra() {
+    public Carrito() {
         this.publicacionesCarrito = new ArrayList<>();
     }
 
