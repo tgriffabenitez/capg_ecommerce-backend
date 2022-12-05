@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +42,8 @@ public class EcommerceApplication {
     public ProductoBaseRepository productoBaseRepository;
     @Autowired
     public PublicacionRepository publicacionRepository;
+    @Autowired
+    public ClienteRepository clienteRepository;
     @Autowired
     public PublicacionCarritoRepository carritoRepository;
 
@@ -84,23 +87,23 @@ public class EcommerceApplication {
             PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5, LocalDateTime.now()));
             List<PosiblePersonalizacion> posibles5 = Collections.singletonList(posible5);
 
-            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 1500.55, 3, "url 1", categoria1, LocalDateTime.now()));
+            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", BigDecimal.valueOf(1500.55), 3, "url 1", categoria1, LocalDateTime.now()));
             base1.setPosiblesPersonalizaciones(posibles1);
             productoBaseRepository.save(base1);
 
-            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 1500.55, 3, "url 2", categoria2, LocalDateTime.now()));
+            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", BigDecimal.valueOf(1500.55), 3, "url 2", categoria2, LocalDateTime.now()));
             base2.setPosiblesPersonalizaciones(posibles2);
             productoBaseRepository.save(base2);
 
-            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 1500.55, 3, "url 3", categoria3, LocalDateTime.now()));
+            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", BigDecimal.valueOf(1500.55), 3, "url 3", categoria3, LocalDateTime.now()));
             base3.setPosiblesPersonalizaciones(posibles3);
             productoBaseRepository.save(base3);
 
-            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 1500.55, 3, "url 4", categoria4, LocalDateTime.now()));
+            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", BigDecimal.valueOf(1500.55), 3, "url 4", categoria4, LocalDateTime.now()));
             base4.setPosiblesPersonalizaciones(posibles4);
             productoBaseRepository.save(base4);
 
-            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 1500.55, 3, "url 5", categoria5, LocalDateTime.now()));
+            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", BigDecimal.valueOf(1500.55), 3, "url 5", categoria5, LocalDateTime.now()));
             base5.setPosiblesPersonalizaciones(posibles5);
             productoBaseRepository.save(base5);
 
@@ -144,19 +147,19 @@ public class EcommerceApplication {
             vendedor5.setMetodosDePago(metodoPago5);
             vendedorRepository.save(vendedor5);
 
-            PersonalizacionConcreta concreta1 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 1", 1500.55, posible1, LocalDateTime.now()));
+            PersonalizacionConcreta concreta1 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 1", BigDecimal.valueOf(1500.55), posible1, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas1 = Collections.singletonList(concreta1);
 
-            PersonalizacionConcreta concreta2 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 2", 1500.55, posible2, LocalDateTime.now()));
+            PersonalizacionConcreta concreta2 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 2", BigDecimal.valueOf(1500.55), posible2, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas2 = Collections.singletonList(concreta2);
 
-            PersonalizacionConcreta concreta3 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 3", 1500.55, posible3, LocalDateTime.now()));
+            PersonalizacionConcreta concreta3 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 3", BigDecimal.valueOf(1500.55), posible3, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas3 = Collections.singletonList(concreta3);
 
-            PersonalizacionConcreta concreta4 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 4", 1500.55, posible4, LocalDateTime.now()));
+            PersonalizacionConcreta concreta4 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 4", BigDecimal.valueOf(1500.55), posible4, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas4 = Collections.singletonList(concreta4);
 
-            PersonalizacionConcreta concreta5 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 5", 1500.55, posible5, LocalDateTime.now()));
+            PersonalizacionConcreta concreta5 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 5", BigDecimal.valueOf(1500.55), posible5, LocalDateTime.now()));
             List<PersonalizacionConcreta> concretas5 = Collections.singletonList(concreta5);
 
             ProductoPersonalizado personalizado1 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 1", base1, vendedor1, LocalDateTime.now()));
@@ -185,7 +188,14 @@ public class EcommerceApplication {
             Publicacion publicacion4 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDateTime.now(), personalizado4));
             Publicacion publicacion5 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDateTime.now(), personalizado5));
 
-            PublicacionCarrito carrito1 = carritoRepository.save(new PublicacionCarrito(1, publicacion1));
+            Cliente cliente1 = clienteRepository.save(new Cliente("Nombre 1", "Apellido 1", "cliente1@gmail.com", "12345678", "contrasenia1", "Rosario", "402", "4", "B", LocalDateTime.now()));
+            Cliente cliente2 = clienteRepository.save(new Cliente("Nombre 2", "Apellido 2", "cliente2@gmail.com", "12345678", "contrasenia2", "Av. Rivadavia", "6900", "3", "3", LocalDateTime.now()));
+            Cliente cliente3 = clienteRepository.save(new Cliente("Nombre 3", "Apellido 3", "cliente3@gmail.com", "12345678", "contrasenia3", "Av. San Juan", "1234", "15", "A", LocalDateTime.now()));
+            Cliente cliente4 = clienteRepository.save(new Cliente("Nombre 4", "Apellido 4", "cliente4@gmail.com", "12345678", "contrasenia4", "Viamonte", "723", "7", "2", LocalDateTime.now()));
+            Cliente cliente5 = clienteRepository.save(new Cliente("Nombre 5", "Apellido 5", "cliente5@gmail.com", "12345678", "contrasenia5", "Uriburur", "865", "1", "C", LocalDateTime.now()));
+
+
+            PublicacionCarrito carrito1 = carritoRepository.save(new PublicacionCarrito(5, publicacion1));
             PublicacionCarrito carrito2 = carritoRepository.save(new PublicacionCarrito(2, publicacion2));
             PublicacionCarrito carrito3 = carritoRepository.save(new PublicacionCarrito(3, publicacion3));
             PublicacionCarrito carrito4 = carritoRepository.save(new PublicacionCarrito(4, publicacion4));
