@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,36 +16,77 @@ import java.util.List;
 @Table(name = "cliente")
 public class Cliente extends EntidadPersistente {
 
+    @Column(name = "clienteEstado")
+    private boolean estaActivo;
+
     @NotBlank
-    @NotEmpty
     @Column(name = "nombre")
-    private String nombreCliente;
+    private String nombre;
 
     @NotBlank
-    @NotEmpty
     @Column(name = "apellido")
-    private String apellidoCliente;
+    private String apellido;
 
     @NotBlank
-    @NotEmpty
     @Email
     @Column(name = "email")
-    private String emailCliente;
+    private String email;
+
+    @Positive
+    @Column(name = "telefono")
+    private String telefono;
 
     @NotBlank
     @NotEmpty
     @Column(name = "contrasenia")
     private String contrasenia;
 
+    @NotBlank
+    @Column(name = "direccionCalle")
+    private String direccionCalle;
+
+    @NotBlank
+    @Column(name = "direccionNumero")
+    private String direccionNumero;
+
+    @NotBlank
+    @Column(name = "direccionPiso")
+    private String direccionPiso;
+
+    @NotBlank
+    @Column(name = "direccionDepartamento")
+    private String direccionDepartamento;
+
+    @PastOrPresent
+    @Column(name = "fechaDeAlta")
+    private LocalDateTime fechaAlta;
+
+    @PastOrPresent
+    @Column(name = "fechaDeBaja")
+    private LocalDateTime fechaBaja;
+
+    @PastOrPresent
+    @Column(name = "fechaUltimaModificacion")
+    private LocalDateTime fechaUltimaModificacion;
+
     @OneToMany
     @JoinColumn(name = "compra_id", referencedColumnName = "id")
     private List<Carrito> carritos;
 
-    public Cliente(String nombreCliente, String apellidoCliente, String emailCliente, String contrasenia) {
-        this.nombreCliente = nombreCliente;
-        this.apellidoCliente = apellidoCliente;
-        this.emailCliente = emailCliente;
+    public Cliente(String nombre, String apellido, String email, String telefono, String contrasenia, String direccionCalle, String direccionNumero, String direccionPiso, String direccionDepartamento, LocalDateTime fechaDeAlta) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
         this.contrasenia = contrasenia;
+        this.direccionCalle = direccionCalle;
+        this.direccionNumero = direccionNumero;
+        this.direccionPiso = direccionPiso;
+        this.direccionDepartamento = direccionDepartamento;
+        this.estaActivo = true;
+        this.fechaAlta = fechaDeAlta;
+        this.fechaBaja = null;
+        this.fechaUltimaModificacion = null;
     }
 
     public Cliente() {
@@ -56,5 +96,4 @@ public class Cliente extends EntidadPersistente {
     public void agregarCompra(Carrito carrito) {
         this.carritos.add(carrito);
     }
-
 }

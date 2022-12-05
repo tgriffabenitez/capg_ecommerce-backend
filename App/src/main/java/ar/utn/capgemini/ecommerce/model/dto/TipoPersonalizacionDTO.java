@@ -10,11 +10,4 @@ import javax.validation.constraints.NotBlank;
 public class TipoPersonalizacionDTO {
     @NotBlank
     private String tipoPersonalizacion;
-
-    public TipoPersonalizacionDTO(String tipoPersonalizacion) {
-        this.tipoPersonalizacion = tipoPersonalizacion;
-    }
-
-    public TipoPersonalizacionDTO() {
-    }
 }

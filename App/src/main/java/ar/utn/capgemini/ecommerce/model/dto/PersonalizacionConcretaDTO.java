@@ -16,13 +16,4 @@ public class PersonalizacionConcretaDTO {
     private Double precioPersonalizacionConcreta;
     @Positive
     private Integer posiblePersonalizacionId;
-
-    public PersonalizacionConcretaDTO(String detalle, Double precioPersonalizacionConcreta, Integer posiblePersonalizacionId) {
-        this.detalle = detalle;
-        this.precioPersonalizacionConcreta = precioPersonalizacionConcreta;
-        this.posiblePersonalizacionId = posiblePersonalizacionId;
-    }
-
-    public PersonalizacionConcretaDTO() {
-    }
 }

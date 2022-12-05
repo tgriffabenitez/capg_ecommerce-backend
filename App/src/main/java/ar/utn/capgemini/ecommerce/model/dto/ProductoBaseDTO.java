@@ -19,15 +19,4 @@ public class ProductoBaseDTO {
     private String productoBaseUrl;
     @Positive
     private Integer categoriaId;
-
-    public ProductoBaseDTO(String descripcion, Double precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Integer categoriaId) {
-        this.descripcion = descripcion;
-        this.precioBase = precioBase;
-        this.tiempoDeFabricacion = tiempoDeFabricacion;
-        this.productoBaseUrl = productoBaseUrl;
-        this.categoriaId = categoriaId;
-    }
-
-    public ProductoBaseDTO() {
-    }
 }

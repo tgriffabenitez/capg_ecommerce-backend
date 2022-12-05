@@ -10,11 +10,4 @@ import javax.validation.constraints.NotBlank;
 public class CategoriaDTO {
     @NotBlank
     private Integer categoria;
-
-    public CategoriaDTO(Integer categoria) {
-        this.categoria = categoria;
-    }
-
-    public CategoriaDTO() {
-    }
 }

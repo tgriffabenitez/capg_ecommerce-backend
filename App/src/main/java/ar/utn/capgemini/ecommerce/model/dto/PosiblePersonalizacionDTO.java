@@ -12,12 +12,4 @@ public class PosiblePersonalizacionDTO {
     private Integer tipoPersonalizacion;
     @NotBlank
     private Integer areaPersonalizacion;
-
-    public PosiblePersonalizacionDTO(Integer tipoPersonalizacion, Integer areaPersonalizacion) {
-        this.tipoPersonalizacion = tipoPersonalizacion;
-        this.areaPersonalizacion = areaPersonalizacion;
-    }
-
-    public PosiblePersonalizacionDTO() {
-    }
 }
