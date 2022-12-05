@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -31,10 +33,16 @@ public class Publicacion extends EntidadPersistente {
     @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
     private ProductoPersonalizado productoPersonalizado;
 
+    @NotNull
+    @Positive
+    @Column(name = "precio")
+    private BigDecimal precio;
+
     public Publicacion(ESTADO estadoPublicacion, LocalDateTime fechaCambioEstado, ProductoPersonalizado productoPersonalizado) {
         this.estadoPublicacion = estadoPublicacion;
         this.fechaCambioEstado = fechaCambioEstado;
         this.productoPersonalizado = productoPersonalizado;
+
     }
 
     public Publicacion() {
