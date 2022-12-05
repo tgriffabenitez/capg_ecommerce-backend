@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -23,6 +24,12 @@ public class PublicacionPorCarrito extends EntidadPersistente {
     @JoinColumn(name = "publicacion_id", referencedColumnName = "id")
     private Publicacion publicacion;
 
+    @NotNull
+    @Positive
+    @Column(name = "subtotal")
+    private BigDecimal subtotal;
+
+
     public PublicacionPorCarrito(Integer cantidadPublicaciones, Publicacion publicacion) {
         this.cantidadPublicaciones = cantidadPublicaciones;
         this.publicacion = publicacion;
@@ -30,5 +37,7 @@ public class PublicacionPorCarrito extends EntidadPersistente {
 
     public PublicacionPorCarrito() {
     }
+
+
 
 }
