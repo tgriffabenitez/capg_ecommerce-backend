@@ -32,7 +32,6 @@ public class PersonalizacionConcreta extends EntidadPersistente {
     @JoinColumn(name = "posiblePersonalizacion_id", referencedColumnName = "id")
     private PosiblePersonalizacion posiblePersonalizacion;
 
-
     @PastOrPresent
     @Column(name = "fechaDeAlta", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeAlta;
