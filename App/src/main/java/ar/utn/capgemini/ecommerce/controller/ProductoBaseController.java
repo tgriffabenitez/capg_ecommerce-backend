@@ -37,7 +37,8 @@ public class ProductoBaseController {
 
     @PostMapping(path = {"", "/"})
     public ResponseEntity<String> crearProductoBase(@RequestBody @Valid ProductoBaseDTO productoBaseDTO, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
+        boolean existeCategoria = categoriaRepository.existsById(productoBaseDTO.getCategoriaId());
+        if (!bindingResult.hasErrors() && existeCategoria) {
             Categoria categoria = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
             ProductoBase productoBase = new ProductoBase(productoBaseDTO.getDescripcion(), productoBaseDTO.getPrecioBase(), productoBaseDTO.getTiempoDeFabricacion(), productoBaseDTO.getProductoBaseUrl(), categoria, LocalDateTime.now());
 

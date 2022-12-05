@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 @Setter
 @Entity
 @Table(name = "publicacionPorCarrito")
-public class PublicacionCarrito extends EntidadPersistente {
+public class PublicacionPorCarrito extends EntidadPersistente {
 
     @NotNull
     @PositiveOrZero
@@ -23,12 +23,12 @@ public class PublicacionCarrito extends EntidadPersistente {
     @JoinColumn(name = "publicacion_id", referencedColumnName = "id")
     private Publicacion publicacion;
 
-    public PublicacionCarrito(Integer cantidadPublicaciones, Publicacion publicacion) {
+    public PublicacionPorCarrito(Integer cantidadPublicaciones, Publicacion publicacion) {
         this.cantidadPublicaciones = cantidadPublicaciones;
         this.publicacion = publicacion;
     }
 
-    public PublicacionCarrito() {
+    public PublicacionPorCarrito() {
     }
 
 }

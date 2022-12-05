@@ -45,10 +45,10 @@ public class Carrito extends EntidadPersistente {
 
     @OneToMany
     @JoinColumn(name = "publicacionCarrito", referencedColumnName = "id")
-    private List<PublicacionCarrito> publicacionesCarrito;
+    private List<PublicacionPorCarrito> publicacionesPorCarrito;
 
     public Carrito(LocalDateTime fechaDeCompra, PAGO metodoDePago, ESTADO estadoDeCompra, LocalDateTime fechaCambioEstado, BigDecimal precioTotal) {
-        this.publicacionesCarrito = new ArrayList<>();
+        this.publicacionesPorCarrito = new ArrayList<>();
         this.fechaDeCompra = fechaDeCompra;
         this.metodoDePago = metodoDePago;
         this.estadoDeCompra = estadoDeCompra;
@@ -57,7 +57,7 @@ public class Carrito extends EntidadPersistente {
     }
 
     public Carrito() {
-        this.publicacionesCarrito = new ArrayList<>();
+        this.publicacionesPorCarrito = new ArrayList<>();
     }
 
 }

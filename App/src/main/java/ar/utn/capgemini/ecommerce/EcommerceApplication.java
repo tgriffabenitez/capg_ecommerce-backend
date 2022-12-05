@@ -195,11 +195,11 @@ public class EcommerceApplication {
             Cliente cliente5 = clienteRepository.save(new Cliente("Nombre 5", "Apellido 5", "cliente5@gmail.com", "12345678", "contrasenia5", "Uriburur", "865", "1", "C", LocalDateTime.now()));
 
 
-            PublicacionCarrito carrito1 = carritoRepository.save(new PublicacionCarrito(5, publicacion1));
-            PublicacionCarrito carrito2 = carritoRepository.save(new PublicacionCarrito(2, publicacion2));
-            PublicacionCarrito carrito3 = carritoRepository.save(new PublicacionCarrito(3, publicacion3));
-            PublicacionCarrito carrito4 = carritoRepository.save(new PublicacionCarrito(4, publicacion4));
-            PublicacionCarrito carrito5 = carritoRepository.save(new PublicacionCarrito(5, publicacion5));
+            PublicacionPorCarrito carrito1 = carritoRepository.save(new PublicacionPorCarrito(5, publicacion1));
+            PublicacionPorCarrito carrito2 = carritoRepository.save(new PublicacionPorCarrito(2, publicacion2));
+            PublicacionPorCarrito carrito3 = carritoRepository.save(new PublicacionPorCarrito(3, publicacion3));
+            PublicacionPorCarrito carrito4 = carritoRepository.save(new PublicacionPorCarrito(4, publicacion4));
+            PublicacionPorCarrito carrito5 = carritoRepository.save(new PublicacionPorCarrito(5, publicacion5));
         };
     }
 }
