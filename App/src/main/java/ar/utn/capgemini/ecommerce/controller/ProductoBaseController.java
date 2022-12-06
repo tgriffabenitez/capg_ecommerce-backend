@@ -31,88 +31,98 @@ public class ProductoBaseController {
     public AreaPersonalizacionRepository areaPersonalizacionRepository;
 
     @GetMapping(path = {"", "/"})
-    public List<ProductoBase> obtenerProductos() {
-        return productoBaseRepository.findAll();
+    public ResponseEntity<?> obtenerProductos() {
+        return new ResponseEntity<>(productoBaseRepository.findAll(), HttpStatus.OK);
     }
 
     @PostMapping(path = {"", "/"})
-    public ResponseEntity<String> crearProductoBase(@RequestBody @Valid ProductoBaseDTO productoBaseDTO, BindingResult bindingResult) {
-        boolean existeCategoria = categoriaRepository.existsById(productoBaseDTO.getCategoriaId());
-        if (!bindingResult.hasErrors() && existeCategoria) {
-            Categoria categoria = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
-            ProductoBase productoBase = new ProductoBase(productoBaseDTO.getDescripcion(), productoBaseDTO.getPrecioBase(), productoBaseDTO.getTiempoDeFabricacion(), productoBaseDTO.getProductoBaseUrl(), categoria, LocalDateTime.now());
+    public ResponseEntity<?> crearProductoBase(@RequestBody @Valid ProductoBaseDTO productoBaseDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-            productoBaseRepository.save(productoBase);
-            return new ResponseEntity<>("Producto base creado con exito", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Error al crear el producto base", HttpStatus.BAD_REQUEST);
-        }
+        if (!categoriaRepository.findById(productoBaseDTO.getCategoriaId()).isPresent())
+            return new ResponseEntity<>("La categoria no existe", HttpStatus.BAD_REQUEST);
+
+        Categoria categoria = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
+        ProductoBase productoBase = new ProductoBase();
+        productoBase.setCategoria(categoria);
+        productoBase.setDescripcion(productoBaseDTO.getDescripcion());
+        productoBase.setPrecioBase(productoBaseDTO.getPrecioBase());
+        productoBase.setProductoBaseUrl(productoBaseDTO.getProductoBaseUrl());
+        productoBase.setTiempoDeFabricacion(productoBaseDTO.getTiempoDeFabricacion());
+        productoBaseRepository.save(productoBase);
+
+        return new ResponseEntity<>("Producto base creado con exito", HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<ProductoBase> obtenerProductoPorId(@PathVariable Integer id) {
-        if (productoBaseRepository.existsById(id)) {
-            ProductoBase productoEncontrado = productoBaseRepository.findById(id).get();
-            return new ResponseEntity<>(productoEncontrado, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> obtenerProductoPorId(@PathVariable Integer id) {
+        if (!productoBaseRepository.findById(id).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(productoBaseRepository.findById(id).get(), HttpStatus.OK);
     }
 
     @Transactional
     @PatchMapping(path = "/{id}")
-    public ResponseEntity<String> modificarProductoBase(@PathVariable Integer id, @RequestBody ProductoBaseDTO productoBaseDTO) {
-        if (productoBaseRepository.existsById(id)) {
-            Categoria categoriaNueva = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
-            ProductoBase productoBase = productoBaseRepository.findById(id).get();
-            productoBase.setCategoria(categoriaNueva);
-            productoBase.setPrecioBase(productoBaseDTO.getPrecioBase());
-            productoBase.setProductoBaseUrl(productoBaseDTO.getProductoBaseUrl());
-            productoBase.setDescripcion(productoBaseDTO.getDescripcion());
-            productoBase.setTiempoDeFabricacion(productoBaseDTO.getTiempoDeFabricacion());
-            productoBase.setFechaUltimaModificacion(LocalDateTime.now());
-            return new ResponseEntity<>("Producto base modificado con exito", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("No se encontro el producto", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> modificarProductoBase(@PathVariable Integer id, @RequestBody ProductoBaseDTO productoBaseDTO) {
+        if (!productoBaseRepository.findById(id).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
+
+        if (!categoriaRepository.findById(productoBaseDTO.getCategoriaId()).isPresent())
+            return new ResponseEntity<>("Categoria no encontrada", HttpStatus.BAD_REQUEST);
+
+        Categoria categoriaNueva = categoriaRepository.findById(productoBaseDTO.getCategoriaId()).get();
+        ProductoBase productoBase = productoBaseRepository.findById(id).get();
+
+        productoBase.setCategoria(categoriaNueva);
+        productoBase.setPrecioBase(productoBaseDTO.getPrecioBase());
+        productoBase.setProductoBaseUrl(productoBaseDTO.getProductoBaseUrl());
+        productoBase.setDescripcion(productoBaseDTO.getDescripcion());
+        productoBase.setTiempoDeFabricacion(productoBaseDTO.getTiempoDeFabricacion());
+        productoBase.setFechaUltimaModificacion(LocalDateTime.now());
+        return new ResponseEntity<>("Producto base modificado con exito", HttpStatus.OK);
     }
 
     @Transactional
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<String> darProductoDeBaja(@PathVariable Integer id) {
-        if (productoBaseRepository.existsById(id)) {
-            ProductoBase productoBase = productoBaseRepository.findById(id).get();
-            productoBase.setEstaActivo(false);
-            productoBase.setFechaDeBaja(LocalDateTime.now());
-            productoBase.setFechaUltimaModificacion(LocalDateTime.now());
-            return new ResponseEntity<>("Producto base dado de baja con exito", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("No se encontro el producto", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> darProductoBaseDeBaja(@PathVariable Integer id) {
+        if (!productoBaseRepository.findById(id).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
+
+        ProductoBase productoBase = productoBaseRepository.findById(id).get();
+        productoBase.setEstaActivo(false);
+        productoBase.setFechaDeBaja(LocalDateTime.now());
+        productoBase.setFechaUltimaModificacion(LocalDateTime.now());
+        return new ResponseEntity<>("Producto base dado de baja con exito", HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}/categoria")
-    public ResponseEntity<Categoria> obtenerCategoria(@PathVariable Integer id) {
-        if (productoBaseRepository.existsById(id)) {
-            ProductoBase productoBase = productoBaseRepository.findById(id).get();
-            return new ResponseEntity<>(productoBase.getCategoria(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> obtenerCategoria(@PathVariable Integer id) {
+        if (!productoBaseRepository.findById(id).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
+
+        ProductoBase productoBase = productoBaseRepository.findById(id).get();
+        return new ResponseEntity<>(productoBase.getCategoria(), HttpStatus.OK);
+
     }
 
     @Transactional
     @PatchMapping(path = "/{id}/categoria")
-    public ResponseEntity<String> modificarCategoria(@PathVariable Integer id, @RequestBody CategoriaDTO categoria) {
-        if (productoBaseRepository.existsById(id)) {
-            ProductoBase productoBase = productoBaseRepository.findById(id).get();
-            Categoria categoriaNueva = categoriaRepository.findById(categoria.getCategoria()).get();
-            productoBase.setCategoria(categoriaNueva);
-            productoBase.setFechaUltimaModificacion(LocalDateTime.now());
-            return new ResponseEntity<>("Categoria modificada con exito", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Producto no encontrado", HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> modificarCategoria(@PathVariable Integer id, @RequestBody CategoriaDTO categoria) {
+        if (!productoBaseRepository.findById(id).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
+
+        if (!categoriaRepository.findById(categoria.getCategoria()).isPresent())
+            return new ResponseEntity<>("Categoria no encontrada", HttpStatus.NOT_FOUND);
+
+        ProductoBase productoBase = productoBaseRepository.findById(id).get();
+        Categoria categoriaNueva = categoriaRepository.findById(categoria.getCategoria()).get();
+        productoBase.setCategoria(categoriaNueva);
+        productoBase.setFechaUltimaModificacion(LocalDateTime.now());
+        return new ResponseEntity<>("Categoria modificada con exito", HttpStatus.OK);
     }
+
 
     /*
      * Para conservar la integridad referencial no puedo tener un productoBase sin categoria
@@ -120,31 +130,28 @@ public class ProductoBaseController {
      * de baja una categoria correctamente deberia crear un controlador para gestionarlas
      */
 
-    /*
     @Transactional
     @DeleteMapping("/productosBase/{id}/categoria")
-    public ResponseEntity<String> darCategoriaDeBaja(@PathVariable Integer id) {
-        if (productoBaseRepository.existsById(id)) {
-            ProductoBase productoBase = productoBaseRepository.findById(id).get();
-            productoBase.getCategoria().setEstaActivo(false);
-            productoBase.getCategoria().setFechaDeBaja(LocalDateTime.now());
-            productoBase.getCategoria().setFechaUltimaModificacion(LocalDateTime.now());
-            return new ResponseEntity<>("Se dio de baja con exito la categoria", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Producto no encontrado", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> darCategoriaDeBaja(@PathVariable Integer id) {
+        if (!productoBaseRepository.findById(id).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
+
+        ProductoBase productoBase = productoBaseRepository.findById(id).get();
+        productoBase.getCategoria().setEstaActivo(false);
+        productoBase.getCategoria().setFechaDeBaja(LocalDateTime.now());
+        productoBase.getCategoria().setFechaUltimaModificacion(LocalDateTime.now());
+        return new ResponseEntity<>("Categoria dada de baja con exito", HttpStatus.OK);
+
     }
-    */
 
     @GetMapping(path = {"/{id}/posiblesPersonalizaciones"})
-    public ResponseEntity<List<PosiblePersonalizacion>> obtenerPosiblesPersonalizaciones(@PathVariable Integer id) {
-        if (productoBaseRepository.existsById(id)) {
-            ProductoBase productoBase = productoBaseRepository.findById(id).get();
-            List<PosiblePersonalizacion> posibles = productoBase.getPosiblesPersonalizaciones();
-            return new ResponseEntity<>(posibles, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> obtenerPosiblesPersonalizaciones(@PathVariable Integer id) {
+        if (!productoBaseRepository.findById(id).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
+
+        ProductoBase productoBase = productoBaseRepository.findById(id).get();
+        List<PosiblePersonalizacion> posiblesPersonalizaciones = productoBase.getPosiblesPersonalizaciones();
+        return new ResponseEntity<>(posiblesPersonalizaciones, HttpStatus.OK);
     }
 
     /*
@@ -153,67 +160,78 @@ public class ProductoBaseController {
      */
     @Transactional
     @DeleteMapping(path = {"/{productoBaseId}/posiblesPersonalizaciones/{posiblePersonalizacionId}"})
-    public ResponseEntity<String> darPosiblePersonalizacionDeBaja(@PathVariable Integer productoBaseId, @PathVariable Integer posiblePersonalizacionId) {
-        if (posiblePersonalizacionRepository.existsById(posiblePersonalizacionId) && productoBaseRepository.existsById(productoBaseId)) {
-            PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(posiblePersonalizacionId).get();
-            posiblePersonalizacion.setEstaActivo(false);
-            posiblePersonalizacion.setFechaDeBaja(LocalDateTime.now());
-            posiblePersonalizacion.setFechaUltimaModificacion(LocalDateTime.now());
-            return new ResponseEntity<>("Personalizacion dada de baja", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("No se encontro el producto o la personalizacion", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> darPosiblePersonalizacionDeBaja(@PathVariable Integer productoBaseId, @PathVariable Integer posiblePersonalizacionId) {
+        if (!productoBaseRepository.findById(productoBaseId).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
+
+        if (!posiblePersonalizacionRepository.findById(posiblePersonalizacionId).isPresent())
+            return new ResponseEntity<>("Posible personalizacion no encontrada", HttpStatus.NOT_FOUND);
+
+        PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(posiblePersonalizacionId).get();
+        posiblePersonalizacion.setEstaActivo(false);
+        posiblePersonalizacion.setFechaDeBaja(LocalDateTime.now());
+        posiblePersonalizacion.setFechaUltimaModificacion(LocalDateTime.now());
+        return new ResponseEntity<>("Posible personalizacion dada de baja", HttpStatus.OK);
     }
 
     @PostMapping(path = "/{id}/posiblesPersonalizaciones")
-    public ResponseEntity<String> crearPosiblePersonalizacion(@PathVariable Integer id, @RequestBody PosiblePersonalizacionDTO posibleDTO, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors() && productoBaseRepository.existsById(id)) {
-            ProductoBase productoBase = productoBaseRepository.findById(id).get();
-            boolean existeArea = areaPersonalizacionRepository.existsById(posibleDTO.getAreaPersonalizacion());
-            boolean existeTipo = tipoPersonalizacionRepository.existsById(posibleDTO.getTipoPersonalizacion());
-            AreaPersonalizacion areaPersonalizacion;
-            TipoPersonalizacion tipoPersonalizacion;
-            if (existeArea) {
-                areaPersonalizacion = areaPersonalizacionRepository.findById(posibleDTO.getAreaPersonalizacion()).get();
-            } else {
-                return new ResponseEntity<>("No se encontro el area de personalizacion", HttpStatus.NOT_FOUND);
-            }
-            if (existeTipo) {
-                tipoPersonalizacion = tipoPersonalizacionRepository.findById(posibleDTO.getTipoPersonalizacion()).get();
-            } else {
-                return new ResponseEntity<>("No se encontro el tipo de personalizacion", HttpStatus.NOT_FOUND);
-            }
-            PosiblePersonalizacion posiblePersonalizacion = new PosiblePersonalizacion(tipoPersonalizacion, areaPersonalizacion, LocalDateTime.now());
-            posiblePersonalizacionRepository.save(posiblePersonalizacion);
-            productoBase.agregarPosiblePersonalizacion(posiblePersonalizacion);
-            productoBaseRepository.save(productoBase);
-            return new ResponseEntity<>("Posible personalizacion agregada", HttpStatus.OK);
-        }
-        return new ResponseEntity<>("No se encontro el producto", HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> crearPosiblePersonalizacion(@PathVariable Integer id, @RequestBody PosiblePersonalizacionDTO posibleDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+
+        if (!productoBaseRepository.findById(id).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
+
+        if (!tipoPersonalizacionRepository.findById(posibleDTO.getTipoPersonalizacion()).isPresent())
+            return new ResponseEntity<>("Tipo de personalizacion no encontrado", HttpStatus.NOT_FOUND);
+
+        if (!areaPersonalizacionRepository.findById(posibleDTO.getAreaPersonalizacion()).isPresent())
+            return new ResponseEntity<>("Area de personalizacion no encontrada", HttpStatus.NOT_FOUND);
+
+        ProductoBase productoBase = productoBaseRepository.findById(id).get();
+        AreaPersonalizacion area = areaPersonalizacionRepository.findById(posibleDTO.getAreaPersonalizacion()).get();
+        TipoPersonalizacion tipo = tipoPersonalizacionRepository.findById(posibleDTO.getTipoPersonalizacion()).get();
+
+        PosiblePersonalizacion posiblePersonalizacion = new PosiblePersonalizacion();
+        posiblePersonalizacion.setAreaPersonalizacion(area);
+        posiblePersonalizacion.setTipoPersonalizacion(tipo);
+        posiblePersonalizacionRepository.save(posiblePersonalizacion);
+
+        productoBase.agregarPosiblePersonalizacion(posiblePersonalizacion);
+        productoBaseRepository.save(productoBase);
+
+        return new ResponseEntity<>("Posible personalizacion creada", HttpStatus.OK);
     }
 
     @Transactional
     @PatchMapping(path = "{productoBaseId}/posiblesPersonalizaciones/{posiblePersonalizacionId}")
-    public ResponseEntity<String> modificarPosiblePersonalizacion(@PathVariable Integer productoBaseId, @PathVariable Integer posiblePersonalizacionId, @RequestBody PosiblePersonalizacionDTO posibleDTO, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors() && posiblePersonalizacionRepository.existsById(posiblePersonalizacionId) && productoBaseRepository.existsById(productoBaseId)) {
+    public ResponseEntity<?> modificarPosiblePersonalizacion(@PathVariable Integer productoBaseId, @PathVariable Integer posiblePersonalizacionId, @RequestBody PosiblePersonalizacionDTO posibleDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-            ProductoBase productoBase = productoBaseRepository.findById(productoBaseId).get();
-            AreaPersonalizacion areaPersonalizacion = areaPersonalizacionRepository.findById(posibleDTO.getAreaPersonalizacion()).get();
-            TipoPersonalizacion tipoPersonalizacion = tipoPersonalizacionRepository.findById(posibleDTO.getTipoPersonalizacion()).get();
-            PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(posiblePersonalizacionId).get();
+        if (!productoBaseRepository.findById(productoBaseId).isPresent())
+            return new ResponseEntity<>("Producto base no encontrado", HttpStatus.NOT_FOUND);
 
-            posiblePersonalizacion.setAreaPersonalizacion(areaPersonalizacion);
-            areaPersonalizacion.setFechaUltimaModificacion(LocalDateTime.now());
+        if (!posiblePersonalizacionRepository.findById(posiblePersonalizacionId).isPresent())
+            return new ResponseEntity<>("Posible personalizacion no encontrada", HttpStatus.NOT_FOUND);
 
-            posiblePersonalizacion.setTipoPersonalizacion(tipoPersonalizacion);
-            tipoPersonalizacion.setFechaUltimaModificacion(LocalDateTime.now());
+        if (!tipoPersonalizacionRepository.findById(posibleDTO.getTipoPersonalizacion()).isPresent())
+            return new ResponseEntity<>("Tipo de personalizacion no encontrado", HttpStatus.NOT_FOUND);
 
-            posiblePersonalizacion.setFechaUltimaModificacion(LocalDateTime.now());
-            productoBase.agregarPosiblePersonalizacion(posiblePersonalizacion);
+        if (!areaPersonalizacionRepository.findById(posibleDTO.getAreaPersonalizacion()).isPresent())
+            return new ResponseEntity<>("Area de personalizacion no encontrada", HttpStatus.NOT_FOUND);
 
-            return new ResponseEntity<>("Personalizacion actualizada", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Producto o posible personalizacion no encontrados", HttpStatus.NOT_FOUND);
-        }
+        ProductoBase productoBase = productoBaseRepository.findById(productoBaseId).get();
+        AreaPersonalizacion area = areaPersonalizacionRepository.findById(posibleDTO.getAreaPersonalizacion()).get();
+        TipoPersonalizacion tipo = tipoPersonalizacionRepository.findById(posibleDTO.getTipoPersonalizacion()).get();
+        PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(posiblePersonalizacionId).get();
+
+        posiblePersonalizacion.setAreaPersonalizacion(area);
+        posiblePersonalizacion.setTipoPersonalizacion(tipo);
+        posiblePersonalizacion.setFechaUltimaModificacion(LocalDateTime.now());
+        productoBase.agregarPosiblePersonalizacion(posiblePersonalizacion);
+        productoBase.setFechaUltimaModificacion(LocalDateTime.now());
+
+        return new ResponseEntity<>("Personalizacion actualizada", HttpStatus.OK);
     }
 } // fin ProductoBaseController
