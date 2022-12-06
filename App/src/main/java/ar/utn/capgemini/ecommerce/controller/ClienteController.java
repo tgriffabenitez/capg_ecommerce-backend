@@ -24,29 +24,26 @@ public class ClienteController {
     }
 
     @PostMapping(path = {"", "/"})
-    public ResponseEntity<?> crearCliente(@RequestBody @Valid ClienteDTO clienteDTO, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            boolean existeMail = clienteRepository.existsByEmail(clienteDTO.getEmail());
-            if (!existeMail) {
-                Cliente cliente = new Cliente();
-                cliente.setNombre(clienteDTO.getNombre());
-                cliente.setApellido(clienteDTO.getApellido());
-                cliente.setEmail(clienteDTO.getEmail());
-                cliente.setTelefono(clienteDTO.getTelefono());
-                cliente.setContrasenia(clienteDTO.getContrasenia());
-                cliente.setDireccionCalle(clienteDTO.getDireccionCalle());
-                cliente.setDireccionNumero(clienteDTO.getDireccionNumero());
-                cliente.setDireccionPiso(clienteDTO.getDireccionPiso());
-                cliente.setDireccionDepto(clienteDTO.getDireccionDepto());
-                clienteRepository.save(cliente);
-                return new ResponseEntity<>("Cliente creado con exito", HttpStatus.CREATED);
+    public ResponseEntity<?> registrarCliente(@RequestBody @Valid ClienteDTO clienteDTO, BindingResult bindingResult) {
 
-            } else {
-                return new ResponseEntity<>("El mail ya esta registrado", HttpStatus.BAD_REQUEST);
-            }
-        } else {
-            return new ResponseEntity<>("Error al crear el cliente", HttpStatus.BAD_REQUEST);
-        }
+        if (bindingResult.hasErrors())
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+
+        if (clienteRepository.existsByEmail(clienteDTO.getEmail()))
+            return new ResponseEntity<>("El email ya esta registrado", HttpStatus.BAD_REQUEST);
+
+        Cliente cliente = new Cliente();
+        cliente.setNombre(clienteDTO.getNombre());
+        cliente.setApellido(clienteDTO.getApellido());
+        cliente.setEmail(clienteDTO.getEmail());
+        cliente.setTelefono(clienteDTO.getTelefono());
+        cliente.setContrasenia(clienteDTO.getContrasenia());
+        cliente.setDireccionCalle(clienteDTO.getDireccionCalle());
+        cliente.setDireccionNumero(clienteDTO.getDireccionNumero());
+        cliente.setDireccionPiso(clienteDTO.getDireccionPiso());
+        cliente.setDireccionDepto(clienteDTO.getDireccionDepto());
+        clienteRepository.save(cliente);
+        return new ResponseEntity<>("Cliente registrado con exito", HttpStatus.CREATED);
     }
 }
 
