@@ -32,156 +32,164 @@ public class ProductoPersonalizadoController {
     private PosiblePersonalizacionRepository posiblePersonalizacionRepository;
 
     @GetMapping(path = {"", "/"})
-    public List<ProductoPersonalizado> obtenerProductosPersonalizados() {
-        return productoPersonalizadoRepository.findAll();
+    public ResponseEntity<?> obtenerProductosPersonalizados() {
+        return new ResponseEntity<>(productoPersonalizadoRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = {"/{id}"})
-    public ResponseEntity<ProductoPersonalizado> obtenerProductoPersonalizadoId(@PathVariable Integer id) {
-        if (productoPersonalizadoRepository.existsById(id)) {
+    public ResponseEntity<?> obtenerProductoPersonalizadoId(@PathVariable Integer id) {
+        if (!productoPersonalizadoRepository.findById(id).isPresent())
+            return new ResponseEntity<>("No se encontro el producto personalizado", HttpStatus.NOT_FOUND);
 
-            return new ResponseEntity<>(productoPersonalizadoRepository.findById(id).get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(productoPersonalizadoRepository.findById(id).get(), HttpStatus.OK);
     }
 
     @PostMapping(path = {"", "/"})
-    public ResponseEntity<String> agregarProductoPersonalizado(@RequestBody ProductoPersonalizadoDTO personalizadoDTO, BindingResult bindingResult) {
-        boolean existeProductoBase = productoBaseRepository.existsById(personalizadoDTO.getProductoBaseId());
-        boolean existeVendedor = vendedorRepository.existsById(personalizadoDTO.getVendedorId());
+    public ResponseEntity<?> crearProductoPersonalizado(@RequestBody ProductoPersonalizadoDTO personalizadoDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-        if (!bindingResult.hasErrors() && existeVendedor && existeProductoBase) {
-            String productoPersonalizadoUrl = personalizadoDTO.getProductoPersonalizadoUrl();
-            ProductoBase productoBase = productoBaseRepository.findById(personalizadoDTO.getProductoBaseId()).get();
-            Vendedor vendedor = vendedorRepository.findById(personalizadoDTO.getVendedorId()).get();
+        if (!productoBaseRepository.findById(personalizadoDTO.getProductoBaseId()).isPresent())
+            return new ResponseEntity<>("No se encontro el producto base", HttpStatus.NOT_FOUND);
 
-            ProductoPersonalizado productoPersonalizado = new ProductoPersonalizado(productoPersonalizadoUrl, productoBase, vendedor, LocalDateTime.now());
-            productoPersonalizadoRepository.save(productoPersonalizado);
+        if (!vendedorRepository.findById(personalizadoDTO.getVendedorId()).isPresent())
+            return new ResponseEntity<>("No se encontro el vendedor", HttpStatus.NOT_FOUND);
 
-            return new ResponseEntity<>("Producto personalizado agregado con exito", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Error al crear el productoPersonalizado", HttpStatus.BAD_REQUEST);
-        }
+        ProductoBase productoBase = productoBaseRepository.findById(personalizadoDTO.getProductoBaseId()).get();
+        Vendedor vendedor = vendedorRepository.findById(personalizadoDTO.getVendedorId()).get();
+        String productoPersonalizadoUrl = personalizadoDTO.getProductoPersonalizadoUrl();
+
+        ProductoPersonalizado productoPersonalizado = new ProductoPersonalizado();
+        productoPersonalizado.setProductoPersonalizadoUrl(productoPersonalizadoUrl);
+        productoPersonalizado.setProductoBase(productoBase);
+        productoPersonalizado.setVendedor(vendedor);
+        productoPersonalizado.setFechaDeAlta(LocalDateTime.now());
+        productoPersonalizadoRepository.save(productoPersonalizado);
+
+        return new ResponseEntity<>("Producto personalizado agregado con exito", HttpStatus.OK);
     }
 
     @PatchMapping(path = "/{id}")
-    public ResponseEntity<String> modificarProductoPersonalizado(@PathVariable Integer id, @RequestBody @Valid ProductoPersonalizadoDTO personalizadoDTO, BindingResult bindingResult) {
-        boolean existeProductoPersonalizado = productoPersonalizadoRepository.existsById(id);
+    public ResponseEntity<?> modificarProductoPersonalizado(@PathVariable Integer id, @RequestBody @Valid ProductoPersonalizadoDTO personalizadoDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-        if (!bindingResult.hasErrors() && existeProductoPersonalizado) {
-            String productoPersonalizadoUrl = personalizadoDTO.getProductoPersonalizadoUrl();
-            ProductoBase productoBase = productoBaseRepository.findById(personalizadoDTO.getProductoBaseId()).get();
-            Vendedor vendedor = vendedorRepository.findById(personalizadoDTO.getVendedorId()).get();
-
-            ProductoPersonalizado productoPersonalizado = productoPersonalizadoRepository.findById(id).get();
-            productoPersonalizado.setProductoBase(productoBase);
-            productoPersonalizado.setProductoPersonalizadoUrl(productoPersonalizadoUrl);
-            productoPersonalizado.setVendedor(vendedor);
-            productoPersonalizado.setFechaUltimaModificacion(LocalDateTime.now());
-            productoPersonalizadoRepository.save(productoPersonalizado);
-
-            return new ResponseEntity<>("Producto personalizado modificado con exito", HttpStatus.OK);
-        } else {
+        if (!productoPersonalizadoRepository.findById(id).isPresent())
             return new ResponseEntity<>("No se encontro el producto personalizado", HttpStatus.NOT_FOUND);
-        }
-    }
 
+        if (!productoBaseRepository.findById(personalizadoDTO.getProductoBaseId()).isPresent())
+            return new ResponseEntity<>("No se encontro el producto base", HttpStatus.NOT_FOUND);
+
+        if (!vendedorRepository.findById(personalizadoDTO.getVendedorId()).isPresent())
+            return new ResponseEntity<>("No se encontro el vendedor", HttpStatus.NOT_FOUND);
+
+        String productoPersonalizadoUrl = personalizadoDTO.getProductoPersonalizadoUrl();
+        ProductoBase productoBase = productoBaseRepository.findById(personalizadoDTO.getProductoBaseId()).get();
+        Vendedor vendedor = vendedorRepository.findById(personalizadoDTO.getVendedorId()).get();
+
+        ProductoPersonalizado productoPersonalizado = productoPersonalizadoRepository.findById(id).get();
+        productoPersonalizado.setProductoBase(productoBase);
+        productoPersonalizado.setProductoPersonalizadoUrl(productoPersonalizadoUrl);
+        productoPersonalizado.setVendedor(vendedor);
+        productoPersonalizado.setFechaUltimaModificacion(LocalDateTime.now());
+        productoPersonalizadoRepository.save(productoPersonalizado);
+
+        return new ResponseEntity<>("Producto personalizado modificado con exito", HttpStatus.OK);
+    }
 
     @Transactional
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<String> darProductoPersonalizadoDeBaja(@PathVariable Integer id) {
-        boolean existeProductoPersonalizado = productoPersonalizadoRepository.existsById(id);
+    public ResponseEntity<?> darProductoPersonalizadoDeBaja(@PathVariable Integer id) {
+        if (!productoPersonalizadoRepository.findById(id).isPresent())
+            return new ResponseEntity<>("No se encontro el producto personalizado", HttpStatus.NOT_FOUND);
 
-        if (existeProductoPersonalizado) {
-            ProductoPersonalizado productoPersonalizado = productoPersonalizadoRepository.findById(id).get();
-            productoPersonalizado.setEstaActivo(false);
-            productoPersonalizado.setFechaDeBaja(LocalDateTime.now());
-            productoPersonalizado.setFechaUltimaModificacion(LocalDateTime.now());
-            return new ResponseEntity<>("Producto personalizado dado de baja con exito", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("No se enconctro el producto personalizado", HttpStatus.NOT_FOUND);
-        }
+        ProductoPersonalizado productoPersonalizado = productoPersonalizadoRepository.findById(id).get();
+        productoPersonalizado.setEstaActivo(false);
+        productoPersonalizado.setFechaDeBaja(LocalDateTime.now());
+        productoPersonalizado.setFechaUltimaModificacion(LocalDateTime.now());
 
+        return new ResponseEntity<>("Producto personalizado dado de baja con exito", HttpStatus.OK);
     }
 
     @PostMapping(path = "/{id}/personalizacionConcreta")
-    public ResponseEntity<String> agregarPersonalizacionConcreta(@PathVariable Integer id, @RequestBody PersonalizacionConcretaDTO personalizacionConcretaDTO, BindingResult bindingResult) {
-        boolean existeProductoPersonalizado = productoPersonalizadoRepository.existsById(id);
-        boolean existePosiblePersonalizacion = posiblePersonalizacionRepository.existsById(personalizacionConcretaDTO.getPosiblePersonalizacionId());
+    public ResponseEntity<?> agregarPersonalizacionConcreta(@PathVariable Integer id, @RequestBody PersonalizacionConcretaDTO personalizacionConcretaDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-        if (!bindingResult.hasErrors() && existeProductoPersonalizado && existePosiblePersonalizacion) {
-            ProductoPersonalizado productoPersonalizado = productoPersonalizadoRepository.findById(id).get();
-            PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(personalizacionConcretaDTO.getPosiblePersonalizacionId()).get();
+        if (!productoPersonalizadoRepository.findById(id).isPresent())
+            return new ResponseEntity<>("No se encontro el producto personalizado", HttpStatus.NOT_FOUND);
 
-            PersonalizacionConcreta personalizacionConcreta = new PersonalizacionConcreta(personalizacionConcretaDTO.getDetalle(), personalizacionConcretaDTO.getPrecioPersonalizacion(), posiblePersonalizacion, LocalDateTime.now());
-            personalizacionConcretaRepository.save(personalizacionConcreta);
+        if (!posiblePersonalizacionRepository.findById(personalizacionConcretaDTO.getPosiblePersonalizacionId()).isPresent())
+            return new ResponseEntity<>("No se encontro la posible personalizacion", HttpStatus.NOT_FOUND);
 
-            productoPersonalizado.agregarPersonalizacionConcreta(personalizacionConcreta);
-            productoPersonalizadoRepository.save(productoPersonalizado);
+        ProductoPersonalizado productoPersonalizado = productoPersonalizadoRepository.findById(id).get();
+        PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(personalizacionConcretaDTO.getPosiblePersonalizacionId()).get();
 
-            return new ResponseEntity<>("Se agego la personalizacionConcreta con exito", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("No se encontro el productoPersonalizado o la posiblePersonalizacion", HttpStatus.NOT_FOUND);
-        }
+        PersonalizacionConcreta personalizacionConcreta = new PersonalizacionConcreta();
+        personalizacionConcreta.setDetalle(personalizacionConcretaDTO.getDetalle());
+        personalizacionConcreta.setPrecioPersonalizacion(personalizacionConcretaDTO.getPrecioPersonalizacion());
+        personalizacionConcreta.setPosiblePersonalizacion(posiblePersonalizacion);
+        personalizacionConcretaRepository.save(personalizacionConcreta);
+
+        productoPersonalizado.agregarPersonalizacionConcreta(personalizacionConcreta);
+        productoPersonalizadoRepository.save(productoPersonalizado);
+
+        return new ResponseEntity<>("Se agego la personalizacionConcreta con exito", HttpStatus.OK);
     }
 
-
     @GetMapping(path = "/{id}/personalizacionConcreta")
-    public ResponseEntity<List<PersonalizacionConcreta>> obtenerPersonalizacionConcreta(@PathVariable Integer id) {
-        boolean existeProductoPersonalizado = productoPersonalizadoRepository.existsById(id);
+    public ResponseEntity<?> obtenerPersonalizacionConcreta(@PathVariable Integer id) {
+        if (!productoPersonalizadoRepository.findById(id).isPresent())
+            return new ResponseEntity<>("No se encontro el producto personalizado", HttpStatus.NOT_FOUND);
 
-        if (existeProductoPersonalizado) {
-            ProductoPersonalizado productoPersonalizado = productoPersonalizadoRepository.findById(id).get();
-            List<PersonalizacionConcreta> personalizacionesConcretas = productoPersonalizado.getPersonalizacionesConcretas();
-            return new ResponseEntity<>(personalizacionesConcretas, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        ProductoPersonalizado productoPersonalizado = productoPersonalizadoRepository.findById(id).get();
+        List<PersonalizacionConcreta> personalizacionesConcretas = productoPersonalizado.getPersonalizacionesConcretas();
+
+        return new ResponseEntity<>(personalizacionesConcretas, HttpStatus.OK);
     }
 
     @Transactional
     @DeleteMapping(path = "/{productoPersonalizadoId}/personalizacionConcreta/{personalizacionConcretaId}")
-    public ResponseEntity<String> darPersonalizacionConcretaDeBaja(@PathVariable Integer productoPersonalizadoId, @PathVariable Integer personalizacionConcretaId) {
-        boolean existeProductoPersonalizado = productoPersonalizadoRepository.existsById(productoPersonalizadoId);
-        boolean existePersonalizacionConcreta = personalizacionConcretaRepository.existsById(personalizacionConcretaId);
+    public ResponseEntity<?> darPersonalizacionConcretaDeBaja(@PathVariable Integer productoPersonalizadoId, @PathVariable Integer personalizacionConcretaId) {
+        if (!productoPersonalizadoRepository.findById(productoPersonalizadoId).isPresent())
+            return new ResponseEntity<>("No se encontro el producto personalizado", HttpStatus.NOT_FOUND);
 
-        if (existePersonalizacionConcreta && existeProductoPersonalizado) {
-            PersonalizacionConcreta personalizacionConcreta = personalizacionConcretaRepository.findById(personalizacionConcretaId).get();
-            personalizacionConcreta.setEstaActivo(false);
-            personalizacionConcreta.setFechaDeBaja(LocalDateTime.now());
+        if (!personalizacionConcretaRepository.findById(personalizacionConcretaId).isPresent())
+            return new ResponseEntity<>("No se encontro la personalizacion concreta", HttpStatus.NOT_FOUND);
 
-            return new ResponseEntity<>("Se modifico la personalizacion concreta con exito", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("No se encontro el producto personalizado o la personalizacion concreta", HttpStatus.NOT_FOUND);
-        }
+        PersonalizacionConcreta personalizacionConcreta = personalizacionConcretaRepository.findById(personalizacionConcretaId).get();
+        personalizacionConcreta.setEstaActivo(false);
+        personalizacionConcreta.setFechaDeBaja(LocalDateTime.now());
+        personalizacionConcreta.setFechaUltimaModificacion(LocalDateTime.now());
+
+        return new ResponseEntity<>("Se modifico la personalizacion concreta con exito", HttpStatus.OK);
     }
 
     @Transactional
     @PatchMapping(path = "/{productoPersonalizadoId}/personalizacionConcreta/{personalizacionConcretaId}")
-    public ResponseEntity<String> modificarPersonalizacionConcretaId(@PathVariable Integer productoPersonalizadoId, @PathVariable Integer personalizacionConcretaId, @RequestBody @Valid PersonalizacionConcretaDTO personalizacionConcretaDTO, BindingResult bindingResult) {
-        boolean existeProductoPersonalizado = productoPersonalizadoRepository.existsById(productoPersonalizadoId);
-        boolean existePersonalizacionConcreta = personalizacionConcretaRepository.existsById(personalizacionConcretaId);
-        boolean existePosiblePersonalizacion = posiblePersonalizacionRepository.existsById(personalizacionConcretaDTO.getPosiblePersonalizacionId());
+    public ResponseEntity<?> modificarPersonalizacionConcretaId(@PathVariable Integer productoPersonalizadoId, @PathVariable Integer personalizacionConcretaId, @RequestBody @Valid PersonalizacionConcretaDTO personalizacionConcretaDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-        if (!bindingResult.hasErrors() && existeProductoPersonalizado && existePersonalizacionConcreta) {
-            String detalleNuevo = personalizacionConcretaDTO.getDetalle();
-            BigDecimal precioNuevo = personalizacionConcretaDTO.getPrecioPersonalizacion();
+        if (!productoPersonalizadoRepository.findById(productoPersonalizadoId).isPresent())
+            return new ResponseEntity<>("No se encontro el producto personalizado", HttpStatus.NOT_FOUND);
 
-            if (existePosiblePersonalizacion) {
-                PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(personalizacionConcretaDTO.getPosiblePersonalizacionId()).get();
-                PersonalizacionConcreta personalizacionConcreta = personalizacionConcretaRepository.findById(personalizacionConcretaId).get();
-                personalizacionConcreta.setDetalle(detalleNuevo);
-                personalizacionConcreta.setPrecioPersonalizacion(precioNuevo);
-                personalizacionConcreta.setPosiblePersonalizacion(posiblePersonalizacion);
-                personalizacionConcreta.setFechaUltimaModificacion(LocalDateTime.now());
-                return new ResponseEntity<>("Se actualizaco correctamente la personalizacion concreta", HttpStatus.OK);
-            }
+        if (!personalizacionConcretaRepository.findById(personalizacionConcretaId).isPresent())
             return new ResponseEntity<>("No se encontro la personalizacion concreta", HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>("No se encontro el productoPersonalizado o la personalizacionConcreta", HttpStatus.NOT_FOUND);
-        }
 
+        if (!posiblePersonalizacionRepository.findById(personalizacionConcretaDTO.getPosiblePersonalizacionId()).isPresent())
+            return new ResponseEntity<>("No se encontro la posible personalizacion", HttpStatus.NOT_FOUND);
 
+        String detalleNuevo = personalizacionConcretaDTO.getDetalle();
+        BigDecimal precioNuevo = personalizacionConcretaDTO.getPrecioPersonalizacion();
+
+        PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(personalizacionConcretaDTO.getPosiblePersonalizacionId()).get();
+        PersonalizacionConcreta personalizacionConcreta = personalizacionConcretaRepository.findById(personalizacionConcretaId).get();
+        personalizacionConcreta.setDetalle(detalleNuevo);
+        personalizacionConcreta.setPrecioPersonalizacion(precioNuevo);
+        personalizacionConcreta.setPosiblePersonalizacion(posiblePersonalizacion);
+        personalizacionConcreta.setFechaUltimaModificacion(LocalDateTime.now());
+
+        return new ResponseEntity<>("Se actualizaco correctamente la personalizacion concreta", HttpStatus.OK);
     }
-}
+} // fin ProductoPersonalizadoController
