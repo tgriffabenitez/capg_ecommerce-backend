@@ -43,6 +43,7 @@ public class ClienteController {
         cliente.setDireccionPiso(clienteDTO.getDireccionPiso());
         cliente.setDireccionDepto(clienteDTO.getDireccionDepto());
         clienteRepository.save(cliente);
+
         return new ResponseEntity<>("Cliente registrado con exito", HttpStatus.CREATED);
     }
 }
