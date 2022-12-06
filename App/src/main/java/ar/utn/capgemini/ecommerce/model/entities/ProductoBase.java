@@ -60,19 +60,24 @@ public class ProductoBase extends EntidadPersistente {
     @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaUltimaModificacion;
 
-    public ProductoBase(String descripcion, BigDecimal precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria, LocalDateTime fechaDeAlta) {
+    public ProductoBase(String descripcion, BigDecimal precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria) {
+        this.posiblesPersonalizaciones = new ArrayList<>();
         this.descripcion = descripcion;
         this.precioBase = precioBase;
         this.tiempoDeFabricacion = tiempoDeFabricacion;
         this.productoBaseUrl = productoBaseUrl;
         this.categoria = categoria;
         this.estaActivo = true;
-        this.fechaDeAlta = fechaDeAlta;
+        this.fechaDeAlta = LocalDateTime.now();
         this.fechaDeBaja = null;
         this.fechaUltimaModificacion = null;
     }
 
     public ProductoBase() {
+        this.estaActivo = true;
+        this.fechaDeAlta = LocalDateTime.now();
+        this.fechaDeBaja = null;
+        this.fechaUltimaModificacion = null;
         this.posiblesPersonalizaciones = new ArrayList<>();
     }
 

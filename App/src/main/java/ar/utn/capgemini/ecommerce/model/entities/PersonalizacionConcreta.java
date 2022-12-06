@@ -44,17 +44,21 @@ public class PersonalizacionConcreta extends EntidadPersistente {
     @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaUltimaModificacion;
 
-    public PersonalizacionConcreta(String detalle, BigDecimal precioPersonalizacion, PosiblePersonalizacion posiblePersonalizacion, LocalDateTime fechaDeAlta) {
+    public PersonalizacionConcreta(String detalle, BigDecimal precioPersonalizacion, PosiblePersonalizacion posiblePersonalizacion) {
         this.detalle = detalle;
         this.precioPersonalizacion = precioPersonalizacion;
         this.posiblePersonalizacion = posiblePersonalizacion;
         this.estaActivo = true;
-        this.fechaDeAlta = fechaDeAlta;
+        this.fechaDeAlta = LocalDateTime.now();
         this.fechaDeBaja = null;
         this.fechaUltimaModificacion = null;
     }
 
     public PersonalizacionConcreta() {
+        this.estaActivo = true;
+        this.fechaDeAlta = LocalDateTime.now();
+        this.fechaDeBaja = null;
+        this.fechaUltimaModificacion = null;
     }
 
 }

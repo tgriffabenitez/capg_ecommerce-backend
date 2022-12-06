@@ -34,15 +34,19 @@ public class Categoria extends EntidadPersistente {
     @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaUltimaModificacion;
 
-    public Categoria(String categoria, LocalDateTime fechaDeAlta) {
+    public Categoria(String categoria) {
         this.categoria = categoria;
-        this.fechaDeAlta = fechaDeAlta;
+        this.fechaDeAlta = LocalDateTime.now();
         this.fechaDeBaja = null;
         this.fechaUltimaModificacion = null;
         this.estaActivo = true;
     }
 
     public Categoria() {
+        this.fechaDeAlta = LocalDateTime.now();
+        this.fechaDeBaja = null;
+        this.fechaUltimaModificacion = null;
+        this.estaActivo = true;
     }
 
 }

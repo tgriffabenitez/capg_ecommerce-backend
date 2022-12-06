@@ -32,15 +32,19 @@ public class AreaPersonalizacion extends EntidadPersistente {
     @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaUltimaModificacion;
 
-    public AreaPersonalizacion(String area, LocalDateTime fechaDeAlta) {
+    public AreaPersonalizacion(String area) {
         this.area = area;
         this.estaActivo = true;
-        this.fechaDeAlta = fechaDeAlta;
+        this.fechaDeAlta = LocalDateTime.now();
         this.fechaUltimaModificacion = null;
         this.fechaDeBaja = null;
     }
 
     public AreaPersonalizacion() {
+        this.estaActivo = true;
+        this.fechaDeAlta = LocalDateTime.now();
+        this.fechaUltimaModificacion = null;
+        this.fechaDeBaja = null;
     }
 
 }

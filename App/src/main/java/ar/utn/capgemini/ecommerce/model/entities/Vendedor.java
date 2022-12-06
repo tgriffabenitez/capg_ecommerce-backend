@@ -42,6 +42,7 @@ public class Vendedor extends EntidadPersistente {
     private List<MetodoDePago> metodosDePago;
 
     public Vendedor(String nombreVendedor, String apellidoVendedor, String tienda, String emailVendedor) {
+        this.metodosDePago = new ArrayList<>();
         this.nombreVendedor = nombreVendedor;
         this.apellidoVendedor = apellidoVendedor;
         this.tienda = tienda;

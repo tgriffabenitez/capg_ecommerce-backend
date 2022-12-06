@@ -56,18 +56,22 @@ public class ProductoPersonalizado extends EntidadPersistente {
     @Column(name = "estado")
     private boolean estaActivo;
 
-    public ProductoPersonalizado(String productoPersonalizadoUrl, ProductoBase productoBase, Vendedor vendedor, LocalDateTime fechaDeAlta) {
+    public ProductoPersonalizado(String productoPersonalizadoUrl, ProductoBase productoBase, Vendedor vendedor) {
         this.personalizacionesConcretas = new ArrayList<>();
         this.productoPersonalizadoUrl = productoPersonalizadoUrl;
         this.productoBase = productoBase;
         this.vendedor = vendedor;
-        this.fechaDeAlta = fechaDeAlta;
+        this.fechaDeAlta = LocalDateTime.now();
         this.fechaDeBaja = null;
         this.fechaUltimaModificacion = null;
         this.estaActivo = true;
     }
 
     public ProductoPersonalizado() {
+        this.estaActivo = true;
+        this.fechaDeAlta = LocalDateTime.now();
+        this.fechaDeBaja = null;
+        this.fechaUltimaModificacion = null;
         this.personalizacionesConcretas = new ArrayList<>();
     }
 
@@ -75,12 +79,11 @@ public class ProductoPersonalizado extends EntidadPersistente {
         this.personalizacionesConcretas.add(personalizacionConcreta);
     }
 
-    public BigDecimal precioTotal() {
+    public void calcularPrecioTotal() {
         BigDecimal precioTotal = this.productoBase.getPrecioBase();
         for (PersonalizacionConcreta personalizacionConcreta : this.personalizacionesConcretas) {
             precioTotal = precioTotal.add(personalizacionConcreta.getPrecioPersonalizacion());
         }
-        return precioTotal;
+        this.precioTotal = precioTotal;
     }
-
 }

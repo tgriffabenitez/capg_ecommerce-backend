@@ -36,16 +36,20 @@ public class PosiblePersonalizacion extends EntidadPersistente {
     @Column(name = "fechaUltimaModificacion")
     private LocalDateTime fechaUltimaModificacion;
 
-    public PosiblePersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion, LocalDateTime fechaDeAlta) {
+    public PosiblePersonalizacion(TipoPersonalizacion tipoPersonalizacion, AreaPersonalizacion areaPersonalizacion) {
         this.tipoPersonalizacion = tipoPersonalizacion;
         this.areaPersonalizacion = areaPersonalizacion;
         this.estaActivo = true;
-        this.fechaDeAlta = fechaDeAlta;
+        this.fechaDeAlta = LocalDateTime.now();
         this.fechaDeBaja = null;
         this.fechaUltimaModificacion = null;
     }
 
     public PosiblePersonalizacion() {
+        this.estaActivo = true;
+        this.fechaDeAlta = LocalDateTime.now();
+        this.fechaDeBaja = null;
+        this.fechaUltimaModificacion = null;
     }
 
 }
