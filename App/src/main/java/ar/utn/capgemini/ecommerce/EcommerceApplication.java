@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -182,11 +181,11 @@ public class EcommerceApplication {
             personalizado5.setPersonalizacionesConcretas(concretas5);
             productoPersonalizadoRepository.save(personalizado5);
 
-            Publicacion publicacion1 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDateTime.now(), personalizado1));
-            Publicacion publicacion2 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDateTime.now(), personalizado2));
-            Publicacion publicacion3 = publicacionRepository.save(new Publicacion(ESTADO.CANCELADO, LocalDateTime.now(), personalizado3));
-            Publicacion publicacion4 = publicacionRepository.save(new Publicacion(ESTADO.ACTIVO, LocalDateTime.now(), personalizado4));
-            Publicacion publicacion5 = publicacionRepository.save(new Publicacion(ESTADO.PAUSADO, LocalDateTime.now(), personalizado5));
+            Publicacion publicacion1 = publicacionRepository.save(new Publicacion("Titulo 1", "Descripcion 1", ESTADO.ACTIVO, personalizado1, BigDecimal.valueOf(1500.55)));
+            Publicacion publicacion2 = publicacionRepository.save(new Publicacion("Titulo 2", "Descripcion 2", ESTADO.ACTIVO, personalizado2, BigDecimal.valueOf(1500.55)));
+            Publicacion publicacion3 = publicacionRepository.save(new Publicacion("Titulo 3", "Descripcion 3", ESTADO.ACTIVO, personalizado3, BigDecimal.valueOf(1500.55)));
+            Publicacion publicacion4 = publicacionRepository.save(new Publicacion("Titulo 4", "Descripcion 4", ESTADO.ACTIVO, personalizado4, BigDecimal.valueOf(1500.55)));
+            Publicacion publicacion5 = publicacionRepository.save(new Publicacion("Titulo 5", "Descripcion 5", ESTADO.ACTIVO, personalizado5, BigDecimal.valueOf(1500.55)));
 
             Cliente cliente1 = clienteRepository.save(new Cliente("Nombre 1", "Apellido 1", "cliente1@gmail.com", "12345678", "contrasenia1", "Rosario", "402", "4", "B"));
             Cliente cliente2 = clienteRepository.save(new Cliente("Nombre 2", "Apellido 2", "cliente2@gmail.com", "12345678", "contrasenia2", "Av. Rivadavia", "6900", "3", "3"));
