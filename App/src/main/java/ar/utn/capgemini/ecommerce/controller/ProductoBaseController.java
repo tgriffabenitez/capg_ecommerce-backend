@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -30,9 +32,12 @@ public class ProductoBaseController {
     @Autowired
     public AreaPersonalizacionRepository areaPersonalizacionRepository;
 
+    @PersistenceContext
+    private EntityManager em;
+
     @GetMapping(path = {"", "/"})
-    public ResponseEntity<?> obtenerProductos() {
-        return new ResponseEntity<>(productoBaseRepository.findAll(), HttpStatus.OK);
+    public List<?> obtenerProductos() {
+        return em.createQuery("SELECT mt FROM ProductoBase mt WHERE mt.estaActivo = true").getResultList();
     }
 
     @PostMapping(path = {"", "/"})
