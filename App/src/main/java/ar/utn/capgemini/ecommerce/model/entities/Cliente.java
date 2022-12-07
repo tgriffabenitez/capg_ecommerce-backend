@@ -74,6 +74,7 @@ public class Cliente extends EntidadPersistente {
     private List<Carrito> carritos;
 
     public Cliente(String nombre, String apellido, String email, String telefono, String contrasenia, String direccionCalle, String direccionNumero, String direccionPiso, String direccionDepto) {
+        this.carritos = new ArrayList<>();
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -90,6 +91,10 @@ public class Cliente extends EntidadPersistente {
     }
 
     public Cliente() {
+        this.fechaAlta = LocalDateTime.now();
+        this.fechaBaja = null;
+        this.fechaUltimaModificacion = null;
+        this.estaActivo = true;
         this.carritos = new ArrayList<>();
     }
 
