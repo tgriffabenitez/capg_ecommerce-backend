@@ -1,5 +1,6 @@
 package ar.utn.capgemini.ecommerce.controller;
 
+import ar.utn.capgemini.ecommerce.model.dto.CarritoDTO;
 import ar.utn.capgemini.ecommerce.model.dto.ClienteDTO;
 import ar.utn.capgemini.ecommerce.model.entities.Cliente;
 import ar.utn.capgemini.ecommerce.repository.ClienteRepository;
@@ -19,7 +20,7 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     @GetMapping(path = "")
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<?> obtenerClientes() {
         return new ResponseEntity<>(clienteRepository.findAll(), HttpStatus.OK);
     }
 
@@ -45,6 +46,17 @@ public class ClienteController {
         clienteRepository.save(cliente);
 
         return new ResponseEntity<>("Cliente registrado con exito", HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/{clienteId}/carrito")
+    public ResponseEntity<?> crearCarrtio(@PathVariable Integer clienteId, @RequestBody @Valid CarritoDTO carritoDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+
+        if (!clienteRepository.findById(clienteId).isPresent())
+            return new ResponseEntity<>("El cliente no existe", HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>("Carrito creado con exito", HttpStatus.CREATED);
     }
 }
 
