@@ -12,7 +12,6 @@ public class PosiblePersonalizacionDTO {
     @NotNull
     @Positive
     private Integer tipoPersonalizacion;
-
     @NotNull
     @Positive
     private Integer areaPersonalizacion;

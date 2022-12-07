@@ -12,11 +12,9 @@ import javax.validation.constraints.Positive;
 public class ProductoPersonalizadoDTO {
     @NotBlank
     private String productoPersonalizadoUrl;
-
     @NotNull
     @Positive
     private Integer productoBaseId;
-
     @NotNull
     @Positive
     private Integer vendedorId;

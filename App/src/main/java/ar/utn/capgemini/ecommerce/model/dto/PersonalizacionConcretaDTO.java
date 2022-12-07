@@ -13,11 +13,9 @@ import java.math.BigDecimal;
 public class PersonalizacionConcretaDTO {
     @NotBlank
     private String detalle;
-
     @NotNull
     @Positive
     private BigDecimal precioPersonalizacion;
-
     @NotNull
     @Positive
     private Integer posiblePersonalizacionId;
