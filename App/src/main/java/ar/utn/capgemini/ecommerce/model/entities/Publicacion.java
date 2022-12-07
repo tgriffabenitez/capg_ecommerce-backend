@@ -19,11 +19,32 @@ import java.time.LocalDateTime;
 public class Publicacion extends EntidadPersistente {
 
     @NotNull
+    @Column(name = "titulo")
+    private String titulo;
+
+    @NotNull
+    @Column(name = "descripcion")
+    private String descripcion;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado")
+    private ESTADO estado;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     private ESTADO estadoPublicacion;
 
-
     @NotNull
+    private boolean estaActivo;
+
+    @PastOrPresent
+    @Column(name = "fechaDeAlta", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeAlta;
+
+    @PastOrPresent
+    @Column(name = "fechaDeBaja", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeBaja;
+
     @PastOrPresent
     @Column(name = "fechaCambioEstado", columnDefinition = "TIMESTAMP")
     private LocalDateTime fechaCambioEstado;
@@ -38,15 +59,24 @@ public class Publicacion extends EntidadPersistente {
     @Column(name = "precio")
     private BigDecimal precio;
 
-    public Publicacion(ESTADO estadoPublicacion, LocalDateTime fechaCambioEstado, ProductoPersonalizado productoPersonalizado) {
+    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado, BigDecimal precio) {
         this.estadoPublicacion = estadoPublicacion;
-        this.fechaCambioEstado = fechaCambioEstado;
         this.productoPersonalizado = productoPersonalizado;
-        this.precio = BigDecimal.valueOf(0.0);
-
+        this.descripcion = descripcion;
+        this.titulo = titulo;
+        this.precio = precio;
+        this.fechaDeAlta = LocalDateTime.now();
+        this.estaActivo = true;
+        this.fechaDeBaja = null;
+        this.fechaCambioEstado = null;
     }
 
     public Publicacion() {
+        this.precio = BigDecimal.valueOf(0.0);
+        this.fechaDeAlta = LocalDateTime.now();
+        this.fechaDeBaja = null;
+        this.fechaCambioEstado = null;
+        this.estaActivo = true;
     }
 
 }
