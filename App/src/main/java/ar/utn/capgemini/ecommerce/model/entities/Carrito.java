@@ -24,7 +24,6 @@ public class Carrito extends EntidadPersistente {
     @Column(name = "fechaDeCompra", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeCompra;
 
-
     @NotNull
     @Enumerated(EnumType.STRING)
     private PAGO metodoDePago;
@@ -47,12 +46,12 @@ public class Carrito extends EntidadPersistente {
     @JoinColumn(name = "publicacionCarrito", referencedColumnName = "id")
     private List<PublicacionPorCarrito> publicacionesPorCarrito;
 
-    public Carrito(LocalDateTime fechaDeCompra, PAGO metodoDePago, ESTADO estadoDeCompra, LocalDateTime fechaCambioEstado, BigDecimal precioTotal) {
+    public Carrito(LocalDateTime fechaDeCompra, PAGO metodoDePago, ESTADO estadoDeCompra, BigDecimal precioTotal) {
         this.publicacionesPorCarrito = new ArrayList<>();
         this.fechaDeCompra = fechaDeCompra;
         this.metodoDePago = metodoDePago;
         this.estadoDeCompra = estadoDeCompra;
-        this.fechaCambioEstado = fechaCambioEstado;
+        this.fechaCambioEstado = LocalDateTime.now();
         this.precioTotal = precioTotal;
     }
 
@@ -60,4 +59,16 @@ public class Carrito extends EntidadPersistente {
         this.publicacionesPorCarrito = new ArrayList<>();
     }
 
+    public void agregarPublicacion(PublicacionPorCarrito publicacionPorCarrito) {
+        this.publicacionesPorCarrito.add(publicacionPorCarrito);
+    }
+
+    public void eliminarPublicacion(PublicacionPorCarrito publicacionPorCarrito) {
+        this.publicacionesPorCarrito.remove(publicacionPorCarrito);
+    }
+
+    public void cambiarEstado(ESTADO estado) {
+        this.estadoDeCompra = estado;
+        this.fechaCambioEstado = LocalDateTime.now();
+    }
 }
