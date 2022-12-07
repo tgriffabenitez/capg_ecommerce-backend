@@ -13,18 +13,14 @@ import java.math.BigDecimal;
 public class ProductoBaseDTO {
     @NotBlank
     private String descripcion;
-
     @NotNull
     @Positive
     private BigDecimal precioBase;
-
     @NotNull
     @Positive
     private Integer tiempoDeFabricacion;
-
     @NotBlank
     private String productoBaseUrl;
-
     @NotNull
     @Positive
     private Integer categoriaId;
