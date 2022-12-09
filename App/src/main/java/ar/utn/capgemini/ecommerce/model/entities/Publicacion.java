@@ -26,15 +26,13 @@ public class Publicacion extends EntidadPersistente {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "estado")
-    private ESTADO estado;
-
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "estado")
     private ESTADO estadoPublicacion;
 
     @NotNull
+    @Column(name = "dadoDeBaja")
     private boolean estaActivo;
 
     @PastOrPresent
