@@ -6,14 +6,15 @@ import ar.utn.capgemini.ecommerce.model.entities.Publicacion;
 import ar.utn.capgemini.ecommerce.repository.ProductoPersonalizadoRepository;
 import ar.utn.capgemini.ecommerce.repository.PublicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/publicacion")
@@ -23,9 +24,12 @@ public class PublicacionController {
     @Autowired
     private ProductoPersonalizadoRepository productoPersonalizadoRepository;
 
+    @PersistenceContext
+    private EntityManager em;
+
     @GetMapping(path = {"", "/"})
-    public Page<Publicacion> obtenerPublicaciones(Pageable pagina) {
-        return publicacionRepository.findAll(pagina);
+    public List<?> obtenerPublicaciones() {
+        return em.createQuery("SELECT p FROM Publicacion p WHERE p.estaActivo = true").getResultList();
     }
 
     @DeleteMapping(path = "/{id}")
