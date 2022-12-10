@@ -28,7 +28,7 @@ public class ClienteController {
         if (bindingResult.hasErrors())
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-        if (clienteService.findByEmail(clienteDTO.getEmail()))
+        if (clienteService.findByEmail(clienteDTO.getEmail()).isPresent())
             return new ResponseEntity<>("El email ya esta registrado", HttpStatus.BAD_REQUEST);
 
         clienteService.agregarCliente(clienteDTO, clienteDTO.getEmail());
