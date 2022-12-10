@@ -1,8 +1,8 @@
 package ar.utn.capgemini.ecommerce.controller;
 
-import ar.utn.capgemini.ecommerce.model.dto.PublicacionDTO;
-import ar.utn.capgemini.ecommerce.model.entities.ProductoPersonalizado;
-import ar.utn.capgemini.ecommerce.model.entities.Publicacion;
+import ar.utn.capgemini.ecommerce.dto.PublicacionDTO;
+import ar.utn.capgemini.ecommerce.model.ProductoPersonalizado;
+import ar.utn.capgemini.ecommerce.model.Publicacion;
 import ar.utn.capgemini.ecommerce.repository.ProductoPersonalizadoRepository;
 import ar.utn.capgemini.ecommerce.repository.PublicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;

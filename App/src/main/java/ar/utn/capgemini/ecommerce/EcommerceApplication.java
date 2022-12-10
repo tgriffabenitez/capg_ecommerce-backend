@@ -1,8 +1,8 @@
 package ar.utn.capgemini.ecommerce;
 
-import ar.utn.capgemini.ecommerce.model.entities.*;
-import ar.utn.capgemini.ecommerce.model.utils.ESTADO;
-import ar.utn.capgemini.ecommerce.model.utils.PAGO;
+import ar.utn.capgemini.ecommerce.model.*;
+import ar.utn.capgemini.ecommerce.utils.ESTADO;
+import ar.utn.capgemini.ecommerce.utils.PAGO;
 import ar.utn.capgemini.ecommerce.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

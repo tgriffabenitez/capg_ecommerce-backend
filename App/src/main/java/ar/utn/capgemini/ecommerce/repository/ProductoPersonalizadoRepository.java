@@ -1,6 +1,6 @@
 package ar.utn.capgemini.ecommerce.repository;
 
-import ar.utn.capgemini.ecommerce.model.entities.ProductoPersonalizado;
+import ar.utn.capgemini.ecommerce.model.ProductoPersonalizado;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

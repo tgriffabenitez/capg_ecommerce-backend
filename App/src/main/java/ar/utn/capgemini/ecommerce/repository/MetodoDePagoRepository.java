@@ -1,7 +1,7 @@
 package ar.utn.capgemini.ecommerce.repository;
 
-import ar.utn.capgemini.ecommerce.model.entities.MetodoDePago;
-import ar.utn.capgemini.ecommerce.model.utils.PAGO;
+import ar.utn.capgemini.ecommerce.model.MetodoDePago;
+import ar.utn.capgemini.ecommerce.utils.PAGO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

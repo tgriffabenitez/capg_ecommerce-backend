@@ -1,6 +1,6 @@
 package ar.utn.capgemini.ecommerce.controller;
 
-import ar.utn.capgemini.ecommerce.model.entities.Vendedor;
+import ar.utn.capgemini.ecommerce.model.Vendedor;
 import ar.utn.capgemini.ecommerce.repository.VendedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

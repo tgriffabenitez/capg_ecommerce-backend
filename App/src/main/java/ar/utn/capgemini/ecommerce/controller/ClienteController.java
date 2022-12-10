@@ -1,8 +1,7 @@
 package ar.utn.capgemini.ecommerce.controller;
 
-import ar.utn.capgemini.ecommerce.model.dto.ClienteDTO;
-import ar.utn.capgemini.ecommerce.model.entities.Cliente;
-import ar.utn.capgemini.ecommerce.repository.ClienteRepository;
+import ar.utn.capgemini.ecommerce.dto.ClienteDTO;
+import ar.utn.capgemini.ecommerce.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +15,11 @@ import javax.validation.Valid;
 public class ClienteController {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
 
     @GetMapping(path = "")
     public ResponseEntity<?> obtenerClientes() {
-        return new ResponseEntity<>(clienteRepository.findAll(), HttpStatus.OK);
+        return clienteService.findAll();
     }
 
     @PostMapping(path = {"", "/"})
@@ -29,21 +28,10 @@ public class ClienteController {
         if (bindingResult.hasErrors())
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-        if (clienteRepository.existsByEmail(clienteDTO.getEmail()))
+        if (clienteService.findByEmail(clienteDTO.getEmail()))
             return new ResponseEntity<>("El email ya esta registrado", HttpStatus.BAD_REQUEST);
 
-        Cliente cliente = new Cliente();
-        cliente.setNombre(clienteDTO.getNombre());
-        cliente.setApellido(clienteDTO.getApellido());
-        cliente.setEmail(clienteDTO.getEmail());
-        cliente.setTelefono(clienteDTO.getTelefono());
-        cliente.setContrasenia(clienteDTO.getContrasenia());
-        cliente.setDireccionCalle(clienteDTO.getDireccionCalle());
-        cliente.setDireccionNumero(clienteDTO.getDireccionNumero());
-        cliente.setDireccionPiso(clienteDTO.getDireccionPiso());
-        cliente.setDireccionDepto(clienteDTO.getDireccionDepto());
-        clienteRepository.save(cliente);
-
+        clienteService.agregarCliente(clienteDTO, clienteDTO.getEmail());
         return new ResponseEntity<>("Cliente registrado con exito", HttpStatus.CREATED);
     }
 } // fin ClienteController
