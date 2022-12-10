@@ -71,10 +71,10 @@ public class Cliente extends EntidadPersistente {
 
     @OneToMany
     @JoinColumn(name = "compra_id", referencedColumnName = "id")
-    private List<Carrito> carritos;
+    private List<Compra> compras;
 
     public Cliente(String nombre, String apellido, String email, String telefono, String contrasenia, String direccionCalle, String direccionNumero, String direccionPiso, String direccionDepto) {
-        this.carritos = new ArrayList<>();
+        this.compras = new ArrayList<>();
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -95,10 +95,10 @@ public class Cliente extends EntidadPersistente {
         this.fechaBaja = null;
         this.fechaUltimaModificacion = null;
         this.estaActivo = true;
-        this.carritos = new ArrayList<>();
+        this.compras = new ArrayList<>();
     }
 
-    public void agregarCompra(Carrito carrito) {
-        this.carritos.add(carrito);
+    public void agregarCompra(Compra compra) {
+        this.compras.add(compra);
     }
 }

@@ -34,6 +34,4 @@ public class ClienteDTO {
 
     @NotBlank
     private String direccionDepto;
-
-//    private List<Carrito> carritos;
 }

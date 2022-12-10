@@ -1,14 +1,12 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.utils.EntidadPersistente;
-import ar.utn.capgemini.ecommerce.utils.PAGO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,36 +17,17 @@ import java.util.List;
 public class Carrito extends EntidadPersistente {
 
     @NotNull
-    @Past
-    @Column(name = "fechaDeCompra", columnDefinition = "DATETIME")
-    private LocalDateTime fechaDeCompra;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private PAGO metodoDePago;
-
-    @NotNull
-    @Past
-    @Column(name = "fechaCambioEstado", columnDefinition = "DATETIME")
-    private LocalDateTime fechaCambioEstado;
-
-    @NotNull
-    @Positive
+    @PositiveOrZero
     @Column(name = "precioTotal")
     private BigDecimal precioTotal;
 
     @OneToMany
-    @JoinColumn(name = "publicacionCarrito", referencedColumnName = "id")
+    @JoinColumn(name = "carrito_id", referencedColumnName = "id")
     private List<PublicacionPorCarrito> publicacionesPorCarrito;
 
-    public Carrito(PAGO metodoDePago, BigDecimal precioTotal) {
-        this.publicacionesPorCarrito = new ArrayList<>();
-        this.metodoDePago = metodoDePago;
-        this.fechaCambioEstado = LocalDateTime.now();
-        this.precioTotal = precioTotal;
-    }
 
     public Carrito() {
+        this.precioTotal = BigDecimal.valueOf(0.0);
         this.publicacionesPorCarrito = new ArrayList<>();
     }
 

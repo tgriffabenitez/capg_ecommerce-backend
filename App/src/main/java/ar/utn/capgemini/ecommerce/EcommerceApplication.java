@@ -44,7 +44,9 @@ public class EcommerceApplication {
     @Autowired
     public ClienteRepository clienteRepository;
     @Autowired
-    public PublicacionCarritoRepository carritoRepository;
+    public PublicacionCarritoRepository publicacionPorCarritoRepository;
+    @Autowired
+    public CarritoRepository carritoRepository;
 
 
     public static void main(String[] args) {
@@ -187,18 +189,21 @@ public class EcommerceApplication {
             Publicacion publicacion4 = publicacionRepository.save(new Publicacion("Titulo 4", "Descripcion 4", ESTADO.ACTIVO, personalizado4, BigDecimal.valueOf(1500.55)));
             Publicacion publicacion5 = publicacionRepository.save(new Publicacion("Titulo 5", "Descripcion 5", ESTADO.ACTIVO, personalizado5, BigDecimal.valueOf(1500.55)));
 
-            Cliente cliente1 = clienteRepository.save(new Cliente("Nombre 1", "Apellido 1", "cliente1@gmail.com", "12345678", "contrasenia1", "Rosario", "402", "4", "B"));
-            Cliente cliente2 = clienteRepository.save(new Cliente("Nombre 2", "Apellido 2", "cliente2@gmail.com", "12345678", "contrasenia2", "Av. Rivadavia", "6900", "3", "3"));
-            Cliente cliente3 = clienteRepository.save(new Cliente("Nombre 3", "Apellido 3", "cliente3@gmail.com", "12345678", "contrasenia3", "Av. San Juan", "1234", "15", "A"));
-            Cliente cliente4 = clienteRepository.save(new Cliente("Nombre 4", "Apellido 4", "cliente4@gmail.com", "12345678", "contrasenia4", "Viamonte", "723", "7", "2"));
-            Cliente cliente5 = clienteRepository.save(new Cliente("Nombre 5", "Apellido 5", "cliente5@gmail.com", "12345678", "contrasenia5", "Uriburur", "865", "1", "C"));
+            PublicacionPorCarrito publicacionPorCarrito1 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion1, 2, BigDecimal.valueOf(1500.55)));
+            PublicacionPorCarrito publicacionPorCarrito2 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion2, 4, BigDecimal.valueOf(1500.55)));
+            PublicacionPorCarrito publicacionPorCarrito3 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion3, 3, BigDecimal.valueOf(1500.55)));
+            PublicacionPorCarrito publicacionPorCarrito4 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion4, 3, BigDecimal.valueOf(1500.55)));
+            PublicacionPorCarrito publicacionPorCarrito5 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion5, 1, BigDecimal.valueOf(1500.55)));
 
 
-            PublicacionPorCarrito carrito1 = carritoRepository.save(new PublicacionPorCarrito(5, publicacion1));
-            PublicacionPorCarrito carrito2 = carritoRepository.save(new PublicacionPorCarrito(2, publicacion2));
-            PublicacionPorCarrito carrito3 = carritoRepository.save(new PublicacionPorCarrito(3, publicacion3));
-            PublicacionPorCarrito carrito4 = carritoRepository.save(new PublicacionPorCarrito(4, publicacion4));
-            PublicacionPorCarrito carrito5 = carritoRepository.save(new PublicacionPorCarrito(5, publicacion5));
+            Carrito carrito1 = carritoRepository.save(new Carrito());
+            carrito1.agregarPublicacion(publicacionPorCarrito1);
+            carrito1.setPrecioTotal(BigDecimal.valueOf(publicacionPorCarrito1.getCantidad() * publicacionPorCarrito1.getSubtotal().doubleValue()));
+            carrito1.agregarPublicacion(publicacionPorCarrito2);
+            carrito1.setPrecioTotal(BigDecimal.valueOf(publicacionPorCarrito2.getCantidad() * publicacionPorCarrito2.getSubtotal().doubleValue()));
+            carritoRepository.save(carrito1);
+
+
         };
     }
 }
