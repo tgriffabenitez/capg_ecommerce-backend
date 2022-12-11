@@ -2,6 +2,7 @@ package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.utils.EntidadPersistente;
 import ar.utn.capgemini.ecommerce.utils.PAGO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,7 @@ public class Compra extends EntidadPersistente {
     private Carrito carrito;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 

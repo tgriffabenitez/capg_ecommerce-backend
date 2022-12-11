@@ -87,6 +87,7 @@ public class CarritoController {
             compra.setCarrito(carrito);
             compra.setPrecioTotal(carrito.getPrecioTotal());
             compra.setFechaDeCompra(LocalDateTime.now());
+            cliente.agregarCompra(compra);
             compraRepository.save(compra);
         } else {
             // Si el id no es nulo, vefifico que exista el cliente con ese id
@@ -102,6 +103,7 @@ public class CarritoController {
             compra.setCarrito(carrito);
             compra.setPrecioTotal(carrito.getPrecioTotal());
             compra.setFechaDeCompra(LocalDateTime.now());
+            cliente.agregarCompra(compra);
             compraRepository.save(compra);
         }
 
