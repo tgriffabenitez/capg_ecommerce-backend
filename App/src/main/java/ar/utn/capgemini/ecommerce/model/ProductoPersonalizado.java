@@ -78,12 +78,13 @@ public class ProductoPersonalizado extends EntidadPersistente {
         this.personalizacionesConcretas.add(personalizacionConcreta);
     }
 
-    public void calcularPrecioTotal() {
+    public Double calcularPrecioTotal() {
         Double preciototal = this.productoBase.getPrecioBase();
         for (PersonalizacionConcreta personalizacionConcreta : this.personalizacionesConcretas) {
             preciototal = preciototal + personalizacionConcreta.getPrecioPersonalizacionConcreta();
         }
         this.preciototal = preciototal;
+        return this.preciototal;
     }
 
 }

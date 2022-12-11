@@ -39,7 +39,7 @@ public class CarritoController {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
         Carrito carrito = new Carrito();
-        carrito.setPrecioTotal(compraDTO.getTotal());
+        Double precioTotal = 0.0;
 
         for (PublicacionCarritoDTO publicacionPorCarritoDTO : compraDTO.getPublicaciones()) {
             if (!publicacionRepository.findById(publicacionPorCarritoDTO.getPublicacionId()).isPresent())
@@ -47,14 +47,23 @@ public class CarritoController {
 
             Publicacion publicacion = publicacionRepository.findById(publicacionPorCarritoDTO.getPublicacionId()).get();
 
+            // Obtengo el precio del productoPersonalizado
+            ProductoPersonalizado productoPersonalizado = publicacion.getProductoPersonalizado();
+            Double precioProductoPersonalizado = productoPersonalizado.calcularPrecioTotal();
+
             PublicacionPorCarrito publicacionPorCarrito = new PublicacionPorCarrito();
             publicacionPorCarrito.setPublicacion(publicacion);
             publicacionPorCarrito.setCantidad(publicacionPorCarritoDTO.getCantidad());
-            publicacionPorCarrito.setSubtotal(publicacionPorCarritoDTO.getSubtotal());
+            publicacionPorCarrito.setPrecioUnitario(precioProductoPersonalizado);
+
+            // el subtotal de la publicacionPorCarrito es el precio del productoPersonalizado * la cantidad
+            publicacionPorCarrito.setSubtotal(precioProductoPersonalizado * publicacionPorCarritoDTO.getCantidad());
             publicacionCarritoRepository.save(publicacionPorCarrito);
 
             carrito.agregarPublicacion(publicacionPorCarrito);
+            precioTotal += publicacionPorCarrito.getSubtotal();
         }
+        carrito.setPrecioTotal(precioTotal);
         carritoRepository.save(carrito);
 
         // Verifico si existe el clienteId
@@ -76,7 +85,7 @@ public class CarritoController {
             compra.setCliente(cliente);
             compra.setMetodoDePago(compraDTO.getMetodoDePago());
             compra.setCarrito(carrito);
-            compra.setPrecioTotal(compraDTO.getTotal());
+            compra.setPrecioTotal(carrito.getPrecioTotal());
             compra.setFechaDeCompra(LocalDateTime.now());
             compraRepository.save(compra);
         } else {
@@ -91,7 +100,7 @@ public class CarritoController {
             compra.setCliente(cliente);
             compra.setMetodoDePago(compraDTO.getMetodoDePago());
             compra.setCarrito(carrito);
-            compra.setPrecioTotal(compraDTO.getTotal());
+            compra.setPrecioTotal(carrito.getPrecioTotal());
             compra.setFechaDeCompra(LocalDateTime.now());
             compraRepository.save(compra);
         }

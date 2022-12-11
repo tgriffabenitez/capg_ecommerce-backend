@@ -14,7 +14,4 @@ public class PublicacionCarritoDTO {
 
     @NotNull
     private Integer publicacionId;
-
-    @NotNull
-    private Double subtotal;
 }

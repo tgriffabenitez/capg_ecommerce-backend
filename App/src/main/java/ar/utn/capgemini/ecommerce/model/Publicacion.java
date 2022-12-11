@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 @Getter
@@ -51,12 +50,7 @@ public class Publicacion extends EntidadPersistente {
     @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
     private ProductoPersonalizado productoPersonalizado;
 
-    @NotNull
-    @PositiveOrZero
-    @Column(name = "precio")
-    private Double preciototal;
-
-    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado, Double preciototal) {
+    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado) {
         this.estadoPublicacion = estadoPublicacion;
         this.productoPersonalizado = productoPersonalizado;
         this.descripcion = descripcion;
@@ -65,11 +59,9 @@ public class Publicacion extends EntidadPersistente {
         this.estaActivo = true;
         this.fechaDeBaja = null;
         this.fechaCambioEstado = null;
-        this.preciototal = 0.0;
     }
 
     public Publicacion() {
-        this.preciototal = 0.0;
         this.fechaDeAlta = LocalDateTime.now();
         this.fechaDeBaja = null;
         this.fechaCambioEstado = null;

@@ -28,6 +28,11 @@ public class PublicacionPorCarrito extends EntidadPersistente {
     @Column(name = "subtotal")
     private Double subtotal;
 
+    @NotNull
+    @PositiveOrZero
+    @Column(name = "precioUnitario")
+    private Double precioUnitario;
+
     public PublicacionPorCarrito() {
     }
 
