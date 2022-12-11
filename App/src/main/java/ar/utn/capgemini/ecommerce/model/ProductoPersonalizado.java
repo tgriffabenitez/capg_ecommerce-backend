@@ -51,7 +51,7 @@ public class ProductoPersonalizado extends EntidadPersistente {
 
     @Positive
     @Column(name = "preciototal")
-    private BigDecimal precioTotal;
+    private BigDecimal preciototal;
 
     @Column(name = "estado")
     private boolean estaActivo;
@@ -80,10 +80,11 @@ public class ProductoPersonalizado extends EntidadPersistente {
     }
 
     public void calcularPrecioTotal() {
-        BigDecimal precioTotal = this.productoBase.getPrecioBase();
+        BigDecimal preciototal = this.productoBase.getPrecioBase();
         for (PersonalizacionConcreta personalizacionConcreta : this.personalizacionesConcretas) {
-            precioTotal = precioTotal.add(personalizacionConcreta.getPrecioPersonalizacion());
+            preciototal = preciototal.add(personalizacionConcreta.getPrecioPersonalizacion());
         }
-        this.precioTotal = precioTotal;
+        this.preciototal = preciototal;
     }
+
 }

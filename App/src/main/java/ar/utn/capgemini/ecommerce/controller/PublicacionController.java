@@ -59,7 +59,7 @@ public class PublicacionController {
 
         publicacionActualizada.setTitulo(publicacion.getTitulo());
         publicacionActualizada.setDescripcion(publicacion.getDescripcion());
-        publicacionActualizada.setPrecio(publicacion.getPrecio());
+        publicacionActualizada.setPreciototal(publicacion.getPrecio());
         publicacionActualizada.setProductoPersonalizado(productoPersonalizado);
         publicacionActualizada.setFechaCambioEstado(LocalDateTime.now());
         publicacionRepository.save(publicacionActualizada);

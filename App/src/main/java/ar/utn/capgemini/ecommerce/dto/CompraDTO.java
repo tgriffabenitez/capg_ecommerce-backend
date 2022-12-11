@@ -14,8 +14,8 @@ import java.util.List;
 public class CompraDTO {
 
     // info del cliente
-    @NotNull
-    @Positive
+//    @NotNull
+//    @Positive
     private Integer clienteId;
 
     // info de la compra

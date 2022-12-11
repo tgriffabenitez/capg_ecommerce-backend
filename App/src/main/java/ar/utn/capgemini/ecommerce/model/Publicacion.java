@@ -55,26 +55,25 @@ public class Publicacion extends EntidadPersistente {
     @NotNull
     @PositiveOrZero
     @Column(name = "precio")
-    private BigDecimal precio;
+    private BigDecimal preciototal;
 
-    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado, BigDecimal precio) {
+    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado) {
         this.estadoPublicacion = estadoPublicacion;
         this.productoPersonalizado = productoPersonalizado;
         this.descripcion = descripcion;
         this.titulo = titulo;
-        this.precio = precio;
         this.fechaDeAlta = LocalDateTime.now();
         this.estaActivo = true;
         this.fechaDeBaja = null;
         this.fechaCambioEstado = null;
+        this.preciototal = BigDecimal.valueOf(0.0);
     }
 
     public Publicacion() {
-        this.precio = BigDecimal.valueOf(0.0);
+        this.preciototal = BigDecimal.valueOf(0.0);
         this.fechaDeAlta = LocalDateTime.now();
         this.fechaDeBaja = null;
         this.fechaCambioEstado = null;
         this.estaActivo = true;
     }
-
 }
