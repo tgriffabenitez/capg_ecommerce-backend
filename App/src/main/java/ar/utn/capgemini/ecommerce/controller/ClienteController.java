@@ -45,6 +45,15 @@ public class ClienteController {
         clienteRepository.save(cliente);
         return new ResponseEntity<>("Cliente registrado con exito", HttpStatus.CREATED);
     }
+
+    @GetMapping(path = "/{id}/compras")
+    public ResponseEntity<?> obtenerComprasCliente(@PathVariable Integer id) {
+        if (!clienteRepository.findById(id).isPresent())
+            return new ResponseEntity<>("El cliente no existe", HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(clienteRepository.findById(id).get().getCompras(), HttpStatus.OK);
+    }
+
 } // fin ClienteController
 
 
