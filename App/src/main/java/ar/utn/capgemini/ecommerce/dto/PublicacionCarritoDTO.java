@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -17,5 +16,5 @@ public class PublicacionCarritoDTO {
     private Integer publicacionId;
 
     @NotNull
-    private BigDecimal subtotal;
+    private Double subtotal;
 }

@@ -12,7 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -88,23 +87,23 @@ public class EcommerceApplication {
             PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5));
             List<PosiblePersonalizacion> posibles5 = Collections.singletonList(posible5);
 
-            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", BigDecimal.valueOf(1500.55), 3, "url 1", categoria1));
+            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 1500.55, 3, "url 1", categoria1));
             base1.setPosiblesPersonalizaciones(posibles1);
             productoBaseRepository.save(base1);
 
-            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", BigDecimal.valueOf(1500.55), 3, "url 2", categoria2));
+            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 1500.55, 3, "url 2", categoria2));
             base2.setPosiblesPersonalizaciones(posibles2);
             productoBaseRepository.save(base2);
 
-            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", BigDecimal.valueOf(1500.55), 3, "url 3", categoria3));
+            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 1500.55, 3, "url 3", categoria3));
             base3.setPosiblesPersonalizaciones(posibles3);
             productoBaseRepository.save(base3);
 
-            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", BigDecimal.valueOf(1500.55), 3, "url 4", categoria4));
+            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 1500.55, 3, "url 4", categoria4));
             base4.setPosiblesPersonalizaciones(posibles4);
             productoBaseRepository.save(base4);
 
-            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", BigDecimal.valueOf(1500.55), 3, "url 5", categoria5));
+            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 1500.55, 3, "url 5", categoria5));
             base5.setPosiblesPersonalizaciones(posibles5);
             productoBaseRepository.save(base5);
 
@@ -148,19 +147,19 @@ public class EcommerceApplication {
             vendedor5.setMetodosDePago(metodoPago5);
             vendedorRepository.save(vendedor5);
 
-            PersonalizacionConcreta concreta1 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 1", BigDecimal.valueOf(1500.55), posible1));
+            PersonalizacionConcreta concreta1 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 1", 1500.55, posible1));
             List<PersonalizacionConcreta> concretas1 = Collections.singletonList(concreta1);
 
-            PersonalizacionConcreta concreta2 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 2", BigDecimal.valueOf(1500.55), posible2));
+            PersonalizacionConcreta concreta2 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 2", 1500.55, posible2));
             List<PersonalizacionConcreta> concretas2 = Collections.singletonList(concreta2);
 
-            PersonalizacionConcreta concreta3 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 3", BigDecimal.valueOf(1500.55), posible3));
+            PersonalizacionConcreta concreta3 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 3", 1500.55, posible3));
             List<PersonalizacionConcreta> concretas3 = Collections.singletonList(concreta3);
 
-            PersonalizacionConcreta concreta4 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 4", BigDecimal.valueOf(1500.55), posible4));
+            PersonalizacionConcreta concreta4 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 4", 1500.55, posible4));
             List<PersonalizacionConcreta> concretas4 = Collections.singletonList(concreta4);
 
-            PersonalizacionConcreta concreta5 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 5", BigDecimal.valueOf(1500.55), posible5));
+            PersonalizacionConcreta concreta5 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 5", 1500.55, posible5));
             List<PersonalizacionConcreta> concretas5 = Collections.singletonList(concreta5);
 
             ProductoPersonalizado personalizado1 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 1", base1, vendedor1));
@@ -183,11 +182,11 @@ public class EcommerceApplication {
             personalizado5.setPersonalizacionesConcretas(concretas5);
             productoPersonalizadoRepository.save(personalizado5);
 
-            publicacionRepository.save(new Publicacion("Titulo 1", "Descripcion 1", ESTADO.ACTIVO, personalizado1, BigDecimal.valueOf(1500.55)));
-            publicacionRepository.save(new Publicacion("Titulo 2", "Descripcion 2", ESTADO.ACTIVO, personalizado2, BigDecimal.valueOf(1500.55)));
-            publicacionRepository.save(new Publicacion("Titulo 3", "Descripcion 3", ESTADO.ACTIVO, personalizado3, BigDecimal.valueOf(1500.55)));
-            publicacionRepository.save(new Publicacion("Titulo 4", "Descripcion 4", ESTADO.ACTIVO, personalizado4, BigDecimal.valueOf(1500.55)));
-            publicacionRepository.save(new Publicacion("Titulo 5", "Descripcion 5", ESTADO.ACTIVO, personalizado5, BigDecimal.valueOf(1500.55)));
+            publicacionRepository.save(new Publicacion("Titulo 1", "Descripcion 1", ESTADO.ACTIVO, personalizado1, 1500.55));
+            publicacionRepository.save(new Publicacion("Titulo 2", "Descripcion 2", ESTADO.ACTIVO, personalizado2, 1500.55));
+            publicacionRepository.save(new Publicacion("Titulo 3", "Descripcion 3", ESTADO.ACTIVO, personalizado3, 1500.55));
+            publicacionRepository.save(new Publicacion("Titulo 4", "Descripcion 4", ESTADO.ACTIVO, personalizado4, 1500.55));
+            publicacionRepository.save(new Publicacion("Titulo 5", "Descripcion 5", ESTADO.ACTIVO, personalizado5, 1500.55));
         };
     }
 }

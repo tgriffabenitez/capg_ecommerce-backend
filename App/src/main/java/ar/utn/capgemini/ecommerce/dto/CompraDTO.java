@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -37,5 +36,5 @@ public class CompraDTO {
     private List<PublicacionCarritoDTO> publicaciones;
     @NotNull
     @Positive
-    private BigDecimal total;
+    private Double total;
 }

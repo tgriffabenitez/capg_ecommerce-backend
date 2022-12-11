@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -55,9 +54,9 @@ public class Publicacion extends EntidadPersistente {
     @NotNull
     @PositiveOrZero
     @Column(name = "precio")
-    private BigDecimal preciototal;
+    private Double preciototal;
 
-    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado, BigDecimal preciototal) {
+    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado, Double preciototal) {
         this.estadoPublicacion = estadoPublicacion;
         this.productoPersonalizado = productoPersonalizado;
         this.descripcion = descripcion;
@@ -66,11 +65,11 @@ public class Publicacion extends EntidadPersistente {
         this.estaActivo = true;
         this.fechaDeBaja = null;
         this.fechaCambioEstado = null;
-        this.preciototal = new BigDecimal(0);
+        this.preciototal = 0.0;
     }
 
     public Publicacion() {
-        this.preciototal = BigDecimal.valueOf(0.0);
+        this.preciototal = 0.0;
         this.fechaDeAlta = LocalDateTime.now();
         this.fechaDeBaja = null;
         this.fechaCambioEstado = null;

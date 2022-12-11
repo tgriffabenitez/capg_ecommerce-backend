@@ -6,7 +6,6 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ public class ProductoBaseDTO {
     private String descripcion;
     @NotNull
     @Positive
-    private BigDecimal precioBase;
+    private Double precioBase;
     @NotNull
     @Positive
     private Integer tiempoDeFabricacion;

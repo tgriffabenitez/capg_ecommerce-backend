@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,7 +22,7 @@ public class Compra extends EntidadPersistente {
 
     @Positive
     @Column(name = "precioTotal")
-    private BigDecimal precioTotal;
+    private Double precioTotal;
 
     @PastOrPresent
     @Column(name = "fechaDeCompra", columnDefinition = "DATETIME")

@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class Carrito extends EntidadPersistente {
     @NotNull
     @PositiveOrZero
     @Column(name = "precioTotal")
-    private BigDecimal precioTotal;
+    private Double precioTotal;
 
     @OneToMany
     @JoinColumn(name = "carrito_id", referencedColumnName = "id")
@@ -27,7 +26,7 @@ public class Carrito extends EntidadPersistente {
 
 
     public Carrito() {
-        this.precioTotal = BigDecimal.valueOf(0.0);
+        this.precioTotal = 0.0;
         this.publicacionesPorCarrito = new ArrayList<>();
     }
 

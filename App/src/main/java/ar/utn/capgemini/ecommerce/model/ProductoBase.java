@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ProductoBase extends EntidadPersistente {
     @NotNull
     @Positive
     @Column(name = "precioBase")
-    private BigDecimal precioBase;
+    private Double precioBase;
 
     @NotNull
     @Positive
@@ -60,7 +59,7 @@ public class ProductoBase extends EntidadPersistente {
     @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaUltimaModificacion;
 
-    public ProductoBase(String descripcion, BigDecimal precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria) {
+    public ProductoBase(String descripcion, Double precioBase, Integer tiempoDeFabricacion, String productoBaseUrl, Categoria categoria) {
         this.posiblesPersonalizaciones = new ArrayList<>();
         this.descripcion = descripcion;
         this.precioBase = precioBase;

@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class ProductoPersonalizado extends EntidadPersistente {
 
     @Positive
     @Column(name = "preciototal")
-    private BigDecimal preciototal;
+    private Double preciototal;
 
     @Column(name = "estado")
     private boolean estaActivo;
@@ -80,9 +79,9 @@ public class ProductoPersonalizado extends EntidadPersistente {
     }
 
     public void calcularPrecioTotal() {
-        BigDecimal preciototal = this.productoBase.getPrecioBase();
+        Double preciototal = this.productoBase.getPrecioBase();
         for (PersonalizacionConcreta personalizacionConcreta : this.personalizacionesConcretas) {
-            preciototal = preciototal.add(personalizacionConcreta.getPrecioPersonalizacion());
+            preciototal = preciototal + personalizacionConcreta.getPrecioPersonalizacionConcreta();
         }
         this.preciototal = preciototal;
     }

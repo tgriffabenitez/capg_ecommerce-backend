@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -127,7 +126,7 @@ public class ProductoPersonalizadoController {
 
         PersonalizacionConcreta personalizacionConcreta = new PersonalizacionConcreta();
         personalizacionConcreta.setDetalle(personalizacionConcretaDTO.getDetalle());
-        personalizacionConcreta.setPrecioPersonalizacion(personalizacionConcretaDTO.getPrecioPersonalizacion());
+        personalizacionConcreta.setPrecioPersonalizacionConcreta(personalizacionConcretaDTO.getPrecioPersonalizacion());
         personalizacionConcreta.setPosiblePersonalizacion(posiblePersonalizacion);
         personalizacionConcretaRepository.save(personalizacionConcreta);
 
@@ -181,12 +180,12 @@ public class ProductoPersonalizadoController {
             return new ResponseEntity<>("No se encontro la posible personalizacion", HttpStatus.NOT_FOUND);
 
         String detalleNuevo = personalizacionConcretaDTO.getDetalle();
-        BigDecimal precioNuevo = personalizacionConcretaDTO.getPrecioPersonalizacion();
+        Double precioNuevo = personalizacionConcretaDTO.getPrecioPersonalizacion();
 
         PosiblePersonalizacion posiblePersonalizacion = posiblePersonalizacionRepository.findById(personalizacionConcretaDTO.getPosiblePersonalizacionId()).get();
         PersonalizacionConcreta personalizacionConcreta = personalizacionConcretaRepository.findById(personalizacionConcretaId).get();
         personalizacionConcreta.setDetalle(detalleNuevo);
-        personalizacionConcreta.setPrecioPersonalizacion(precioNuevo);
+        personalizacionConcreta.setPrecioPersonalizacionConcreta(precioNuevo);
         personalizacionConcreta.setPosiblePersonalizacion(posiblePersonalizacion);
         personalizacionConcreta.setFechaUltimaModificacion(LocalDateTime.now());
 

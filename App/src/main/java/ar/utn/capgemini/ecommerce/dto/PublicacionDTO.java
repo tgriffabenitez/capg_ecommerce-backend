@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -21,5 +20,5 @@ public class PublicacionDTO {
     private Integer productoPersonalizadoId;
     @NotNull
     @PositiveOrZero
-    private BigDecimal precio;
+    private Double precio;
 }

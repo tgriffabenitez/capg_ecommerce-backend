@@ -6,7 +6,6 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ public class PersonalizacionConcretaDTO {
     private String detalle;
     @NotNull
     @Positive
-    private BigDecimal precioPersonalizacion;
+    private Double precioPersonalizacion;
     @NotNull
     @Positive
     private Integer posiblePersonalizacionId;

@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -26,7 +25,7 @@ public class PersonalizacionConcreta extends EntidadPersistente {
     @NotNull
     @Positive
     @Column(name = "precioPersonalizacionConcreta")
-    private BigDecimal precioPersonalizacion;
+    private Double precioPersonalizacionConcreta;
 
     @ManyToOne
     @JoinColumn(name = "posiblePersonalizacion_id", referencedColumnName = "id")
@@ -44,9 +43,9 @@ public class PersonalizacionConcreta extends EntidadPersistente {
     @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaUltimaModificacion;
 
-    public PersonalizacionConcreta(String detalle, BigDecimal precioPersonalizacion, PosiblePersonalizacion posiblePersonalizacion) {
+    public PersonalizacionConcreta(String detalle, Double precioPersonalizacionConcreta, PosiblePersonalizacion posiblePersonalizacion) {
         this.detalle = detalle;
-        this.precioPersonalizacion = precioPersonalizacion;
+        this.precioPersonalizacionConcreta = precioPersonalizacionConcreta;
         this.posiblePersonalizacion = posiblePersonalizacion;
         this.estaActivo = true;
         this.fechaDeAlta = LocalDateTime.now();
