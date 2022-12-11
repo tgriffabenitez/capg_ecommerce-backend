@@ -2,12 +2,8 @@ package ar.utn.capgemini.ecommerce.controller;
 
 import ar.utn.capgemini.ecommerce.dto.CompraDTO;
 import ar.utn.capgemini.ecommerce.dto.PublicacionCarritoDTO;
-import ar.utn.capgemini.ecommerce.model.Carrito;
-import ar.utn.capgemini.ecommerce.model.Publicacion;
-import ar.utn.capgemini.ecommerce.model.PublicacionPorCarrito;
-import ar.utn.capgemini.ecommerce.repository.CarritoRepository;
-import ar.utn.capgemini.ecommerce.repository.PublicacionCarritoRepository;
-import ar.utn.capgemini.ecommerce.repository.PublicacionRepository;
+import ar.utn.capgemini.ecommerce.model.*;
+import ar.utn.capgemini.ecommerce.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 
 @RestController
@@ -26,6 +23,10 @@ public class CarritoController {
     private PublicacionCarritoRepository publicacionCarritoRepository;
     @Autowired
     private PublicacionRepository publicacionRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
+    @Autowired
+    private CompraRepository compraRepository;
 
     @GetMapping(path = {"/", ""})
     public ResponseEntity<?> obtenerCarritos() {
@@ -56,6 +57,41 @@ public class CarritoController {
         }
 
         carritoRepository.save(carrito);
+
+
+        // Verifico si el cliente existe
+        if (!clienteRepository.findById(compraDTO.getClienteId()).isPresent()) {
+            // Si no existe, lo creo
+            Cliente cliente = new Cliente();
+            cliente.setNombre(compraDTO.getNombre());
+            cliente.setApellido(compraDTO.getApellido());
+            cliente.setEmail(compraDTO.getEmail());
+            cliente.setTelefono(compraDTO.getTelefono());
+            cliente.setDireccionCalle(compraDTO.getDireccionCalle());
+            cliente.setDireccionNumero(compraDTO.getDireccionNumero());
+            cliente.setDireccionPiso(compraDTO.getDireccionPiso());
+            cliente.setDireccionDepto(compraDTO.getDireccionDepto());
+            clienteRepository.save(cliente);
+
+            Compra compra = new Compra();
+            compra.setCliente(cliente);
+            compra.setMetodoDePago(compraDTO.getMetodoDePago());
+            compra.setCarrito(carrito);
+            compra.setPrecioTotal(compraDTO.getTotal());
+            compra.setFechaDeCompra(LocalDateTime.now());
+            compraRepository.save(compra);
+        } else {
+            // Si existe, lo busco
+            Cliente cliente = clienteRepository.findById(compraDTO.getClienteId()).get();
+            Compra compra = new Compra();
+            compra.setCliente(cliente);
+            compra.setMetodoDePago(compraDTO.getMetodoDePago());
+            compra.setCarrito(carrito);
+            compra.setPrecioTotal(compraDTO.getTotal());
+            compra.setFechaDeCompra(LocalDateTime.now());
+            compraRepository.save(compra);
+        }
+
         return new ResponseEntity<>("carrito creado con exito", HttpStatus.CREATED);
     }
 } // fin carritoController

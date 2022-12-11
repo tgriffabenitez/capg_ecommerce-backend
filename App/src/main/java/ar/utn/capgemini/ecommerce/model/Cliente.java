@@ -7,8 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -69,12 +67,8 @@ public class Cliente extends EntidadPersistente {
     @Column(name = "fechaUltimaModificacion")
     private LocalDateTime fechaUltimaModificacion;
 
-    @OneToMany
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    private List<Compra> compras;
 
     public Cliente(String nombre, String apellido, String email, String telefono, String contrasenia, String direccionCalle, String direccionNumero, String direccionPiso, String direccionDepto) {
-        this.compras = new ArrayList<>();
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -95,10 +89,5 @@ public class Cliente extends EntidadPersistente {
         this.fechaBaja = null;
         this.fechaUltimaModificacion = null;
         this.estaActivo = true;
-        this.compras = new ArrayList<>();
-    }
-
-    public void agregarCompra(Compra compra) {
-        this.compras.add(compra);
     }
 }

@@ -33,6 +33,10 @@ public class Compra extends EntidadPersistente {
     @JoinColumn(name = "carrito_id", referencedColumnName = "id")
     private Carrito carrito;
 
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+    private Cliente cliente;
+
     public Compra() {
     }
 }

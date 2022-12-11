@@ -183,27 +183,11 @@ public class EcommerceApplication {
             personalizado5.setPersonalizacionesConcretas(concretas5);
             productoPersonalizadoRepository.save(personalizado5);
 
-            Publicacion publicacion1 = publicacionRepository.save(new Publicacion("Titulo 1", "Descripcion 1", ESTADO.ACTIVO, personalizado1, BigDecimal.valueOf(1500.55)));
-            Publicacion publicacion2 = publicacionRepository.save(new Publicacion("Titulo 2", "Descripcion 2", ESTADO.ACTIVO, personalizado2, BigDecimal.valueOf(1500.55)));
-            Publicacion publicacion3 = publicacionRepository.save(new Publicacion("Titulo 3", "Descripcion 3", ESTADO.ACTIVO, personalizado3, BigDecimal.valueOf(1500.55)));
-            Publicacion publicacion4 = publicacionRepository.save(new Publicacion("Titulo 4", "Descripcion 4", ESTADO.ACTIVO, personalizado4, BigDecimal.valueOf(1500.55)));
-            Publicacion publicacion5 = publicacionRepository.save(new Publicacion("Titulo 5", "Descripcion 5", ESTADO.ACTIVO, personalizado5, BigDecimal.valueOf(1500.55)));
-
-            PublicacionPorCarrito publicacionPorCarrito1 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion1, 2, BigDecimal.valueOf(1500.55)));
-            PublicacionPorCarrito publicacionPorCarrito2 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion2, 4, BigDecimal.valueOf(1500.55)));
-            PublicacionPorCarrito publicacionPorCarrito3 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion3, 3, BigDecimal.valueOf(1500.55)));
-            PublicacionPorCarrito publicacionPorCarrito4 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion4, 3, BigDecimal.valueOf(1500.55)));
-            PublicacionPorCarrito publicacionPorCarrito5 = publicacionPorCarritoRepository.save(new PublicacionPorCarrito(publicacion5, 1, BigDecimal.valueOf(1500.55)));
-
-
-            Carrito carrito1 = carritoRepository.save(new Carrito());
-            carrito1.agregarPublicacion(publicacionPorCarrito1);
-            carrito1.setPrecioTotal(BigDecimal.valueOf(publicacionPorCarrito1.getCantidad() * publicacionPorCarrito1.getSubtotal().doubleValue()));
-            carrito1.agregarPublicacion(publicacionPorCarrito2);
-            carrito1.setPrecioTotal(BigDecimal.valueOf(publicacionPorCarrito2.getCantidad() * publicacionPorCarrito2.getSubtotal().doubleValue()));
-            carritoRepository.save(carrito1);
-
-
+            publicacionRepository.save(new Publicacion("Titulo 1", "Descripcion 1", ESTADO.ACTIVO, personalizado1, BigDecimal.valueOf(1500.55)));
+            publicacionRepository.save(new Publicacion("Titulo 2", "Descripcion 2", ESTADO.ACTIVO, personalizado2, BigDecimal.valueOf(1500.55)));
+            publicacionRepository.save(new Publicacion("Titulo 3", "Descripcion 3", ESTADO.ACTIVO, personalizado3, BigDecimal.valueOf(1500.55)));
+            publicacionRepository.save(new Publicacion("Titulo 4", "Descripcion 4", ESTADO.ACTIVO, personalizado4, BigDecimal.valueOf(1500.55)));
+            publicacionRepository.save(new Publicacion("Titulo 5", "Descripcion 5", ESTADO.ACTIVO, personalizado5, BigDecimal.valueOf(1500.55)));
         };
     }
 }
