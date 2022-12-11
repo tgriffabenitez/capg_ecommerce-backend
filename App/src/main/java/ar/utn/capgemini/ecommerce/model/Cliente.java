@@ -70,7 +70,7 @@ public class Cliente extends EntidadPersistente {
     private LocalDateTime fechaUltimaModificacion;
 
     @OneToMany
-    @JoinColumn(name = "compra_id", referencedColumnName = "id")
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private List<Compra> compras;
 
     public Cliente(String nombre, String apellido, String email, String telefono, String contrasenia, String direccionCalle, String direccionNumero, String direccionPiso, String direccionDepto) {
