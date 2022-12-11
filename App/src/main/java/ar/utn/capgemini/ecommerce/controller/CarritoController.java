@@ -55,12 +55,10 @@ public class CarritoController {
 
             carrito.agregarPublicacion(publicacionPorCarrito);
         }
-
         carritoRepository.save(carrito);
 
-
-        // Verifico si el cliente existe
-        if (!clienteRepository.findById(compraDTO.getClienteId()).isPresent()) {
+        // Verifico si existe el clienteId
+        if (compraDTO.getClienteId() == null) {
             // Si no existe, lo creo
             Cliente cliente = new Cliente();
             cliente.setNombre(compraDTO.getNombre());
@@ -73,6 +71,7 @@ public class CarritoController {
             cliente.setDireccionDepto(compraDTO.getDireccionDepto());
             clienteRepository.save(cliente);
 
+            // creo una nueva compra
             Compra compra = new Compra();
             compra.setCliente(cliente);
             compra.setMetodoDePago(compraDTO.getMetodoDePago());
@@ -81,8 +80,13 @@ public class CarritoController {
             compra.setFechaDeCompra(LocalDateTime.now());
             compraRepository.save(compra);
         } else {
-            // Si existe, lo busco
+            // Si el id no es nulo, vefifico que exista el cliente con ese id
+            if (!clienteRepository.findById(compraDTO.getClienteId()).isPresent())
+                return new ResponseEntity<>("No existe el cliente con id " + compraDTO.getClienteId(), HttpStatus.BAD_REQUEST);
+
             Cliente cliente = clienteRepository.findById(compraDTO.getClienteId()).get();
+
+            // creo una nueva compra
             Compra compra = new Compra();
             compra.setCliente(cliente);
             compra.setMetodoDePago(compraDTO.getMetodoDePago());

@@ -34,10 +34,10 @@ public class Cliente extends EntidadPersistente {
     @Column(name = "telefono")
     private String telefono;
 
-    @NotBlank
-    @NotEmpty
-    @Column(name = "contrasenia")
-    private String contrasenia;
+//    @NotBlank
+//    @NotEmpty
+@Column(name = "contrasenia")
+private String contrasenia;
 
     @NotBlank
     @Column(name = "direccionCalle")
