@@ -13,4 +13,6 @@ public interface PublicacionRepository extends JpaRepository<Publicacion, Intege
     List<?> findByTitulo(String titulo);
 
     List<?> findByDescripcion(String descripcion);
+
+    List<Publicacion> findByVendedorId(Integer vendedorId);
 }
