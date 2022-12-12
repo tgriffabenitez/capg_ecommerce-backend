@@ -32,12 +32,21 @@ public class PublicacionController {
                                                   @RequestParam(name = "descripcion", required = false) String descripcion) {
 
         if (titulo != null && descripcion != null) {
+            if (publicacionRepository.findByTituloAndDescripcion(titulo, descripcion).isEmpty()) {
+                return new ResponseEntity<>("Titulo y descripcion no encontrados", HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(publicacionRepository.findByTituloAndDescripcion(titulo, descripcion), HttpStatus.OK);
 
         } else if (titulo != null) {
+            if (publicacionRepository.findByTitulo(titulo).isEmpty()) {
+                return new ResponseEntity<>("Titulo no encontrado", HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(publicacionRepository.findByTitulo(titulo), HttpStatus.OK);
 
         } else if (descripcion != null) {
+            if (publicacionRepository.findByDescripcion(descripcion).isEmpty()) {
+                return new ResponseEntity<>("Descripcion no encontrada", HttpStatus.NOT_FOUND);
+            }
             return new ResponseEntity<>(publicacionRepository.findByDescripcion(descripcion), HttpStatus.OK);
 
         } else {

@@ -58,11 +58,11 @@ public class EcommerceApplication {
         LOG.info("Cargando datos en la base de datos");
 
         return (args) -> {
-            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo UTN"));
-            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo Ferrari"));
+            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo-UTN"));
+            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo-Ferrari"));
             TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Degrade"));
             TipoPersonalizacion tipo4 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Emoji"));
-            TipoPersonalizacion tipo5 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Texto ABC"));
+            TipoPersonalizacion tipo5 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Texto-ABC"));
 
             AreaPersonalizacion area1 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Espalda"));
             AreaPersonalizacion area2 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Dorso"));
@@ -87,23 +87,23 @@ public class EcommerceApplication {
             PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5));
             List<PosiblePersonalizacion> posibles5 = Collections.singletonList(posible5);
 
-            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 2000.0, 3, "url 1", categoria1));
+            ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 2000.0, 3, "url-1", categoria1));
             base1.setPosiblesPersonalizaciones(posibles1);
             productoBaseRepository.save(base1);
 
-            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 3000.0, 3, "url 2", categoria2));
+            ProductoBase base2 = productoBaseRepository.save(new ProductoBase("Pantalon", 3000.0, 3, "url-2", categoria2));
             base2.setPosiblesPersonalizaciones(posibles2);
             productoBaseRepository.save(base2);
 
-            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 8000.0, 3, "url 3", categoria3));
+            ProductoBase base3 = productoBaseRepository.save(new ProductoBase("Buzo", 8000.0, 3, "url-3", categoria3));
             base3.setPosiblesPersonalizaciones(posibles3);
             productoBaseRepository.save(base3);
 
-            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 50000.0, 3, "url 4", categoria4));
+            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 50000.0, 3, "url-4", categoria4));
             base4.setPosiblesPersonalizaciones(posibles4);
             productoBaseRepository.save(base4);
 
-            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 15000.0, 3, "url 5", categoria5));
+            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 15000.0, 3, "url-5", categoria5));
             base5.setPosiblesPersonalizaciones(posibles5);
             productoBaseRepository.save(base5);
 
@@ -127,23 +127,23 @@ public class EcommerceApplication {
             metodo5.setFormaDePago(PAGO.CREDITO_MASTERCARD);
             List<MetodoDePago> metodoPago5 = Collections.singletonList(metodo5);
 
-            Vendedor vendedor1 = vendedorRepository.save(new Vendedor("Nombre 1", "Apellido 1", "Tienda 1", "Email1@gmail.com"));
+            Vendedor vendedor1 = vendedorRepository.save(new Vendedor("Nombre-1", "Apellido-1", "Tienda-1", "Email1@gmail.com"));
             vendedor1.setMetodosDePago(metodoPago1);
             vendedorRepository.save(vendedor1);
 
-            Vendedor vendedor2 = vendedorRepository.save(new Vendedor("Nombre 2", "Apellido 2", "Tienda 2", "Email2@gmail.com"));
+            Vendedor vendedor2 = vendedorRepository.save(new Vendedor("Nombre-2", "Apellido-2", "Tienda-2", "Email2@gmail.com"));
             vendedor2.setMetodosDePago(metodoPago2);
             vendedorRepository.save(vendedor2);
 
-            Vendedor vendedor3 = vendedorRepository.save(new Vendedor("Nombre 3", "Apellido 3", "Tienda 3", "Email3@gmail.com"));
+            Vendedor vendedor3 = vendedorRepository.save(new Vendedor("Nombre-3", "Apellido-3", "Tienda-3", "Email3@gmail.com"));
             vendedor3.setMetodosDePago(metodoPago3);
             vendedorRepository.save(vendedor3);
 
-            Vendedor vendedor4 = vendedorRepository.save(new Vendedor("Nombre 4", "Apellido 4", "Tienda 4", "Email4@gmail.com"));
+            Vendedor vendedor4 = vendedorRepository.save(new Vendedor("Nombre-4", "Apellido-4", "Tienda-4", "Email4@gmail.com"));
             vendedor4.setMetodosDePago(metodoPago4);
             vendedorRepository.save(vendedor4);
 
-            Vendedor vendedor5 = vendedorRepository.save(new Vendedor("Nombre 5", "Apellido 5", "Tienda 5", "Email5@gmail.com"));
+            Vendedor vendedor5 = vendedorRepository.save(new Vendedor("Nombre-5", "Apellido-5", "Tienda-5", "Email5@gmail.com"));
             vendedor5.setMetodosDePago(metodoPago5);
             vendedorRepository.save(vendedor5);
 
@@ -162,31 +162,31 @@ public class EcommerceApplication {
             PersonalizacionConcreta concreta5 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 5", 2500.0, posible5));
             List<PersonalizacionConcreta> concretas5 = Collections.singletonList(concreta5);
 
-            ProductoPersonalizado personalizado1 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 1", base1, vendedor1));
+            ProductoPersonalizado personalizado1 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url-1", base1, vendedor1));
             personalizado1.setPersonalizacionesConcretas(concretas1);
             productoPersonalizadoRepository.save(personalizado1);
 
-            ProductoPersonalizado personalizado2 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 2", base2, vendedor2));
+            ProductoPersonalizado personalizado2 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url-2", base2, vendedor2));
             personalizado2.setPersonalizacionesConcretas(concretas2);
             productoPersonalizadoRepository.save(personalizado2);
 
-            ProductoPersonalizado personalizado3 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 3", base3, vendedor3));
+            ProductoPersonalizado personalizado3 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url-3", base3, vendedor3));
             personalizado3.setPersonalizacionesConcretas(concretas3);
             productoPersonalizadoRepository.save(personalizado3);
 
-            ProductoPersonalizado personalizado4 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 4", base4, vendedor4));
+            ProductoPersonalizado personalizado4 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url-4", base4, vendedor4));
             personalizado4.setPersonalizacionesConcretas(concretas4);
             productoPersonalizadoRepository.save(personalizado4);
 
-            ProductoPersonalizado personalizado5 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url 5", base5, vendedor5));
+            ProductoPersonalizado personalizado5 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url-5", base5, vendedor5));
             personalizado5.setPersonalizacionesConcretas(concretas5);
             productoPersonalizadoRepository.save(personalizado5);
 
-            publicacionRepository.save(new Publicacion("Titulo 1", "Descripcion 1", ESTADO.ACTIVO, personalizado1));
-            publicacionRepository.save(new Publicacion("Titulo 2", "Descripcion 2", ESTADO.ACTIVO, personalizado2));
-            publicacionRepository.save(new Publicacion("Titulo 3", "Descripcion 3", ESTADO.ACTIVO, personalizado3));
-            publicacionRepository.save(new Publicacion("Titulo 4", "Descripcion 4", ESTADO.ACTIVO, personalizado4));
-            publicacionRepository.save(new Publicacion("Titulo 5", "Descripcion 5", ESTADO.ACTIVO, personalizado5));
+            publicacionRepository.save(new Publicacion("Titulo-1", "Descripcion-1", ESTADO.ACTIVO, personalizado1));
+            publicacionRepository.save(new Publicacion("Titulo-2", "Descripcion-2", ESTADO.ACTIVO, personalizado2));
+            publicacionRepository.save(new Publicacion("Titulo-3", "Descripcion-3", ESTADO.ACTIVO, personalizado3));
+            publicacionRepository.save(new Publicacion("Titulo-4", "Descripcion-4", ESTADO.ACTIVO, personalizado4));
+            publicacionRepository.save(new Publicacion("Titulo-5", "Descripcion-5", ESTADO.ACTIVO, personalizado5));
         };
     }
 }
