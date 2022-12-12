@@ -182,11 +182,11 @@ public class EcommerceApplication {
             personalizado5.setPersonalizacionesConcretas(concretas5);
             productoPersonalizadoRepository.save(personalizado5);
 
-            publicacionRepository.save(new Publicacion("Titulo-1", "Descripcion-1", ESTADO.ACTIVO, personalizado1));
-            publicacionRepository.save(new Publicacion("Titulo-2", "Descripcion-2", ESTADO.ACTIVO, personalizado2));
-            publicacionRepository.save(new Publicacion("Titulo-3", "Descripcion-3", ESTADO.ACTIVO, personalizado3));
-            publicacionRepository.save(new Publicacion("Titulo-4", "Descripcion-4", ESTADO.ACTIVO, personalizado4));
-            publicacionRepository.save(new Publicacion("Titulo-5", "Descripcion-5", ESTADO.ACTIVO, personalizado5));
+            publicacionRepository.save(new Publicacion("Titulo-1", "Descripcion-1", ESTADO.ACTIVO, personalizado1, vendedor1));
+            publicacionRepository.save(new Publicacion("Titulo-2", "Descripcion-2", ESTADO.ACTIVO, personalizado2, vendedor2));
+            publicacionRepository.save(new Publicacion("Titulo-3", "Descripcion-3", ESTADO.ACTIVO, personalizado3, vendedor3));
+            publicacionRepository.save(new Publicacion("Titulo-4", "Descripcion-4", ESTADO.ACTIVO, personalizado4, vendedor4));
+            publicacionRepository.save(new Publicacion("Titulo-5", "Descripcion-5", ESTADO.ACTIVO, personalizado5, vendedor5));
         };
     }
 }

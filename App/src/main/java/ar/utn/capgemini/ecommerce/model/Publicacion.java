@@ -50,8 +50,14 @@ public class Publicacion extends EntidadPersistente {
     @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
     private ProductoPersonalizado productoPersonalizado;
 
-    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado) {
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
+    private Vendedor vendedor;
+
+    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado, Vendedor vendedor) {
         this.estadoPublicacion = estadoPublicacion;
+        this.vendedor = vendedor;
         this.productoPersonalizado = productoPersonalizado;
         this.descripcion = descripcion;
         this.titulo = titulo;

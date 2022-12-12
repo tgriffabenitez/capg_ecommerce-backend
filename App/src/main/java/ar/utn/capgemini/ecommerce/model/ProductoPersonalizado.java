@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.utils.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +33,7 @@ public class ProductoPersonalizado extends EntidadPersistente {
     @JoinColumn(name = "productoPersonalizado", referencedColumnName = "id")
     private List<PersonalizacionConcreta> personalizacionesConcretas;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
