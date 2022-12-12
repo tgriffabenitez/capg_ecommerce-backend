@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequestMapping("/publicacion")
@@ -28,8 +28,22 @@ public class PublicacionController {
     private EntityManager em;
 
     @GetMapping(path = {"", "/"})
-    public List<?> obtenerPublicaciones() {
-        return em.createQuery("SELECT p FROM Publicacion p WHERE p.estaActivo = true").getResultList();
+    public ResponseEntity<?> obtenerPublicaciones(@RequestParam(name = "titulo", required = false) String titulo,
+                                                  @RequestParam(name = "descripcion", required = false) String descripcion) {
+
+        if (titulo != null && descripcion != null) {
+            return new ResponseEntity<>(publicacionRepository.findByTituloAndDescripcion(titulo, descripcion), HttpStatus.OK);
+
+        } else if (titulo != null) {
+            return new ResponseEntity<>(publicacionRepository.findByTitulo(titulo), HttpStatus.OK);
+
+        } else if (descripcion != null) {
+            return new ResponseEntity<>(publicacionRepository.findByDescripcion(descripcion), HttpStatus.OK);
+
+        } else {
+            Query query = em.createQuery("SELECT p FROM Publicacion p WHERE p.estaActivo = true");
+            return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
+        }
     }
 
     @DeleteMapping(path = "/{id}")
