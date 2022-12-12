@@ -38,14 +38,17 @@ public class ProductoPersonalizado extends EntidadPersistente {
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaDeAlta", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeAlta;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaDeBaja", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeBaja;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaUltimaModificacion", columnDefinition = "DATETIME")
     private LocalDateTime fechaUltimaModificacion;

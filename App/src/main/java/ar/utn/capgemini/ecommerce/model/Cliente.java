@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.utils.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,14 +57,17 @@ public class Cliente extends EntidadPersistente {
     @Column(name = "direccionDepartamento")
     private String direccionDepto;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaDeAlta")
     private LocalDateTime fechaAlta;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaDeBaja")
     private LocalDateTime fechaBaja;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaUltimaModificacion")
     private LocalDateTime fechaUltimaModificacion;

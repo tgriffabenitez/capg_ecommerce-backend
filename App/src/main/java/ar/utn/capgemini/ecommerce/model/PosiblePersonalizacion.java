@@ -1,6 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
 import ar.utn.capgemini.ecommerce.utils.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,14 +25,17 @@ public class PosiblePersonalizacion extends EntidadPersistente {
     @JoinColumn(name = "areaPersonalizacion", referencedColumnName = "id")
     private AreaPersonalizacion areaPersonalizacion;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaDeAlta")
     private LocalDateTime fechaDeAlta;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaDeBaja")
     private LocalDateTime fechaDeBaja;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaUltimaModificacion")
     private LocalDateTime fechaUltimaModificacion;

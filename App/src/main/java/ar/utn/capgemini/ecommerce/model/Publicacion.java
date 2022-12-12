@@ -1,7 +1,7 @@
 package ar.utn.capgemini.ecommerce.model;
 
-import ar.utn.capgemini.ecommerce.utils.ESTADO;
 import ar.utn.capgemini.ecommerce.utils.EntidadPersistente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,22 +25,20 @@ public class Publicacion extends EntidadPersistente {
     private String descripcion;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "estado")
-    private ESTADO estadoPublicacion;
-
-    @NotNull
     @Column(name = "dadoDeBaja")
     private boolean estaActivo;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaDeAlta", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeAlta;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaDeBaja", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeBaja;
 
+    @JsonIgnore
     @PastOrPresent
     @Column(name = "fechaCambioEstado", columnDefinition = "TIMESTAMP")
     private LocalDateTime fechaCambioEstado;
@@ -55,8 +53,7 @@ public class Publicacion extends EntidadPersistente {
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
-    public Publicacion(String titulo, String descripcion, ESTADO estadoPublicacion, ProductoPersonalizado productoPersonalizado, Vendedor vendedor) {
-        this.estadoPublicacion = estadoPublicacion;
+    public Publicacion(String titulo, String descripcion, ProductoPersonalizado productoPersonalizado, Vendedor vendedor) {
         this.vendedor = vendedor;
         this.productoPersonalizado = productoPersonalizado;
         this.descripcion = descripcion;
