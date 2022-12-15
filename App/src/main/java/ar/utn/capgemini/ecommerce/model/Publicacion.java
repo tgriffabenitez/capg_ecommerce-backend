@@ -25,6 +25,14 @@ public class Publicacion extends EntidadPersistente {
     private String descripcion;
 
     @NotNull
+    @Column(name = "precio")
+    private Double precio;
+
+    @Column(name = "imagenPublicacion")
+    private String imagenPublicacion;
+
+    @JsonIgnore
+    @NotNull
     @Column(name = "dadoDeBaja")
     private boolean estaActivo;
 
@@ -43,17 +51,19 @@ public class Publicacion extends EntidadPersistente {
     @Column(name = "fechaCambioEstado", columnDefinition = "TIMESTAMP")
     private LocalDateTime fechaCambioEstado;
 
+    @JsonIgnore
     @NotNull
     @OneToOne
     @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
     private ProductoPersonalizado productoPersonalizado;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
-    public Publicacion(String titulo, String descripcion, ProductoPersonalizado productoPersonalizado, Vendedor vendedor) {
+    public Publicacion(String titulo, String descripcion, ProductoPersonalizado productoPersonalizado, String imagenPublicacion, Vendedor vendedor) {
         this.vendedor = vendedor;
         this.productoPersonalizado = productoPersonalizado;
         this.descripcion = descripcion;
@@ -62,6 +72,8 @@ public class Publicacion extends EntidadPersistente {
         this.estaActivo = true;
         this.fechaDeBaja = null;
         this.fechaCambioEstado = null;
+        this.imagenPublicacion = imagenPublicacion;
+        this.precio = productoPersonalizado.calcularPrecioTotal();
     }
 
     public Publicacion() {

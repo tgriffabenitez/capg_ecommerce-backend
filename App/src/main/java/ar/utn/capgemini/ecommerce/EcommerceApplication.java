@@ -181,11 +181,11 @@ public class EcommerceApplication {
             personalizado5.setPersonalizacionesConcretas(concretas5);
             productoPersonalizadoRepository.save(personalizado5);
 
-            publicacionRepository.save(new Publicacion("Titulo-1", "Descripcion-1", personalizado1, vendedor1));
-            publicacionRepository.save(new Publicacion("Titulo-2", "Descripcion-2", personalizado2, vendedor2));
-            publicacionRepository.save(new Publicacion("Titulo-3", "Descripcion-3", personalizado3, vendedor3));
-            publicacionRepository.save(new Publicacion("Titulo-4", "Descripcion-4", personalizado4, vendedor4));
-            publicacionRepository.save(new Publicacion("Titulo-5", "Descripcion-5", personalizado5, vendedor5));
+            publicacionRepository.save(new Publicacion("Titulo-1", "Descripcion-1", personalizado1, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor1));
+            publicacionRepository.save(new Publicacion("Titulo-2", "Descripcion-2", personalizado2, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor2));
+            publicacionRepository.save(new Publicacion("Titulo-3", "Descripcion-3", personalizado3, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor3));
+            publicacionRepository.save(new Publicacion("Titulo-4", "Descripcion-4", personalizado4, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor4));
+            publicacionRepository.save(new Publicacion("Titulo-5", "Descripcion-5", personalizado5, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor5));
         };
     }
 }
