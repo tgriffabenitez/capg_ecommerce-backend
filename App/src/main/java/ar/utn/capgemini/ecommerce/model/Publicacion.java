@@ -32,6 +32,11 @@ public class Publicacion extends EntidadPersistente {
     private String imagenPublicacion;
 
     @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+    private Categoria categoria;
+
+    @JsonIgnore
     @NotNull
     @Column(name = "dadoDeBaja")
     private boolean estaActivo;
@@ -63,8 +68,9 @@ public class Publicacion extends EntidadPersistente {
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
-    public Publicacion(String titulo, String descripcion, ProductoPersonalizado productoPersonalizado, String imagenPublicacion, Vendedor vendedor) {
+    public Publicacion(String titulo, String descripcion, Categoria categoria, ProductoPersonalizado productoPersonalizado, String imagenPublicacion, Vendedor vendedor) {
         this.vendedor = vendedor;
+        this.categoria = categoria;
         this.productoPersonalizado = productoPersonalizado;
         this.descripcion = descripcion;
         this.titulo = titulo;

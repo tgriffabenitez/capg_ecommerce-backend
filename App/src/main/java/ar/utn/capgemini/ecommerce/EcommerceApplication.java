@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,34 +58,39 @@ public class EcommerceApplication {
         LOG.info("Cargando datos en la base de datos");
 
         return (args) -> {
-            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo-UTN"));
-            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Logo-Ferrari"));
-            TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Degrade"));
-            TipoPersonalizacion tipo4 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Emoji"));
-            TipoPersonalizacion tipo5 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("Texto-ABC"));
+            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("logo-star-wars"));
+            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("logo-ferrari"));
+            TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("degrade"));
+            TipoPersonalizacion tipo4 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("emoji"));
 
-            AreaPersonalizacion area1 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Espalda"));
-            AreaPersonalizacion area2 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Dorso"));
-            AreaPersonalizacion area3 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Cuello"));
-            AreaPersonalizacion area4 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Capucha"));
-            AreaPersonalizacion area5 = areaPersonalizacionRepository.save(new AreaPersonalizacion("Piernas"));
+            AreaPersonalizacion area1 = areaPersonalizacionRepository.save(new AreaPersonalizacion("espalda"));
+            AreaPersonalizacion area2 = areaPersonalizacionRepository.save(new AreaPersonalizacion("pecho"));
+            AreaPersonalizacion area3 = areaPersonalizacionRepository.save(new AreaPersonalizacion("cuello"));
+            AreaPersonalizacion area4 = areaPersonalizacionRepository.save(new AreaPersonalizacion("capucha"));
 
-            Categoria categoria1 = cagoriaRepository.save(new Categoria("Remera"));
-            Categoria categoria2 = cagoriaRepository.save(new Categoria("Buzo"));
-            Categoria categoria3 = cagoriaRepository.save(new Categoria("Campera"));
-            Categoria categoria4 = cagoriaRepository.save(new Categoria("Pantalones"));
-            Categoria categoria5 = cagoriaRepository.save(new Categoria("Zapatos"));
+            Categoria categoria1 = cagoriaRepository.save(new Categoria("Remeras"));
+            Categoria categoria2 = cagoriaRepository.save(new Categoria("Buzos"));
+            Categoria categoria3 = cagoriaRepository.save(new Categoria("Pantalones"));
+            Categoria categoria4 = cagoriaRepository.save(new Categoria("Camperas"));
+
 
             PosiblePersonalizacion posible1 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo1, area1));
-            List<PosiblePersonalizacion> posibles1 = Collections.singletonList(posible1);
+            List<PosiblePersonalizacion> posibles1 = new ArrayList<>();
+            posibles1.add(posible1);
+
             PosiblePersonalizacion posible2 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo2, area2));
-            List<PosiblePersonalizacion> posibles2 = Collections.singletonList(posible2);
+            List<PosiblePersonalizacion> posibles2 = new ArrayList<>();
+            posibles2.add(posible2);
+
             PosiblePersonalizacion posible3 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo3, area3));
-            List<PosiblePersonalizacion> posibles3 = Collections.singletonList(posible3);
+            List<PosiblePersonalizacion> posibles3 = new ArrayList<>();
+            posibles3.add(posible3);
+
             PosiblePersonalizacion posible4 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo4, area4));
-            List<PosiblePersonalizacion> posibles4 = Collections.singletonList(posible4);
-            PosiblePersonalizacion posible5 = posiblePersonalizacionRepository.save(new PosiblePersonalizacion(tipo5, area5));
-            List<PosiblePersonalizacion> posibles5 = Collections.singletonList(posible5);
+            List<PosiblePersonalizacion> posibles4 = new ArrayList<>();
+            posibles4.add(posible4);
+
+            posibles1.add(posible1);
 
             ProductoBase base1 = productoBaseRepository.save(new ProductoBase("Remera", 2000.0, 3, "url-1", categoria1));
             base1.setPosiblesPersonalizaciones(posibles1);
@@ -98,13 +104,10 @@ public class EcommerceApplication {
             base3.setPosiblesPersonalizaciones(posibles3);
             productoBaseRepository.save(base3);
 
-            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 50000.0, 3, "url-4", categoria4));
+            ProductoBase base4 = productoBaseRepository.save(new ProductoBase("Campera", 3000.0, 3, "url-4", categoria4));
             base4.setPosiblesPersonalizaciones(posibles4);
             productoBaseRepository.save(base4);
 
-            ProductoBase base5 = productoBaseRepository.save(new ProductoBase("Zapatos", 15000.0, 3, "url-5", categoria5));
-            base5.setPosiblesPersonalizaciones(posibles5);
-            productoBaseRepository.save(base5);
 
             MetodoDePago metodo1 = metodoDePagoRepository.save(new MetodoDePago(PAGO.EFECTIVO));
             metodo1.setFormaDePago(PAGO.EFECTIVO);
@@ -126,23 +129,23 @@ public class EcommerceApplication {
             metodo5.setFormaDePago(PAGO.CREDITO_MASTERCARD);
             List<MetodoDePago> metodoPago5 = Collections.singletonList(metodo5);
 
-            Vendedor vendedor1 = vendedorRepository.save(new Vendedor("Nombre-1", "Apellido-1", "Tienda-1", "Email1@gmail.com"));
+            Vendedor vendedor1 = vendedorRepository.save(new Vendedor("Julian", "Alvarez", "Minter", "jalvarez1@gmail.com"));
             vendedor1.setMetodosDePago(metodoPago1);
             vendedorRepository.save(vendedor1);
 
-            Vendedor vendedor2 = vendedorRepository.save(new Vendedor("Nombre-2", "Apellido-2", "Tienda-2", "Email2@gmail.com"));
+            Vendedor vendedor2 = vendedorRepository.save(new Vendedor("Camila", "Leone", "Heels", "cleone@gmail.com"));
             vendedor2.setMetodosDePago(metodoPago2);
             vendedorRepository.save(vendedor2);
 
-            Vendedor vendedor3 = vendedorRepository.save(new Vendedor("Nombre-3", "Apellido-3", "Tienda-3", "Email3@gmail.com"));
+            Vendedor vendedor3 = vendedorRepository.save(new Vendedor("Martina", "Lopez", "Rankle", "mlopez@gmail.com"));
             vendedor3.setMetodosDePago(metodoPago3);
             vendedorRepository.save(vendedor3);
 
-            Vendedor vendedor4 = vendedorRepository.save(new Vendedor("Nombre-4", "Apellido-4", "Tienda-4", "Email4@gmail.com"));
+            Vendedor vendedor4 = vendedorRepository.save(new Vendedor("Mateo", "Agostini-4", "Olokuti", "magostini@gmail.com"));
             vendedor4.setMetodosDePago(metodoPago4);
             vendedorRepository.save(vendedor4);
 
-            Vendedor vendedor5 = vendedorRepository.save(new Vendedor("Nombre-5", "Apellido-5", "Tienda-5", "Email5@gmail.com"));
+            Vendedor vendedor5 = vendedorRepository.save(new Vendedor("Martin", "Sanchez", "Semavru", "msanchez@gmail.com"));
             vendedor5.setMetodosDePago(metodoPago5);
             vendedorRepository.save(vendedor5);
 
@@ -158,8 +161,6 @@ public class EcommerceApplication {
             PersonalizacionConcreta concreta4 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 4", 1500.0, posible4));
             List<PersonalizacionConcreta> concretas4 = Collections.singletonList(concreta4);
 
-            PersonalizacionConcreta concreta5 = personalizacionConcretaRepository.save(new PersonalizacionConcreta("Detalle 5", 2500.0, posible5));
-            List<PersonalizacionConcreta> concretas5 = Collections.singletonList(concreta5);
 
             ProductoPersonalizado personalizado1 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url-1", base1, vendedor1));
             personalizado1.setPersonalizacionesConcretas(concretas1);
@@ -177,15 +178,29 @@ public class EcommerceApplication {
             personalizado4.setPersonalizacionesConcretas(concretas4);
             productoPersonalizadoRepository.save(personalizado4);
 
-            ProductoPersonalizado personalizado5 = productoPersonalizadoRepository.save(new ProductoPersonalizado("url-5", base5, vendedor5));
-            personalizado5.setPersonalizacionesConcretas(concretas5);
-            productoPersonalizadoRepository.save(personalizado5);
 
-            publicacionRepository.save(new Publicacion("Titulo-1", "Descripcion-1", personalizado1, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor1));
-            publicacionRepository.save(new Publicacion("Titulo-2", "Descripcion-2", personalizado2, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor2));
-            publicacionRepository.save(new Publicacion("Titulo-3", "Descripcion-3", personalizado3, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor3));
-            publicacionRepository.save(new Publicacion("Titulo-4", "Descripcion-4", personalizado4, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor4));
-            publicacionRepository.save(new Publicacion("Titulo-5", "Descripcion-5", personalizado5, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor5));
+            publicacionRepository.save(new Publicacion("Remera-1", "Remera-star-wars-1", categoria1, personalizado1, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor1));
+            publicacionRepository.save(new Publicacion("Remera-2", "Remera-star-wars-2", categoria1, personalizado2, "https://http2.mlstatic.com/D_NQ_NP_894525-MLA25457281799_032017-W.jpg", vendedor1));
+            publicacionRepository.save(new Publicacion("Remera-3", "Remera-bbt-1", categoria1, personalizado3, "http://3.bp.blogspot.com/-Jxs8n50QIJY/UQ_yfliopOI/AAAAAAAAEjY/Kp7P9Zb0JiI/s1600/remeras-color-animal-the-big-bang-tehory-4.png", vendedor2));
+            publicacionRepository.save(new Publicacion("Remera-4", "Remera-ferrari-1", categoria1, personalizado4, "https://sporting.vteximg.com.br/arquivos/ids/181885-1500-1500/1076705.jpg?v=636743585146670000", vendedor3));
+            publicacionRepository.save(new Publicacion("Remera-5", "Remera-ferrari-2", categoria1, personalizado4, "https://sporting.vteximg.com.br/arquivos/ids/181885-1500-1500/1076705.jpg?v=636743585146670000", vendedor4));
+
+            publicacionRepository.save(new Publicacion("Buzo-1", "Buzo-addidas-1", categoria2, personalizado1, "https://www.digitalsport.com.ar/files/products/5aa985af73cca-437094-1200x1200.jpg", vendedor1));
+            publicacionRepository.save(new Publicacion("Buzo-2", "Buzo-addidas-2", categoria2, personalizado2, "https://www.stockcenter.com.ar/on/demandware.static/-/Sites-dabra-catalog/default/dw8767328e/products/AD_GD5477/AD_GD5477-1.JPG", vendedor1));
+            publicacionRepository.save(new Publicacion("Buzo-3", "Buzo-nike-1", categoria2, personalizado3, "https://www.moovbydexter.com.ar/on/demandware.static/-/Sites-dabra-catalog/default/dwccadf8c5/products/NI_CK2852-010/NI_CK2852-010-1.JPG", vendedor2));
+            publicacionRepository.save(new Publicacion("Buzo-4", "Buzo-nike-2", categoria2, personalizado4, "https://http2.mlstatic.com/buzo-nike-sb-D_NQ_NP_565521-MLA20814538350_072016-F.jpg", vendedor3));
+            publicacionRepository.save(new Publicacion("Buzo-5", "Buzo-new-york-1", categoria2, personalizado4, "https://ver.rosario.gob.ar/media/cache/5c/66/5c66c0b1fb6b83d4eb6c685f1061da3b.png", vendedor4));
+
+            publicacionRepository.save(new Publicacion("Campera-1", "Campera-emoji-1", categoria4, personalizado1, "https://cdn.shopify.com/s/files/1/2511/9944/products/front_3_cf99a61a-1f57-4d61-a281-ee39a135db21_2000x.jpg?v=1590896198", vendedor1));
+            publicacionRepository.save(new Publicacion("Campera-2", "Campera-emoji-2", categoria4, personalizado2, "https://i.pinimg.com/originals/d6/9d/84/d69d842733d4354209b35bbfe4128611.jpg", vendedor1));
+            publicacionRepository.save(new Publicacion("Campera-3", "Campera-seleccion-1", categoria4, personalizado3, "https://essential.vteximg.com.br/arquivos/ids/164064-1000-1000/262-6598_1.jpg?v=636634425722200000", vendedor2));
+            publicacionRepository.save(new Publicacion("Campera-4", "Campera-colorida-1", categoria4, personalizado4, "https://2.bp.blogspot.com/_2kWfAkKKNo0/TQIUTWtYW1I/AAAAAAAAAAc/UntCxkv3zSk/S374/0340976B.jpg", vendedor3));
+            publicacionRepository.save(new Publicacion("Campera-5", "Campera-colorida-2", categoria4, personalizado4, "https://www.digitalsport.com.ar/files/products/5b7ea81b92aa4-452696-500x500.jpg", vendedor4));
+
+            publicacionRepository.save(new Publicacion("Pantalones-1", "jean-colorido-1", categoria3, personalizado4, "https://ae01.alicdn.com/kf/HTB1E3uvLpXXXXcLXFXXq6xXFXXXc/BKXRH-Colorido-Jean-vaqueros-de-Las-Mujeres-Mujeres-del-Resorte-de-la-Tendencia-Nacional-Bordado-de.jpg", vendedor1));
+            publicacionRepository.save(new Publicacion("Pantalones-2", "jean-gastado-1", categoria3, personalizado4, "https://cdn.shopify.com/s/files/1/0290/8559/7780/products/JEANSJV1CELESTE_2048x2048.png?v=1599587339", vendedor1));
+            publicacionRepository.save(new Publicacion("Bermuda-1", "bermuda-imagen-1", categoria3, personalizado4, "https://www.alegriademontar.com.br/wp-content/uploads/2020/07/5-12.jpg", vendedor2));
+            publicacionRepository.save(new Publicacion("bermuda-2", "bermuda-fotos-1", categoria3, personalizado4, "https://www.alegriademontar.com.br/wp-content/uploads/2020/11/BERMUDA-FEM-PRETO.jpg", vendedor3));
         };
     }
 }
