@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @RestController
@@ -28,10 +29,20 @@ public class CarritoController {
     @Autowired
     private CompraRepository compraRepository;
 
-    @GetMapping(path = {"/", ""})
-    public ResponseEntity<?> obtenerCarritos() {
-        return new ResponseEntity<>(carritoRepository.findAll(), HttpStatus.OK);
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<?> getCarrito(@PathVariable Integer id) {
+        Carrito carrito = carritoRepository.findById(id).orElse(null);
+
+        if (carrito == null)
+            return new ResponseEntity<>("No existe el carrito", HttpStatus.NOT_FOUND);
+
+        // de esta forma, sabiendo el id del carrito puedo traer todas las publicaciones que tiene
+        // y mostrar el detalle de la compra y el historial
+        List<PublicacionPorCarrito> publicacionCarritos = carrito.getPublicacionesPorCarrito();
+        return new ResponseEntity<>(publicacionCarritos, HttpStatus.OK);
     }
+
 
     @PostMapping(path = {"/", ""})
     public ResponseEntity<?> crearCarrito(@RequestBody @Valid CompraDTO compraDTO, BindingResult bindingResult) {
@@ -42,7 +53,7 @@ public class CarritoController {
         Double precioTotal = 0.0;
 
         for (PublicacionCarritoDTO publicacionPorCarritoDTO : compraDTO.getPublicaciones()) {
-            if (!publicacionRepository.findById(publicacionPorCarritoDTO.getPublicacionId()).isPresent())
+            if (publicacionRepository.findById(publicacionPorCarritoDTO.getPublicacionId()).isEmpty())
                 return new ResponseEntity<>("No existe la publicacion con id " + publicacionPorCarritoDTO.getPublicacionId(), HttpStatus.BAD_REQUEST);
 
             Publicacion publicacion = publicacionRepository.findById(publicacionPorCarritoDTO.getPublicacionId()).get();
@@ -67,6 +78,9 @@ public class CarritoController {
         carritoRepository.save(carrito);
 
         // Verifico si existe el clienteId
+        if (clienteRepository.findById(compraDTO.getClienteId()).isEmpty())
+            return new ResponseEntity<>("No existe el cliente con id " + compraDTO.getClienteId(), HttpStatus.BAD_REQUEST);
+
         if (compraDTO.getClienteId() == null) {
             // Si no existe, lo creo
             Cliente cliente = new Cliente();
@@ -91,7 +105,7 @@ public class CarritoController {
             compraRepository.save(compra);
         } else {
             // Si el id no es nulo, vefifico que exista el cliente con ese id
-            if (!clienteRepository.findById(compraDTO.getClienteId()).isPresent())
+            if (clienteRepository.findById(compraDTO.getClienteId()).isEmpty())
                 return new ResponseEntity<>("No existe el cliente con id " + compraDTO.getClienteId(), HttpStatus.BAD_REQUEST);
 
             Cliente cliente = clienteRepository.findById(compraDTO.getClienteId()).get();
