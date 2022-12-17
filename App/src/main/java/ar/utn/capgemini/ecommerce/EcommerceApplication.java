@@ -178,7 +178,6 @@ public class EcommerceApplication {
             personalizado4.setPersonalizacionesConcretas(concretas4);
             productoPersonalizadoRepository.save(personalizado4);
 
-
             publicacionRepository.save(new Publicacion("Remera-1", "Remera-star-wars-1", categoria1, personalizado1, "https://static.wixstatic.com/media/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg/v1/fill/w_890,h_890,al_c,q_85/5854b3_09a41c6e92b34befa559011ef3a5a9b1~mv2.jpg", vendedor1));
             publicacionRepository.save(new Publicacion("Remera-2", "Remera-star-wars-2", categoria1, personalizado2, "https://http2.mlstatic.com/D_NQ_NP_894525-MLA25457281799_032017-W.jpg", vendedor1));
             publicacionRepository.save(new Publicacion("Remera-3", "Remera-bbt-1", categoria1, personalizado3, "http://3.bp.blogspot.com/-Jxs8n50QIJY/UQ_yfliopOI/AAAAAAAAEjY/Kp7P9Zb0JiI/s1600/remeras-color-animal-the-big-bang-tehory-4.png", vendedor2));
@@ -201,6 +200,11 @@ public class EcommerceApplication {
             publicacionRepository.save(new Publicacion("Pantalones-2", "jean-gastado-1", categoria3, personalizado4, "https://cdn.shopify.com/s/files/1/0290/8559/7780/products/JEANSJV1CELESTE_2048x2048.png?v=1599587339", vendedor1));
             publicacionRepository.save(new Publicacion("Bermuda-1", "bermuda-imagen-1", categoria3, personalizado4, "https://www.alegriademontar.com.br/wp-content/uploads/2020/07/5-12.jpg", vendedor2));
             publicacionRepository.save(new Publicacion("bermuda-2", "bermuda-fotos-1", categoria3, personalizado4, "https://www.alegriademontar.com.br/wp-content/uploads/2020/11/BERMUDA-FEM-PRETO.jpg", vendedor3));
+
+            // creo un cliente para la demostracion del login
+            clienteRepository.save(new Cliente("Tomas Martin", "Griffa Benitez", "t@gmail.com", "112345678", "1234", "Calle falsa", "123", "1", "A"));
+            clienteRepository.save(new Cliente("Lionel", "Messi", "lm@gmail.com", "99999999", "1234", "Paris", "123", "45", "B"));
+
         };
     }
 }
