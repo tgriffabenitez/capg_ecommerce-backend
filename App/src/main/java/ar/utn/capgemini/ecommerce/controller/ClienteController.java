@@ -19,8 +19,18 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     @GetMapping(path = "")
-    public ResponseEntity<?> obtenerClientes() {
-        return new ResponseEntity<>(clienteRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<?> obtenerClientes(@RequestParam(name = "email", required = false) String email,
+                                             @RequestParam(name = "password", required = false) String password) {
+
+        if (email != null && password != null) {
+            Cliente cliente = clienteRepository.findByEmailAndContrasenia(email, password);
+            if (cliente == null) {
+                return new ResponseEntity<>("Usuario o contraseña incorrectos", HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(cliente, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(clienteRepository.findAll(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping(path = {"", "/"})
@@ -48,11 +58,14 @@ public class ClienteController {
 
     @GetMapping(path = "/{id}/compras")
     public ResponseEntity<?> obtenerComprasCliente(@PathVariable Integer id) {
-        if (!clienteRepository.findById(id).isPresent())
+        Cliente cliente = clienteRepository.findById(id).orElse(null);
+
+        if (cliente == null)
             return new ResponseEntity<>("El cliente no existe", HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(clienteRepository.findById(id).get().getCompras(), HttpStatus.OK);
     }
+
 
 } // fin ClienteController
 
