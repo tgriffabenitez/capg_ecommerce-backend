@@ -31,7 +31,6 @@ public class Publicacion extends EntidadPersistente {
     @Column(name = "imagenPublicacion")
     private String imagenPublicacion;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
@@ -62,7 +61,6 @@ public class Publicacion extends EntidadPersistente {
     @JoinColumn(name = "productoPersonalizado_id", referencedColumnName = "id")
     private ProductoPersonalizado productoPersonalizado;
 
-    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
