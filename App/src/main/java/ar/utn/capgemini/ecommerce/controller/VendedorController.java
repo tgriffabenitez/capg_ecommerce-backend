@@ -3,8 +3,8 @@ package ar.utn.capgemini.ecommerce.controller;
 import ar.utn.capgemini.ecommerce.model.Vendedor;
 import ar.utn.capgemini.ecommerce.repository.VendedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +18,8 @@ public class VendedorController {
     private VendedorRepository vendedorRepository;
 
     @GetMapping(path = {"", "/"})
-    public Page<Vendedor> obtenerVendedores(Pageable pagina){
-        return vendedorRepository.findAll(pagina);
+    public ResponseEntity<?> obtenerVendedores() {
+        return new ResponseEntity<>(vendedorRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = {"/{vendedorId}"})
