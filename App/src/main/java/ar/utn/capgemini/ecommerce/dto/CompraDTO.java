@@ -16,6 +16,7 @@ public class CompraDTO {
      * en caso de que exista. Si no existe ningun cliente con este id, creo
      * uno con los datos de la compra
      */
+    @NotNull
     private Integer clienteId;
     private String nombre;
     private String apellido;
