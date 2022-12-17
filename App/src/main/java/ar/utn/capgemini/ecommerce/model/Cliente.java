@@ -76,6 +76,18 @@ public class Cliente extends EntidadPersistente {
     @OneToMany(mappedBy = "cliente")
     private List<Compra> compras;
 
+    public Cliente(String nombre, String apellido, String email, String telefono, String contrasenia, String direccionCalle, String direccionNumero, String direccionPiso, String direccionDepto) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+        this.contrasenia = contrasenia;
+        this.direccionCalle = direccionCalle;
+        this.direccionNumero = direccionNumero;
+        this.direccionPiso = direccionPiso;
+        this.direccionDepto = direccionDepto;
+    }
+
     public Cliente() {
         this.compras = new ArrayList<>();
         this.fechaAlta = LocalDateTime.now();
