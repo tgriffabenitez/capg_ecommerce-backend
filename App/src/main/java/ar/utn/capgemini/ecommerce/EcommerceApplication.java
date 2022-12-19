@@ -130,7 +130,9 @@ public class EcommerceApplication {
             List<MetodoDePago> metodoPago5 = Collections.singletonList(metodo5);
 
             Vendedor vendedor1 = vendedorRepository.save(new Vendedor("Julian", "Alvarez", "Minter", "jalvarez1@gmail.com"));
-            vendedor1.setMetodosDePago(metodoPago1);
+            vendedor1.agregarMetodoDePago(metodo1);
+            vendedor1.agregarMetodoDePago(metodo2);
+            vendedor1.agregarMetodoDePago(metodo3);
             vendedorRepository.save(vendedor1);
 
             Vendedor vendedor2 = vendedorRepository.save(new Vendedor("Camila", "Leone", "Heels", "cleone@gmail.com"));
@@ -202,7 +204,7 @@ public class EcommerceApplication {
             publicacionRepository.save(new Publicacion("bermuda-2", "bermuda-fotos-1", categoria3, personalizado4, "https://www.alegriademontar.com.br/wp-content/uploads/2020/11/BERMUDA-FEM-PRETO.jpg", vendedor3));
 
             // creo un cliente para la demostracion del login
-            clienteRepository.save(new Cliente("Tomas Martin", "Griffa Benitez", "t@gmail.com", "112345678", "1234", "Calle falsa", "123", "1", "A"));
+            clienteRepository.save(new Cliente("Tomas", "Griffa", "t@gmail.com", "112345678", "1234", "Calle falsa", "123", "1", "A"));
             clienteRepository.save(new Cliente("Lionel", "Messi", "lm@gmail.com", "99999999", "1234", "Paris", "123", "45", "B"));
 
         };
