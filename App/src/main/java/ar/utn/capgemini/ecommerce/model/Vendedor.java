@@ -53,4 +53,8 @@ public class Vendedor extends EntidadPersistente {
         this.metodosDePago = new ArrayList<>();
     }
 
+    public void agregarMetodoDePago(MetodoDePago metodoDePago) {
+        this.metodosDePago.add(metodoDePago);
+    }
+
 }
