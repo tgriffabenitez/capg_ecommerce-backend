@@ -1,6 +1,5 @@
 package ar.utn.capgemini.ecommerce.dto;
 
-import ar.utn.capgemini.ecommerce.utils.PAGO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +28,7 @@ public class CompraDTO {
 
     // info de la compra
     @NotNull
-    private PAGO metodoDePago;
+    private Integer metodoDePago;
 
     // info del carrito
     @NotNull

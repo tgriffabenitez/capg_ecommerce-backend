@@ -28,6 +28,8 @@ public class CarritoController {
     private ClienteRepository clienteRepository;
     @Autowired
     private CompraRepository compraRepository;
+    @Autowired
+    private MetodoDePagoRepository metodoDePagoRepository;
 
 
     @GetMapping(path = "/{id}")
@@ -57,6 +59,10 @@ public class CarritoController {
                 return new ResponseEntity<>("No existe la publicacion con id " + publicacionPorCarritoDTO.getPublicacionId(), HttpStatus.BAD_REQUEST);
 
             Publicacion publicacion = publicacionRepository.findById(publicacionPorCarritoDTO.getPublicacionId()).get();
+
+            MetodoDePago metodoDePago = metodoDePagoRepository.findById(compraDTO.getMetodoDePago()).orElse(null);
+            if (metodoDePago == null)
+                return new ResponseEntity<>("No existe el metodo de pago con id " + compraDTO.getMetodoDePago(), HttpStatus.BAD_REQUEST);
 
             // Obtengo el precio del productoPersonalizado
             ProductoPersonalizado productoPersonalizado = publicacion.getProductoPersonalizado();
@@ -97,7 +103,7 @@ public class CarritoController {
             // creo una nueva compra
             Compra compra = new Compra();
             compra.setCliente(cliente);
-            compra.setMetodoDePago(compraDTO.getMetodoDePago());
+            compra.setMetodoDePago(metodoDePagoRepository.findById(compraDTO.getMetodoDePago()).get().getFormaDePago());
             compra.setCarrito(carrito);
             compra.setPrecioTotal(carrito.getPrecioTotal());
             compra.setFechaDeCompra(LocalDateTime.now());
@@ -113,7 +119,7 @@ public class CarritoController {
             // creo una nueva compra
             Compra compra = new Compra();
             compra.setCliente(cliente);
-            compra.setMetodoDePago(compraDTO.getMetodoDePago());
+            compra.setMetodoDePago(metodoDePagoRepository.findById(compraDTO.getMetodoDePago()).get().getFormaDePago());
             compra.setCarrito(carrito);
             compra.setPrecioTotal(carrito.getPrecioTotal());
             compra.setFechaDeCompra(LocalDateTime.now());
