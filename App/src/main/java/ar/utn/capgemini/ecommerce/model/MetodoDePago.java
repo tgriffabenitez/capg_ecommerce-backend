@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 public class MetodoDePago extends EntidadPersistente {
 
     @NotNull
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private PAGO formaDePago;
 
     public MetodoDePago(PAGO formaDePago) {
