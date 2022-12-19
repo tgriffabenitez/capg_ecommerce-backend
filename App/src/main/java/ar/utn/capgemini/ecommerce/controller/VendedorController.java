@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/vendedores")
@@ -22,14 +21,18 @@ public class VendedorController {
         return new ResponseEntity<>(vendedorRepository.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(path = {"/{vendedorId}"})
-    public Optional<Vendedor> obtenerVendedorId(@PathVariable("vendedorId") Integer id){
-        return vendedorRepository.findById(id);
+    @GetMapping(path = {"/metodos-de-pago/{vendedorId}"})
+    public ResponseEntity<?> obtenerVendedorId(@PathVariable("vendedorId") Integer id) {
+        Vendedor vendedor = vendedorRepository.findById(id).orElse(null);
+        if (vendedor == null)
+            return new ResponseEntity<>("No existe el vendedor con ese id.", HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(vendedor.getMetodosDePago(), HttpStatus.OK);
     }
 
     @PostMapping(path = {"", "/"})
-    public Vendedor agregarVendedor(@RequestBody @Validated Vendedor vendedor){
-        if(vendedorRepository.existsByTienda(vendedor.getTienda())){
+    public Vendedor agregarVendedor(@RequestBody @Validated Vendedor vendedor) {
+        if (vendedorRepository.existsByTienda(vendedor.getTienda())) {
             return vendedorRepository.findByTienda(vendedor.getTienda());
         }
         return vendedorRepository.save(vendedor);
