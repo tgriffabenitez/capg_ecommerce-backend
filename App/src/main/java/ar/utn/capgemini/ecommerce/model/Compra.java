@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 @Getter
@@ -21,7 +21,7 @@ public class Compra extends EntidadPersistente {
     @Column(name = "formaDePago")
     private PAGO metodoDePago;
 
-    @Positive
+    @PositiveOrZero
     @Column(name = "precioTotal")
     private Double precioTotal;
 
