@@ -45,88 +45,68 @@ public class CarritoController {
         return new ResponseEntity<>(publicacionCarritos, HttpStatus.OK);
     }
 
-
     @PostMapping(path = {"/", ""})
     public ResponseEntity<?> crearCarrito(@RequestBody @Valid CompraDTO compraDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
+        // Creo un nuevo carrito
         Carrito carrito = new Carrito();
         Double precioTotal = 0.0;
 
+        // Recorro la lista de publicaciones que me llega en el DTO y las agrego al carrito
         for (PublicacionCarritoDTO publicacionPorCarritoDTO : compraDTO.getPublicaciones()) {
             if (publicacionRepository.findById(publicacionPorCarritoDTO.getPublicacionId()).isEmpty())
                 return new ResponseEntity<>("No existe la publicacion con id " + publicacionPorCarritoDTO.getPublicacionId(), HttpStatus.BAD_REQUEST);
 
+            // busco la publicacion por id y el metodo de pago
             Publicacion publicacion = publicacionRepository.findById(publicacionPorCarritoDTO.getPublicacionId()).get();
-
             MetodoDePago metodoDePago = metodoDePagoRepository.findById(compraDTO.getMetodoDePago()).orElse(null);
             if (metodoDePago == null)
                 return new ResponseEntity<>("No existe el metodo de pago con id " + compraDTO.getMetodoDePago(), HttpStatus.BAD_REQUEST);
 
-            // Obtengo el precio del productoPersonalizado
+            // de la publicacion, obtengo el precio del producto personalizado
             ProductoPersonalizado productoPersonalizado = publicacion.getProductoPersonalizado();
             Double precioProductoPersonalizado = productoPersonalizado.calcularPrecioTotal();
 
+            // Creo la publicacionPorCarrito y le seteo los atributos
             PublicacionPorCarrito publicacionPorCarrito = new PublicacionPorCarrito();
             publicacionPorCarrito.setPublicacion(publicacion);
             publicacionPorCarrito.setCantidad(publicacionPorCarritoDTO.getCantidad());
             publicacionPorCarrito.setPrecioUnitario(precioProductoPersonalizado);
 
-            // el subtotal de la publicacionPorCarrito es el precio del productoPersonalizado * la cantidad
+            // el subtotal de la publicacionPorCarrito es el precio del productoPersonalizado x la cantidad
             publicacionPorCarrito.setSubtotal(precioProductoPersonalizado * publicacionPorCarritoDTO.getCantidad());
             publicacionCarritoRepository.save(publicacionPorCarrito);
 
             carrito.agregarPublicacion(publicacionPorCarrito);
             precioTotal += publicacionPorCarrito.getSubtotal();
         }
+
+        // Al carrito creado le seteo el precio total y lo guardo
         carrito.setPrecioTotal(precioTotal);
         carritoRepository.save(carrito);
 
-        // Verifico si existe el clienteId
-        if (clienteRepository.findById(compraDTO.getClienteId()).isEmpty())
+        // verifico que exista el cliente
+        Cliente cliente = clienteRepository.findById(compraDTO.getClienteId()).orElse(null);
+        if (cliente == null)
             return new ResponseEntity<>("No existe el cliente con id " + compraDTO.getClienteId(), HttpStatus.BAD_REQUEST);
 
-        if (compraDTO.getClienteId() == null) {
-            // Si no existe, lo creo
-            Cliente cliente = new Cliente();
-            cliente.setNombre(compraDTO.getNombre());
-            cliente.setApellido(compraDTO.getApellido());
-            cliente.setEmail(compraDTO.getEmail());
-            cliente.setTelefono(compraDTO.getTelefono());
-            cliente.setDireccionCalle(compraDTO.getDireccionCalle());
-            cliente.setDireccionNumero(compraDTO.getDireccionNumero());
-            cliente.setDireccionPiso(compraDTO.getDireccionPiso());
-            cliente.setDireccionDepto(compraDTO.getDireccionDepto());
-            clienteRepository.save(cliente);
+        // verifico el id del metodo de pago
+        if (metodoDePagoRepository.findById(compraDTO.getMetodoDePago()).isEmpty())
+            return new ResponseEntity<>("No existe el metodo de pago con id " + compraDTO.getMetodoDePago(), HttpStatus.BAD_REQUEST);
 
-            // creo una nueva compra
-            Compra compra = new Compra();
-            compra.setCliente(cliente);
-            compra.setMetodoDePago(metodoDePagoRepository.findById(compraDTO.getMetodoDePago()).get().getFormaDePago());
-            compra.setCarrito(carrito);
-            compra.setPrecioTotal(carrito.getPrecioTotal());
-            compra.setFechaDeCompra(LocalDateTime.now());
-            cliente.agregarCompra(compra);
-            compraRepository.save(compra);
-        } else {
-            // Si el id no es nulo, vefifico que exista el cliente con ese id
-            if (clienteRepository.findById(compraDTO.getClienteId()).isEmpty())
-                return new ResponseEntity<>("No existe el cliente con id " + compraDTO.getClienteId(), HttpStatus.BAD_REQUEST);
-
-            Cliente cliente = clienteRepository.findById(compraDTO.getClienteId()).get();
-
-            // creo una nueva compra
-            Compra compra = new Compra();
-            compra.setCliente(cliente);
-            compra.setMetodoDePago(metodoDePagoRepository.findById(compraDTO.getMetodoDePago()).get().getFormaDePago());
-            compra.setCarrito(carrito);
-            compra.setPrecioTotal(carrito.getPrecioTotal());
-            compra.setFechaDeCompra(LocalDateTime.now());
-            cliente.agregarCompra(compra);
-            compraRepository.save(compra);
-        }
+        // creo una nueva compra, le guardo los atributos y la guardo
+        Compra compra = new Compra();
+        compra.setCliente(cliente);
+        compra.setMetodoDePago(metodoDePagoRepository.findById(compraDTO.getMetodoDePago()).get().getFormaDePago());
+        compra.setCarrito(carrito);
+        compra.setPrecioTotal(carrito.getPrecioTotal());
+        compra.setFechaDeCompra(LocalDateTime.now());
+        cliente.agregarCompra(compra);
+        compraRepository.save(compra);
 
         return new ResponseEntity<>("carrito creado con exito", HttpStatus.CREATED);
-    }
+    } // fin crearCarrito
+
 } // fin carritoController
