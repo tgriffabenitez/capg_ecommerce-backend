@@ -58,14 +58,14 @@ public class EcommerceApplication {
         LOG.info("Cargando datos en la base de datos");
 
         return (args) -> {
-            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("logo-star-wars"));
-            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("logo-ferrari"));
+            TipoPersonalizacion tipo1 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("imagen"));
+            TipoPersonalizacion tipo2 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("texto"));
             TipoPersonalizacion tipo3 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("degrade"));
             TipoPersonalizacion tipo4 = tipoPersonalizacionRepository.save(new TipoPersonalizacion("emoji"));
 
-            AreaPersonalizacion area1 = areaPersonalizacionRepository.save(new AreaPersonalizacion("espalda"));
-            AreaPersonalizacion area2 = areaPersonalizacionRepository.save(new AreaPersonalizacion("pecho"));
-            AreaPersonalizacion area3 = areaPersonalizacionRepository.save(new AreaPersonalizacion("cuello"));
+            AreaPersonalizacion area1 = areaPersonalizacionRepository.save(new AreaPersonalizacion("frente"));
+            AreaPersonalizacion area2 = areaPersonalizacionRepository.save(new AreaPersonalizacion("dorso"));
+            AreaPersonalizacion area3 = areaPersonalizacionRepository.save(new AreaPersonalizacion("pierna"));
             AreaPersonalizacion area4 = areaPersonalizacionRepository.save(new AreaPersonalizacion("capucha"));
 
             Categoria categoria1 = cagoriaRepository.save(new Categoria("Remeras"));
