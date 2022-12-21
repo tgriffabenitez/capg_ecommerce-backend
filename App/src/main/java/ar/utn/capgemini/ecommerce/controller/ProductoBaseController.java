@@ -38,8 +38,11 @@ public class ProductoBaseController {
     private EntityManager em;
 
     @GetMapping(path = {"", "/"})
-    public List<?> obtenerProductos() {
-        return em.createQuery("SELECT mt FROM ProductoBase mt WHERE mt.estaActivo = true").getResultList();
+    public ResponseEntity<?> obtenerProductos() {
+
+        // Obtengo todos los productos base que tienen el estado activo
+        // return em.createQuery("SELECT mt FROM ProductoBase mt WHERE mt.estaActivo = true").getResultList();
+        return new ResponseEntity<>(productoBaseRepository.findAll(), HttpStatus.OK);
     }
 
     @PostMapping(path = {"", "/"})
@@ -59,7 +62,7 @@ public class ProductoBaseController {
         productoBase.setTiempoDeFabricacion(productoBaseDTO.getTiempoDeFabricacion());
         productoBaseRepository.save(productoBase);
 
-        return new ResponseEntity<>("Producto base creado con exito", HttpStatus.OK);
+        return new ResponseEntity<>("Se creo el producto base con id: " + productoBase.getId(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
@@ -88,7 +91,7 @@ public class ProductoBaseController {
         productoBase.setDescripcion(productoBaseDTO.getDescripcion());
         productoBase.setTiempoDeFabricacion(productoBaseDTO.getTiempoDeFabricacion());
         productoBase.setFechaUltimaModificacion(LocalDateTime.now());
-        return new ResponseEntity<>("Producto base modificado con exito", HttpStatus.OK);
+        return new ResponseEntity<>("Se modifico el producto base con id: " + productoBase.getId(), HttpStatus.OK);
     }
 
     @Transactional
@@ -101,7 +104,7 @@ public class ProductoBaseController {
         productoBase.setEstaActivo(false);
         productoBase.setFechaDeBaja(LocalDateTime.now());
         productoBase.setFechaUltimaModificacion(LocalDateTime.now());
-        return new ResponseEntity<>("Producto base dado de baja con exito", HttpStatus.OK);
+        return new ResponseEntity<>("Se dio de baja el producto base con id: " + productoBase.getId(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}/categoria")
@@ -207,7 +210,7 @@ public class ProductoBaseController {
         productoBase.agregarPosiblePersonalizacion(posiblePersonalizacion);
         productoBaseRepository.save(productoBase);
 
-        return new ResponseEntity<>("Posible personalizacion creada", HttpStatus.OK);
+        return new ResponseEntity<>("Se creo la posible personalizacion con id: " + posiblePersonalizacion.getId(), HttpStatus.OK);
     }
 
     @Transactional
