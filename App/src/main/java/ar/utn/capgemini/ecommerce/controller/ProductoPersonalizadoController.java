@@ -65,7 +65,7 @@ public class ProductoPersonalizadoController {
         productoPersonalizado.setFechaDeAlta(LocalDateTime.now());
         productoPersonalizadoRepository.save(productoPersonalizado);
 
-        return new ResponseEntity<>("Producto personalizado agregado con exito", HttpStatus.OK);
+        return new ResponseEntity<>("Se agrego el producto personalizaco con id: " + productoPersonalizado.getId(), HttpStatus.OK);
     }
 
     @PatchMapping(path = "/{id}")
@@ -93,7 +93,7 @@ public class ProductoPersonalizadoController {
         productoPersonalizado.setFechaUltimaModificacion(LocalDateTime.now());
         productoPersonalizadoRepository.save(productoPersonalizado);
 
-        return new ResponseEntity<>("Producto personalizado modificado con exito", HttpStatus.OK);
+        return new ResponseEntity<>("Se modifico el producto personalizado con id: " + productoPersonalizado.getId(), HttpStatus.OK);
     }
 
     @Transactional
@@ -107,7 +107,7 @@ public class ProductoPersonalizadoController {
         productoPersonalizado.setFechaDeBaja(LocalDateTime.now());
         productoPersonalizado.setFechaUltimaModificacion(LocalDateTime.now());
 
-        return new ResponseEntity<>("Producto personalizado dado de baja con exito", HttpStatus.OK);
+        return new ResponseEntity<>("Se dio de baja el producto personalizado con id: " + productoPersonalizado.getId(), HttpStatus.OK);
     }
 
     @PostMapping(path = "/{id}/personalizacionConcreta")
@@ -133,7 +133,7 @@ public class ProductoPersonalizadoController {
         productoPersonalizado.agregarPersonalizacionConcreta(personalizacionConcreta);
         productoPersonalizadoRepository.save(productoPersonalizado);
 
-        return new ResponseEntity<>("Se agego la personalizacionConcreta con exito", HttpStatus.OK);
+        return new ResponseEntity<>("Se agrego la personalizacion concreta con id: " + personalizacionConcreta.getId(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}/personalizacionConcreta")
