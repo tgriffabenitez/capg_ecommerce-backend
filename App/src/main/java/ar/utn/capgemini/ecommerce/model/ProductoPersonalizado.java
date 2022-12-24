@@ -33,7 +33,6 @@ public class ProductoPersonalizado extends EntidadPersistente {
     @JoinColumn(name = "productoPersonalizado", referencedColumnName = "id")
     private List<PersonalizacionConcreta> personalizacionesConcretas;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
