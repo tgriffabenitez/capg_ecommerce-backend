@@ -186,8 +186,8 @@ public class EcommerceApplication {
             publicacionRepository.save(new Publicacion("Remera-4", "Remera-ferrari-1", categoria1, personalizado4, "https://sporting.vteximg.com.br/arquivos/ids/181885-1500-1500/1076705.jpg?v=636743585146670000", vendedor3));
             publicacionRepository.save(new Publicacion("Remera-5", "Remera-ferrari-2", categoria1, personalizado4, "https://sporting.vteximg.com.br/arquivos/ids/181885-1500-1500/1076705.jpg?v=636743585146670000", vendedor4));
 
-            publicacionRepository.save(new Publicacion("Buzo-1", "Buzo-addidas-1", categoria2, personalizado1, "https://www.digitalsport.com.ar/files/products/5aa985af73cca-437094-1200x1200.jpg", vendedor1));
-            publicacionRepository.save(new Publicacion("Buzo-2", "Buzo-addidas-2", categoria2, personalizado2, "https://www.stockcenter.com.ar/on/demandware.static/-/Sites-dabra-catalog/default/dw8767328e/products/AD_GD5477/AD_GD5477-1.JPG", vendedor1));
+            publicacionRepository.save(new Publicacion("Buzo-1", "Buzo-adidas-1", categoria2, personalizado1, "https://www.digitalsport.com.ar/files/products/5aa985af73cca-437094-1200x1200.jpg", vendedor1));
+            publicacionRepository.save(new Publicacion("Buzo-2", "Buzo-adidas-2", categoria2, personalizado2, "https://www.stockcenter.com.ar/on/demandware.static/-/Sites-dabra-catalog/default/dw8767328e/products/AD_GD5477/AD_GD5477-1.JPG", vendedor1));
             publicacionRepository.save(new Publicacion("Buzo-3", "Buzo-nike-1", categoria2, personalizado3, "https://www.moovbydexter.com.ar/on/demandware.static/-/Sites-dabra-catalog/default/dwccadf8c5/products/NI_CK2852-010/NI_CK2852-010-1.JPG", vendedor2));
             publicacionRepository.save(new Publicacion("Buzo-4", "Buzo-nike-2", categoria2, personalizado4, "https://http2.mlstatic.com/buzo-nike-sb-D_NQ_NP_565521-MLA20814538350_072016-F.jpg", vendedor3));
             publicacionRepository.save(new Publicacion("Buzo-5", "Buzo-new-york-1", categoria2, personalizado4, "https://ver.rosario.gob.ar/media/cache/5c/66/5c66c0b1fb6b83d4eb6c685f1061da3b.png", vendedor4));
