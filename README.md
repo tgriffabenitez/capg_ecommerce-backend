@@ -9,8 +9,8 @@ La plataforma permite a los gestores cargar productos base con posibles personal
 Los articulos cargados van a ser del mismo vendedor ya que como se aclaro antes, cada vendedor puede tener diferentes metodos de pago.
 
 Se pide implementarlo en una arquitectura Web, con 2 componentes
-* FrontEnd [link al proyecto]: proyecto Front usado el framework Angular2
-* BackEnd [link al proyecto]: proyecto API REST con persistencia - usando Java-Spring
+* [FrontEnd](https://github.com/tgriffabenitez/ecommerce-frontend): proyecto Front usado el framework Angular2
+* [BackEnd](https://github.com/tgriffabenitez/ecommerce-backend): proyecto API REST con persistencia - usando Java-Spring
 
 Se deben implementar las pantallas del comprador
 * Login
