@@ -63,7 +63,7 @@ public class PublicacionController {
         } else if (tienda != null) {
 
             // verifico que exista el vendedor que tiene esa tienda
-            Vendedor vendedor = vendedorRepository.findByTienda(tienda);
+            Vendedor vendedor = vendedorRepository.findByTienda(tienda).orElse(null);
             if (vendedor == null) {
                 // si no encuentra la tienda el vendedor es null, por lo tanto no existe
                 return new ResponseEntity<>("Tienda no encontrada", HttpStatus.NOT_FOUND);
@@ -99,7 +99,7 @@ public class PublicacionController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> darPublicacionDeBaja(@PathVariable Integer id) {
-        if (!publicacionRepository.findById(id).isPresent())
+        if (publicacionRepository.findById(id).isEmpty())
             return new ResponseEntity<>("No existe la publicacion", HttpStatus.NOT_FOUND);
 
         Publicacion publicacion = publicacionRepository.findById(id).get();
@@ -113,10 +113,10 @@ public class PublicacionController {
 
     @PatchMapping(path = "/{id}")
     public ResponseEntity<?> actualizarPublicacion(@PathVariable Integer id, @RequestBody @Valid PublicacionDTO publicacion) {
-        if (!publicacionRepository.findById(id).isPresent())
+        if (publicacionRepository.findById(id).isEmpty())
             return new ResponseEntity<>("No existe la publicacion", HttpStatus.NOT_FOUND);
 
-        if (!productoPersonalizadoRepository.findById(publicacion.getProductoPersonalizadoId()).isPresent())
+        if (productoPersonalizadoRepository.findById(publicacion.getProductoPersonalizadoId()).isEmpty())
             return new ResponseEntity<>("No existe el producto personalizado", HttpStatus.NOT_FOUND);
 
         Publicacion publicacionActualizada = publicacionRepository.findById(id).get();
