@@ -67,6 +67,7 @@ public class VendedorService {
         vendedorRepository.save(vendedor);
         return new ResponseEntity<>("Vendedor dado de baja", HttpStatus.OK);
     }
+
     public ResponseEntity<?> modificarVendedor(Integer id, VendedorDTO vendedorDTO, BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
