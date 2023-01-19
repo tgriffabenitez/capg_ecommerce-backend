@@ -69,8 +69,8 @@ public class Cliente extends EntidadPersistente {
 
     @JsonIgnore
     @PastOrPresent
-    @Column(name = "fechaUltimaModificacion")
-    private LocalDateTime fechaUltimaModificacion;
+    @Column(name = "fechaModificacion")
+    private LocalDateTime fechaModificacion;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
@@ -86,13 +86,16 @@ public class Cliente extends EntidadPersistente {
         this.direccionNumero = direccionNumero;
         this.direccionPiso = direccionPiso;
         this.direccionDepto = direccionDepto;
+        this.fechaBaja = null;
+        this.fechaModificacion = null;
+        this.estaActivo = true;
     }
 
     public Cliente() {
         this.compras = new ArrayList<>();
         this.fechaAlta = LocalDateTime.now();
         this.fechaBaja = null;
-        this.fechaUltimaModificacion = null;
+        this.fechaModificacion = null;
         this.estaActivo = true;
     }
 
