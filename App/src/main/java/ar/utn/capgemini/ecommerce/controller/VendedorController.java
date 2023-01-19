@@ -1,12 +1,13 @@
 package ar.utn.capgemini.ecommerce.controller;
 
-import ar.utn.capgemini.ecommerce.model.Vendedor;
-import ar.utn.capgemini.ecommerce.repository.VendedorRepository;
+import ar.utn.capgemini.ecommerce.dto.VendedorDTO;
+import ar.utn.capgemini.ecommerce.service.VendedorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -14,40 +15,31 @@ import org.springframework.web.bind.annotation.*;
 public class VendedorController {
 
     @Autowired
-    private VendedorRepository vendedorRepository;
+    private VendedorService vendedorService;
 
     @GetMapping(path = {"", "/"})
     public ResponseEntity<?> obtenerVendedores() {
-        return new ResponseEntity<>(vendedorRepository.findAll(), HttpStatus.OK);
+        return vendedorService.listarVendedores();
     }
 
-    @GetMapping(path = {"/metodos-de-pago/{vendedorId}"})
+    @GetMapping(path = {"/{vendedorId}"})
     public ResponseEntity<?> obtenerVendedorId(@PathVariable("vendedorId") Integer id) {
-        Vendedor vendedor = vendedorRepository.findById(id).orElse(null);
-        if (vendedor == null)
-            return new ResponseEntity<>("No existe el vendedor con ese id.", HttpStatus.NOT_FOUND);
-
-        return new ResponseEntity<>(vendedor.getMetodosDePago(), HttpStatus.OK);
+        return vendedorService.obtenerVendedorPorId(id);
     }
 
     @PostMapping(path = {"", "/"})
-    public Vendedor agregarVendedor(@RequestBody @Validated Vendedor vendedor) {
-        if (vendedorRepository.existsByTienda(vendedor.getTienda())) {
-            return vendedorRepository.findByTienda(vendedor.getTienda());
-        }
-        return vendedorRepository.save(vendedor);
+    public ResponseEntity<?> agregarVendedor(@RequestBody @Valid VendedorDTO vendedorDTO, BindingResult bindingResult) {
+        return vendedorService.agregarVendedor(vendedorDTO, bindingResult);
     }
 
     @DeleteMapping(path = {"/{vendedorId}"})
-    public void  borrarTipoVendedorId(@PathVariable("vendedorId") Integer id){
-        vendedorRepository.deleteById(id);
+    public ResponseEntity<?>  darVendedorDeBaja(@PathVariable("vendedorId") Integer id){
+        return vendedorService.darVendedorDeBaja(id);
     }
 
-    @PutMapping(path = {"/{vendedorId}"})
-    public Vendedor actualizarVendedor(@PathVariable("vendedorId") @RequestBody @Validated Integer id, Vendedor vendedor){
-        vendedor.setId(id);
-        vendedorRepository.save(vendedor);
-        return vendedor;
+    @PatchMapping(path = {"/{vendedorId}"})
+    public ResponseEntity<?> actualizarVendedor(@PathVariable("vendedorId") Integer id, @RequestBody @Valid VendedorDTO vendedorDTO, BindingResult bindingResult){
+        return vendedorService.modificarVendedor(id, vendedorDTO, bindingResult);
     }
 
 }

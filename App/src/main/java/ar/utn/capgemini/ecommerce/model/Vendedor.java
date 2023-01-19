@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,16 +42,32 @@ public class Vendedor extends EntidadPersistente {
     @Column(name = "metodosDePago")
     private List<MetodoDePago> metodosDePago;
 
+    @Column(name = "fechaDeAlta", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeAlta;
+
+    @Column(name = "fechaDeBaja", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeBaja;
+
+    @Column(name = "fechaDeModificacion", columnDefinition = "DATETIME")
+    private LocalDateTime fechaDeModificacion;
+
+    @Column(name = "estado")
+    private boolean estado;
+
     public Vendedor(String nombreVendedor, String apellidoVendedor, String tienda, String emailVendedor) {
         this.metodosDePago = new ArrayList<>();
         this.nombreVendedor = nombreVendedor;
         this.apellidoVendedor = apellidoVendedor;
         this.tienda = tienda;
         this.emailVendedor = emailVendedor;
+        this.fechaDeAlta = LocalDateTime.now();
+        this.estado = true;
     }
 
     public Vendedor() {
         this.metodosDePago = new ArrayList<>();
+        this.fechaDeAlta = LocalDateTime.now();
+        this.estado = true;
     }
 
     public void agregarMetodoDePago(MetodoDePago metodoDePago) {
