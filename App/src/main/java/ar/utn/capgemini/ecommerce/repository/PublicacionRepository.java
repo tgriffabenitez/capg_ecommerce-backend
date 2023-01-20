@@ -8,14 +8,11 @@ import java.util.List;
 
 @Repository
 public interface PublicacionRepository extends JpaRepository<Publicacion, Integer> {
-    List<?> findByTituloAndDescripcion(String titulo, String descripcion);
-
-    List<?> findByTitulo(String titulo);
-
-    List<?> findByDescripcion(String descripcion);
-
+    List<Publicacion> findByTitulo(String titulo);
     List<Publicacion> findByVendedorId(Integer vendedorId);
-
     List<Publicacion> findByCategoriaId(Integer categoriaId);
-
+    List<Publicacion> findByVendedorIdAndCategoriaId(Integer id, Integer id1);
+    List<Publicacion> findByTituloAndCategoriaId(String buscarTitulo, Integer id);
+    List<Publicacion> findByVendedorIdAndTitulo(Integer id, String buscarTitulo);
+    List<Publicacion> findByVendedorIdAndCategoriaIdAndTitulo(Integer id, Integer id1, String buscarTitulo);
 }
