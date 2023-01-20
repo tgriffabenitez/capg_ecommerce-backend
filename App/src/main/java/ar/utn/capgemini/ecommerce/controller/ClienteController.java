@@ -31,7 +31,7 @@ public class ClienteController {
         return clienteService.obtenerCompras(id);
     }
 
-    @PostMapping(path = {""})
+    @PostMapping(path = "")
     public ResponseEntity<?> registrarCliente(@RequestBody @Valid ClienteDTO clienteDTO, BindingResult bindingResult) {
         return clienteService.registrarCliente(clienteDTO, bindingResult);
     }

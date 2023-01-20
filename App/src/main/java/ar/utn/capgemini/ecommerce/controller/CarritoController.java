@@ -17,7 +17,7 @@ public class CarritoController {
     @Autowired
     private CarritoService carritoService;
 
-    @PostMapping(path = {"/", ""})
+    @PostMapping(path = "")
     public ResponseEntity<?> crearCarrito(@RequestBody @Valid CompraDTO compraDTO, BindingResult bindingResult) {
         return carritoService.generarCompra(compraDTO, bindingResult);
     }

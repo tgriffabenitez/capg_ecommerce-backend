@@ -20,7 +20,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("")
-    public ResponseEntity<?> iniciarSesion(@RequestBody @Valid LoginDTO loginDTO, BindingResult bindingResult){
+    public ResponseEntity<?> iniciarSesion(@RequestBody @Valid LoginDTO loginDTO, BindingResult bindingResult) {
         return loginService.iniciarSesion(loginDTO, bindingResult);
     }
 }

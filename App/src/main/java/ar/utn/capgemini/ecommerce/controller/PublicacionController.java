@@ -15,12 +15,12 @@ public class PublicacionController {
     @Autowired
     private PublicacionService publicacionService;
 
-    @GetMapping(path = {""})
+    @GetMapping(path = "")
     public ResponseEntity<?> filtarPublicaciones(@RequestParam(name = "titulo", required = false) String titulo,
                                                  @RequestParam(name = "tienda", required = false) String tienda,
                                                  @RequestParam(name = "categoria", required = false) String categoria) {
 
-       return publicacionService.filtarPublicaciones(titulo, tienda, categoria);
+        return publicacionService.filtarPublicaciones(titulo, tienda, categoria);
     }
 
     @DeleteMapping(path = "/{id}")

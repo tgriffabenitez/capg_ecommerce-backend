@@ -17,28 +17,28 @@ public class VendedorController {
     @Autowired
     private VendedorService vendedorService;
 
-    @GetMapping(path = {"", "/"})
+    @GetMapping(path = "")
     public ResponseEntity<?> obtenerVendedores() {
         return vendedorService.listarVendedores();
     }
 
-    @GetMapping(path = {"/{vendedorId}"})
+    @GetMapping(path = "/{vendedorId}")
     public ResponseEntity<?> obtenerVendedorId(@PathVariable("vendedorId") Integer id) {
         return vendedorService.obtenerVendedorPorId(id);
     }
 
-    @PostMapping(path = {"", "/"})
+    @PostMapping(path = "")
     public ResponseEntity<?> agregarVendedor(@RequestBody @Valid VendedorDTO vendedorDTO, BindingResult bindingResult) {
         return vendedorService.agregarVendedor(vendedorDTO, bindingResult);
     }
 
     @DeleteMapping(path = {"/{vendedorId}"})
-    public ResponseEntity<?>  darVendedorDeBaja(@PathVariable("vendedorId") Integer id){
+    public ResponseEntity<?> darVendedorDeBaja(@PathVariable("vendedorId") Integer id) {
         return vendedorService.darVendedorDeBaja(id);
     }
 
     @PatchMapping(path = {"/{vendedorId}"})
-    public ResponseEntity<?> actualizarVendedor(@PathVariable("vendedorId") Integer id, @RequestBody @Valid VendedorDTO vendedorDTO, BindingResult bindingResult){
+    public ResponseEntity<?> actualizarVendedor(@PathVariable("vendedorId") Integer id, @RequestBody @Valid VendedorDTO vendedorDTO, BindingResult bindingResult) {
         return vendedorService.modificarVendedor(id, vendedorDTO, bindingResult);
     }
 
