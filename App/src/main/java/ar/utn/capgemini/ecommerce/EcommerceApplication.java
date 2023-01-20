@@ -40,8 +40,6 @@ public class EcommerceApplication {
     public ClienteRepository clienteRepository;
     @Autowired
     public PublicacionCarritoRepository publicacionPorCarritoRepository;
-    @Autowired
-    public CarritoRepository carritoRepository;
 
 
     public static void main(String[] args) {

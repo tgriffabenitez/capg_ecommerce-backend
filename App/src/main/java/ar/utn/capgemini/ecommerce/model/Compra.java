@@ -10,6 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,15 +31,20 @@ public class Compra extends EntidadPersistente {
     @Column(name = "fechaDeCompra", columnDefinition = "DATETIME")
     private LocalDateTime fechaDeCompra;
 
-    @OneToOne
-    @JoinColumn(name = "carrito_id", referencedColumnName = "id")
-    private Carrito carrito;
-
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 
+    @OneToMany
+    @JoinColumn(name = "CompraId", referencedColumnName = "id")
+    private List<PublicacionPorCarrito> publicacionesPorCarrito = new ArrayList<>();
+
     public Compra() {
+        this.fechaDeCompra = LocalDateTime.now();
+    }
+
+    public void agregarPublicacion(PublicacionPorCarrito publicacionPorCarrito){
+        this.publicacionesPorCarrito.add(publicacionPorCarrito);
     }
 }

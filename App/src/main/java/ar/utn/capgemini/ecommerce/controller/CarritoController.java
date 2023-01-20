@@ -19,8 +19,6 @@ import java.util.List;
 @RequestMapping(path = "/carrito")
 public class CarritoController {
     @Autowired
-    private CarritoRepository carritoRepository;
-    @Autowired
     private PublicacionCarritoRepository publicacionCarritoRepository;
     @Autowired
     private PublicacionRepository publicacionRepository;
@@ -33,15 +31,15 @@ public class CarritoController {
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<?> getCarrito(@PathVariable Integer id) {
-        Carrito carrito = carritoRepository.findById(id).orElse(null);
+    public ResponseEntity<?> getCompra(@PathVariable Integer id) {
+        Compra compra = compraRepository.findById(id).orElse(null);
 
-        if (carrito == null)
+        if (compra == null)
             return new ResponseEntity<>("No existe el carrito", HttpStatus.NOT_FOUND);
 
         // de esta forma, sabiendo el id del carrito puedo traer todas las publicaciones que tiene
         // y mostrar el detalle de la compra y el historial
-        List<PublicacionPorCarrito> publicacionCarritos = carrito.getPublicacionesPorCarrito();
+        List<PublicacionPorCarrito> publicacionCarritos = compra.getPublicacionesPorCarrito();
         return new ResponseEntity<>(publicacionCarritos, HttpStatus.OK);
     }
 
@@ -50,8 +48,8 @@ public class CarritoController {
         if (bindingResult.hasErrors())
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 
-        // Creo un nuevo carrito
-        Carrito carrito = new Carrito();
+        // Genero una nueva compra
+        Compra compra = new Compra();
         Double precioTotal = 0.0;
 
         // Recorro la lista de publicaciones que me llega en el DTO y las agrego al carrito
@@ -79,13 +77,13 @@ public class CarritoController {
             publicacionPorCarrito.setSubtotal(precioProductoPersonalizado * publicacionPorCarritoDTO.getCantidad());
             publicacionCarritoRepository.save(publicacionPorCarrito);
 
-            carrito.agregarPublicacion(publicacionPorCarrito);
+            compra.agregarPublicacion(publicacionPorCarrito);
             precioTotal += publicacionPorCarrito.getSubtotal();
         }
 
         // Al carrito creado le seteo el precio total y lo guardo
-        carrito.setPrecioTotal(precioTotal);
-        carritoRepository.save(carrito);
+        compra.setPrecioTotal(precioTotal);
+        compraRepository.save(compra);
 
         // verifico que exista el cliente
         Cliente cliente = clienteRepository.findById(compraDTO.getClienteId()).orElse(null);
@@ -97,11 +95,9 @@ public class CarritoController {
             return new ResponseEntity<>("No existe el metodo de pago con id " + compraDTO.getMetodoDePago(), HttpStatus.BAD_REQUEST);
 
         // creo una nueva compra, le guardo los atributos y la guardo
-        Compra compra = new Compra();
         compra.setCliente(cliente);
         compra.setMetodoDePago(metodoDePagoRepository.findById(compraDTO.getMetodoDePago()).get().getFormaDePago());
-        compra.setCarrito(carrito);
-        compra.setPrecioTotal(carrito.getPrecioTotal());
+        compra.setPrecioTotal(compra.getPrecioTotal());
         compra.setFechaDeCompra(LocalDateTime.now());
         cliente.agregarCompra(compra);
         compraRepository.save(compra);
