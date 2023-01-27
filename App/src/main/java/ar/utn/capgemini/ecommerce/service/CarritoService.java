@@ -75,6 +75,6 @@ public class CarritoService {
         compra.setPrecioTotal(total);
         compraRepository.save(compra);
 
-        return new ResponseEntity<>("Compra creada con exito", HttpStatus.OK);
+        return new ResponseEntity<>("Compra creada con exito", HttpStatus.CREATED);
     }
 }
