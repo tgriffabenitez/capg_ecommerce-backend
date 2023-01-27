@@ -30,6 +30,11 @@ public class VendedorService {
         return (vendedor == null)? new ResponseEntity<>("Vendedor no encontrado", HttpStatus.NOT_FOUND) : new ResponseEntity<>(vendedor, HttpStatus.OK);
     }
 
+    public ResponseEntity<?> obtenerMetodoDePago(Integer id) {
+        Vendedor vendedor = vendedorRepository.findById(id).orElse(null);
+        return (vendedor == null)? new ResponseEntity<>("Vendedor no encontrado", HttpStatus.NOT_FOUND) : new ResponseEntity<>(vendedor.getMetodosDePago(), HttpStatus.OK);
+    }
+
     public ResponseEntity<?> agregarVendedor(VendedorDTO vendedorDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);

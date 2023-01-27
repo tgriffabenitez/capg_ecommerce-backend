@@ -27,6 +27,11 @@ public class VendedorController {
         return vendedorService.obtenerVendedorPorId(id);
     }
 
+    @GetMapping(path = "/{vendedorId}/metodos-de-pago")
+    public ResponseEntity<?> obtenerMetodoDePago(@PathVariable("vendedorId") Integer id) {
+        return vendedorService.obtenerMetodoDePago(id);
+    }
+
     @PostMapping(path = "")
     public ResponseEntity<?> agregarVendedor(@RequestBody @Valid VendedorDTO vendedorDTO, BindingResult bindingResult) {
         return vendedorService.agregarVendedor(vendedorDTO, bindingResult);
